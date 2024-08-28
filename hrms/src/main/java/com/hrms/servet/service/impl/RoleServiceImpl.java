@@ -49,6 +49,17 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	public void loadRoleForm(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setAttribute("action", "insertRole");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/roles/role.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e) {
+//			e.printStackTrace();
+			logger.severe("Error  in RoleServiceImpl --> loadRoleForm "+e.getMessage());
+		}
+	}
+	@Override
 	public void getRoleById(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String roleId = request.getParameter("roleId");

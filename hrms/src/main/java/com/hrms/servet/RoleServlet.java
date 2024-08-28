@@ -40,23 +40,18 @@ public class RoleServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String action =  request.getParameter("action");
 //		String action = "/role";
-		logger.info("i "+action);
-		System.out.print("fi "+action);
+//		logger.info("i "+action);
+//		System.out.print("fi "+action);
 //		if(!action.contains(".jsp")) {
 		switch (action) {
 //		case "role":
 //            	roleService.showRolePage(request, response);
 //			break;
-		case "insert":
-			roleService.insertRole(request, response);
+		case "insertRole", "updateRole":
+			roleService.loadRoleForm(request, response);
 			break;
 		case "delete":
 			roleService.deleteRole(request, response);
-			break;
-		case "edit":
-			roleService.updateRole(request, response);
-		case "update":
-			roleService.updateRole(request, response);
 			break;
 		default:
 			roleService.getAllRoles(request, response);

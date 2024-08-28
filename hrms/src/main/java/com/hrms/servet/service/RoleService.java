@@ -15,4 +15,6 @@ public interface RoleService {
 	public void deleteRole(HttpServletRequest request, HttpServletResponse response);
 	
 	public void showRolePage(HttpServletRequest request, HttpServletResponse response);
+
+	public void loadRoleForm(HttpServletRequest request, HttpServletResponse response);
 }
