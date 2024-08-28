@@ -1,0 +1,52 @@
+use emp_management_sys;
+CREATE TABLE employees (
+  employee_id INT AUTO_INCREMENT NOT NULL,
+  employee_first_name VARCHAR(50) NOT NULL,
+  employee_middle_name VARCHAR(50) DEFAULT NULL,
+  employee_last_name VARCHAR(50) NOT NULL,
+  role_id INT NOT NULL,
+  employee_age INT NOT NULL,
+  employee_dob DATE NOT NULL,
+  employee_branch VARCHAR(50) NOT NULL,
+  reporting_person_employee_id INT DEFAULT NULL,
+  employee_ip_address VARCHAR(50) NOT NULL,
+  PRIMARY KEY (employee_id)
+);
+
+CREATE TABLE addresses (
+  address_id INT AUTO_INCREMENT NOT NULL,
+  employee_id INT NOT NULL,
+  address_line1 VARCHAR(100) NOT NULL,
+  address_line2 VARCHAR(100) DEFAULT NULL,
+  city VARCHAR(50) NOT NULL,
+  state VARCHAR(50) NOT NULL,
+  country VARCHAR(50) NOT NULL,
+  pin_code VARCHAR(10) NOT NULL,
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (address_id)
+);
+
+CREATE TABLE bank_details (
+  bank_detail_id INT AUTO_INCREMENT NOT NULL,
+  employee_id INT NOT NULL,
+  bank_name VARCHAR(100) NOT NULL,
+  bank_acc_no VARCHAR(50) NOT NULL,
+  ifsc_no VARCHAR(20) NOT NULL,
+  upi_id VARCHAR(50) NOT NULL,
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (bank_detail_id)
+);
+
+
+
+CREATE TABLE roles (
+  role_id INT AUTO_INCREMENT NOT NULL,
+  role_name VARCHAR(50) NOT NULL,
+  role_level INT NOT NULL,
+  role_reporting_to INT DEFAULT NULL,
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (role_id)
+);
