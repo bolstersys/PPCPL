@@ -381,7 +381,7 @@
 
                       <li class="nav-item">
 
-                        <a href="html/dashboard-2.html" class="nav-link">
+                        <a href="hrms/employee?action=getAllEmployee" class="nav-link">
 
                           <span class="nav-text">
                				  <span>Employee</span>
@@ -393,7 +393,7 @@
 
                       <li class="nav-item">
 
-                        <a href="html/dashboard.html" class="nav-link">
+                        <a href="hrms/role?action=getAllRoles" class="nav-link">
 
                           <span class="nav-text">
                				  <span>Role</span>
