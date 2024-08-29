@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Utility {
-	private static String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
-	private static String JDBC_URL = "jdbc:mysql://localhost:3306/emp_management_sys?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-	private static String JDBC_USER_NAME = "root";
+	private static String DRIVER_CLASS_NAME = "oracle.jdbc.OracleDriver";
+	private static String JDBC_URL = "jdbc:oracle:thin:@apex.oracle.com:1521:ppcpl_erp_modules/WKSP_BOLSTERSYS";
+	private static String JDBC_USER_NAME = "bolstersys";
 	private static String JDBC_PASSWORD = "123456";
 
 	public static Connection getConnection() {
