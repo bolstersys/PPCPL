@@ -39,14 +39,7 @@ public class RoleServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action =  request.getParameter("action");
-//		String action = "/role";
-//		logger.info("i "+action);
-//		System.out.print("fi "+action);
-//		if(!action.contains(".jsp")) {
 		switch (action) {
-//		case "role":
-//            	roleService.showRolePage(request, response);
-//			break;
 		case "insertRole", "updateRole":
 			roleService.loadRoleForm(request, response);
 			break;

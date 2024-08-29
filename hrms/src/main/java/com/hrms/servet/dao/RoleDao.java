@@ -10,9 +10,9 @@ public interface RoleDao {
 
 	public List<Role> getRoleById(String roleId) throws SQLException, ClassNotFoundException;
 
-	public boolean insertRole(Role role) throws SQLException, ClassNotFoundException;
+	public void insertRole(Role role) throws SQLException, ClassNotFoundException;
 
-	public boolean updateRole(Role role) throws SQLException, ClassNotFoundException;
+	public void updateRole(Role role) throws SQLException, ClassNotFoundException;
 
 	public boolean deleteRole(String roleId) throws SQLException, ClassNotFoundException;
 }

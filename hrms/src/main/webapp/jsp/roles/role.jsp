@@ -44,7 +44,7 @@
                     Role Level
                   </th>
 
-                  <th class="border-0 bgc-white shadow-sm w-2">
+                  <th class="border-0 bgc-white shadow-sm w-8">
                     Action
                   </th>
                 </tr>
@@ -66,30 +66,26 @@
                       ${loop.index +1}
                     </td>
 
-                    <td class="text-105">
+                    <td class="text-105 align-middle">
                       ${item.roleCode }
                     </td>
 
-                    <td class="text-105">
+                    <td class="text-105 align-middle">
                       ${item.roleName }
                     </td>
 
-                    <td class="text-105">
+                    <td class="text-105 align-middle">
                       ${item.roleLevel }
                     </td>
 
                     <td class="align-middle">
                       <span class="d-none d-lg-inline">
-                        <a data-rel="tooltip" data-action="edit" title="Edit" href="#" class="v-hover">
-                          <i class="fa fa-edit text-blue-m1 text-120"></i>
-                        </a>
-                      </span>
-
-                      <span class="d-lg-none text-nowrap">
-                        <a title="Edit" href="#" class="btn btn-outline-info shadow-sm px-4 btn-bgc-white">
-                          <i class="fa fa-pencil-alt mx-1"></i>
-                          <span class="ml-1 d-md-none">Edit</span>
-                        </a>
+                        <button class="btn btn-outline-light btn-h-light-blue btn-a-light-blue border-b-2 text-600 px-3 mb-1">
+                          <i class="fa fa-pencil-alt text-110 text-blue-d2 mr-1"></i>
+                        </button>
+                        <button class="btn btn-outline-light btn-h-light-danger btn-a-light-danger border-b-2 text-600 px-3 mb-1">
+                          <i class="fa fa-trash-alt text-110 text-danger-d2 mr-1"></i>
+                        </button>
                       </span>
                     </td>
                   </tr>
@@ -116,6 +112,13 @@
                 </div>
 
                 <div class="card-body">
+
+                  <div class="form-group row">
+                    <div class="col-sm-9">
+                      <input type="hidden" class="form-control" id="idRoleCode" value="${selectedRole.roleCode}"/>
+                    </div>
+                  </div>
+
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
                       <label for="idRoleName" class="mb-0">
@@ -123,7 +126,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="idRoleName" />
+                      <input type="text" class="form-control" id="idRoleName" value="${selectedRole.roleName}"/>
                     </div>
                   </div>
 
@@ -134,7 +137,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=999 id="idRoleLevel" />
+                      <input type="number" class="form-control" min=0 max=999 id="idRoleLevel" value="${selectedRole.roleLevel}"/>
                     </div>
                   </div>
 
@@ -150,9 +153,9 @@
                         id="idReportingRole">
                         <option value="">&nbsp;</option>
                         <c:if test="${not empty roleList}">
-                          <c:forEach items="${roleList}" var="item" varStatus="loop">
-                            <option value='${item.roleCode}'>${item.roleName}</option>
-                          </c:forEach>
+                            <c:forEach items="${roleList}" var="item" varStatus="loop">
+                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selectedRole.roleReportingTo}">selected</c:if>>${item.roleName}</option>
+                            </c:forEach>
                         </c:if>
                       </select>
                     </div>
@@ -176,6 +179,7 @@
     </c:if>
 
     <jsp:include page="../../jsp/footer/footerNew.jsp" />
+
     <script>
       jQuery(function ($) {
         var tableId = '#datatable'
@@ -350,6 +354,49 @@
 
         $('#addBtn').on('click', () => {
           window.location.href = "/hrms/role?action=insertRole"
+        });
+        
+        $('#submitBtn').on('click', () => {
+          var url = "hrms/role?action=insertRole";
+          <c:if test="${action == 'updateRole'}">
+            url = "hrms/role?action=updateRole";
+          </c:if>
+          let roleCode = $('#idRoleCode').val();
+          let roleName = $('#idRoleName').val();
+          let roleLevel = $('#idRoleLevel').val();
+          let roleReportingTo = $('#idReportingRole').val();
+          var data = {
+            "roleCode":roleCode,
+            "roleName":roleName,
+            "roleLevel":roleLevel,
+            "roleReportingTo":roleReportingTo
+          }
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            cache: false,
+            success: function(data){
+              var jsonData = JSON.parse(data);
+              if(jsonData["isSuccess"]){
+                $.aceToaster.add({
+                  placement: 'tr',
+                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
+                  width: 360,
+                  delay: 4000,
+                  close: true, 
+                  className: 'bgc-green-d2 shadow ',
+                  bodyClass: 'border-0 p-0 text-dark-tp2',
+                  headerClass: 'd-none',
+                  progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+                })
+                console.log("success")
+              }
+            },
+            error:function(data){
+
+            },
+          });
         });
 
       })

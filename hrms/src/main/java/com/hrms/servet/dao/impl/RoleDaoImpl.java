@@ -16,7 +16,7 @@ public class RoleDaoImpl implements RoleDao {
 	private static String GET_ALL_ROLE_QUERY = "SELECT `roles`.`role_id`, `roles`.`role_name`, `roles`.`role_level`,  `roles`.`role_reporting_to`,  `roles`.`created_date`, `roles`.`updated_date` FROM `emp_management_sys`.`roles`";
 	private static String GET_ROLE_BY_ID_QUERY = "SELECT `roles`.`role_id`, `roles`.`role_name`, `roles`.`role_level`,  `roles`.`role_reporting_to`,  `roles`.`created_date`, `roles`.`updated_date` FROM `emp_management_sys`.`roles` WHERE `roles`.`role_id` = ?";
 	private static String INSERT_ROLE_QUERY = "INSERT INTO `emp_management_sys`.`roles`( `role_name`, `role_level`, `role_reporting_to`) VALUES (?,?,?)";
-	private static String UPDATE_ROLE_QUERY = "UPDATE `emp_management_sys`.`roles` SET `role_id` = ?, `role_name` = ?, `role_level` = ?, `role_reporting_to` = ?, `created_date` = ?, `updated_date` = ? WHERE `role_id` = ?";
+	private static String UPDATE_ROLE_QUERY = "UPDATE `emp_management_sys`.`roles` SET `role_name` = ?, `role_level` = ?, `role_reporting_to` = ? WHERE `role_id` = ?";
 	private static String DELETE_ROLE_QUERY = "";
 
 	@Override
@@ -63,10 +63,10 @@ public class RoleDaoImpl implements RoleDao {
 
 			// Process the ResultSet object
 			while (rs.next()) {
-				String roleid = rs.getString("roleCode");
-				String roleName = rs.getString("roleName");
-				String roleLevel = rs.getString("roleLevel");
-				String roleReportingTo = rs.getString("roleReportingTo");
+				String roleid = rs.getString("role_id");
+				String roleName = rs.getString("role_name");
+				String roleLevel = rs.getString("role_level");
+				String roleReportingTo = rs.getString("role_reporting_to");
 
 				Role role = new Role();
 				role.setRoleCode(roleid);
@@ -84,8 +84,7 @@ public class RoleDaoImpl implements RoleDao {
 	}
 
 	@Override
-	public boolean insertRole(Role role) throws SQLException, ClassNotFoundException {
-		boolean isInserted = false;
+	public void insertRole(Role role) throws SQLException, ClassNotFoundException {
 		try (Connection connection = Utility.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ROLE_QUERY)) {
 
@@ -96,17 +95,14 @@ public class RoleDaoImpl implements RoleDao {
 			System.out.println(preparedStatement);
 
 			preparedStatement.executeUpdate();
-			isInserted = true;
 		} catch (Exception e) {
 //			e.printStackTrace();
 			throw e;
 		}
-		return isInserted;
 	}
 
 	@Override
-	public boolean updateRole(Role role) throws SQLException, ClassNotFoundException {
-		boolean isUpdated = false;
+	public void updateRole(Role role) throws SQLException, ClassNotFoundException {
 		try (Connection connection = Utility.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ROLE_QUERY)) {
 
@@ -118,12 +114,10 @@ public class RoleDaoImpl implements RoleDao {
 			System.out.println(preparedStatement);
 
 			preparedStatement.executeUpdate();
-			isUpdated = true;
 		} catch (Exception e) {
 //			e.printStackTrace();
 			throw e;
 		}
-		return isUpdated;
 	}
 
 	@Override
