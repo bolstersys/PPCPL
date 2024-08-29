@@ -17,7 +17,7 @@ public class RoleDaoImpl implements RoleDao {
 	private static String GET_ROLE_BY_ID_QUERY = "SELECT `roles`.`role_id`, `roles`.`role_name`, `roles`.`role_level`,  `roles`.`role_reporting_to`,  `roles`.`created_date`, `roles`.`updated_date` FROM `emp_management_sys`.`roles` WHERE `roles`.`role_id` = ?";
 	private static String INSERT_ROLE_QUERY = "INSERT INTO `emp_management_sys`.`roles`( `role_name`, `role_level`, `role_reporting_to`) VALUES (?,?,?)";
 	private static String UPDATE_ROLE_QUERY = "UPDATE `emp_management_sys`.`roles` SET `role_name` = ?, `role_level` = ?, `role_reporting_to` = ? WHERE `role_id` = ?";
-	private static String DELETE_ROLE_QUERY = "";
+	private static String DELETE_ROLE_QUERY = "DELETE FROM `emp_management_sys`.`roles` WHERE `role_id` = ?";
 
 	@Override
 	public List<Role> getAllRoles() throws SQLException, ClassNotFoundException {

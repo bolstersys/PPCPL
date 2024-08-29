@@ -352,7 +352,7 @@
 
                 <li class="nav-item active">
 
-                  <a href="html/dashboard.html" class="nav-link">
+                  <a href="/hrms" class="nav-link">
                     <i class="nav-icon fa fa-tachometer-alt"></i>
                     <span class="nav-text fadeable">
                	  <span>Dashboard</span>

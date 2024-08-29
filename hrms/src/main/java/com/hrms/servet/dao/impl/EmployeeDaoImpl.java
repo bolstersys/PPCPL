@@ -3,16 +3,19 @@ package com.hrms.servet.dao.impl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.hrms.servet.dao.EmployeeDao;
 import com.hrms.servet.model.Address;
 import com.hrms.servet.model.BankDetail;
 import com.hrms.servet.model.Employee;
 import com.hrms.servet.model.Role;
+import com.hrms.servet.service.impl.EmployeeServiceImpl;
 import com.hrms.servet.util.Utility;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
+	private static final Logger logger = Logger.getLogger(EmployeeDaoImpl.class.getName());
 	private static final String GET_ALL_EMPLOYEE_QUERY = "SELECT `employees`.`employee_id`,`employees`.`employee_first_name`, `employees`.`employee_middle_name`, `employees`.`employee_last_name`, `employees`.`role_id`, `employees`.`employee_age`, `employees`.`employee_dob`, `employees`.`employee_branch`, `employees`.`reporting_person_employee_id`, `employees`.`employee_ip_address` FROM `emp_management_sys`.`employees`";
 	private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT `employees`.`employee_id`,`employees`.`employee_first_name`, `employees`.`employee_middle_name`, `employees`.`employee_last_name`, `employees`.`role_id`, `employees`.`employee_age`, `employees`.`employee_dob`, `employees`.`employee_branch`, `employees`.`reporting_person_employee_id`, `employees`.`employee_ip_address` FROM `emp_management_sys`.`employees` WHERE `employees`.`employee_id` = ?";
 
@@ -29,7 +32,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 					"WHERE e.employee_id = ?";
 
 	private static final String INSERT_EMPLOYEE_QUERY = "INSERT INTO `emp_management_sys`.`employees` (`employee_id`, `employee_first_name`, `employee_middle_name`, `employee_last_name`, `role_id`, `employee_age`, `employee_dob`, `employee_branch`, `reporting_person_employee_id`, `employee_ip_address`) VALUES (?,?,?,?,?,?,?,?,?,?)";
-	private static final String INSERT_ADDRESS_QUERY = "INSERT INTO `emp_management_sys`.`addresses` (`employee_id`, `address_line1`, `address_line2`, `city`, `state`, `country`, `pin_code`, `created_date`, `updated_date`) VALUES (?,?,?,?,?,?,?,?)";
+	private static final String INSERT_ADDRESS_QUERY = "INSERT INTO `emp_management_sys`.`addresses` (`employee_id`, `address_line1`, `address_line2`, `city`, `state`, `country`, `pin_code`, `created_date`, `updated_date`) VALUES (?,?,?,?,?,?,?,?,?)";
 	private static final String INSERT_BANK_DTL_QUERY = "INSERT INTO `emp_management_sys`.`bank_details` (`employee_id`, `bank_name`, `bank_acc_no`, `ifsc_no`, `upi_id`) VALUES (?,?,?,?,?)";
 
 	private static final String UPDATE_EMPLOYEES_QUERY = "UPDATE `emp_management_sys`.`employees` SET `employee_first_name` = ?, `employee_middle_name` = ?, `employee_last_name` = ?, `role_id` = ?, `employee_age` = ?, `employee_dob` = ?, `employee_branch` = ?, `reporting_person_employee_id` = ?, `employee_ip_address` = ? WHERE `employee_id` = ?";
@@ -154,16 +157,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public void insertEmployee(Employee employee) throws SQLException, ClassNotFoundException {
-		boolean isInserted = false;
 		Connection connection = null;
 
 		try {
 			connection = Utility.getConnection();
 			connection.setAutoCommit(false);  // Start transaction
 
-			// Insert into employees table
-			try (PreparedStatement employeeStmt = connection.prepareStatement(INSERT_EMPLOYEE_QUERY)) {
-				employeeStmt.setString(1, employee.getEmployeeId());
+			String generatedEmployeeId = null;
+
+			// Insert into employees table and retrieve the generated employee_id
+			try (PreparedStatement employeeStmt = connection.prepareStatement(INSERT_EMPLOYEE_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+				employeeStmt.setString(1, null);
 				employeeStmt.setString(2, employee.getEmployeeFirstName());
 				employeeStmt.setString(3, employee.getEmployeeMiddleName());
 				employeeStmt.setString(4, employee.getEmployeeLastName());
@@ -174,13 +178,29 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employeeStmt.setString(9, employee.getReportingPersonEmployeeId());
 				employeeStmt.setString(10, employee.getEmployeeIpAddress());
 
-				employeeStmt.executeUpdate();
+				int affectedRows = employeeStmt.executeUpdate();
+
+				if (affectedRows == 0) {
+					throw new SQLException("Inserting employee failed, no rows affected.");
+				}
+
+				// Retrieve the generated employee_id
+				try (ResultSet generatedKeys = employeeStmt.getGeneratedKeys()) {
+					if (generatedKeys.next()) {
+						generatedEmployeeId = generatedKeys.getString(1);
+					} else {
+						throw new SQLException("Inserting employee failed, no ID obtained.");
+					}
+				}
 			}
+
+			// Set the generated employee ID to the employee object
+			employee.setEmployeeId(generatedEmployeeId);
 
 			// Insert into address table
 			try (PreparedStatement addressStmt = connection.prepareStatement(INSERT_ADDRESS_QUERY)) {
 				Address address = employee.getAddress();
-				addressStmt.setString(1, employee.getEmployeeId()); // Relational key
+				addressStmt.setString(1, generatedEmployeeId); // Relational key
 				addressStmt.setString(2, address.getAddressLine1());
 				addressStmt.setString(3, address.getAddressLine2());
 				addressStmt.setString(4, address.getCity());
@@ -196,7 +216,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			// Insert into bank details table
 			try (PreparedStatement bankStmt = connection.prepareStatement(INSERT_BANK_DTL_QUERY)) {
 				BankDetail bankDetail = employee.getBankDetail();
-				bankStmt.setString(1, employee.getEmployeeId()); // Relational key
+				bankStmt.setString(1, generatedEmployeeId); // Relational key
 				bankStmt.setString(2, bankDetail.getBankName());
 				bankStmt.setString(3, bankDetail.getBankAccNo());
 				bankStmt.setString(4, bankDetail.getIfscNo());
@@ -206,7 +226,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			}
 
 			connection.commit();  // Commit transaction if all insertions succeed
-			isInserted = true;
 
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -227,8 +246,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				}
 			}
 		}
-
 	}
+
 
 	@Override
 	public void updateEmployee(Employee employee) throws SQLException, ClassNotFoundException {

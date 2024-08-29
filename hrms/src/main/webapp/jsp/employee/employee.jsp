@@ -163,7 +163,7 @@
               <div class="card h-100">
                 <div class="card-header">
                   <span class="card-title text-125">
-                    Role Form
+                    Employee Form
                   </span>
                 </div>
 
@@ -215,7 +215,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=999 id="age" value="${selected.age}"/>
+                      <input type="number" class="form-control" min=0 max=999 id="age" value="${selected.employeeAge}"/>
                     </div>
                   </div>
                   
@@ -229,7 +229,7 @@
                     <div class="col-sm-9">
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="idReportingRole">
+                        id="role">
                         <c:if test="${not empty roleList}">
                             <c:forEach items="${roleList}" var="item" varStatus="loop">
                                 <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
@@ -296,7 +296,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <textarea class="form-control" id="address" maxlength="50"></textarea>
+                      <textarea class="form-control" id="address" maxlength="50">${selected.address.addressLine1}</textarea>
                     </div>
                   </div>
                   
@@ -356,7 +356,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=7 id="pincode" value="${selected.pincode}"/>
+                      <input type="number" class="form-control" min=0 max=7 id="pincode" value="${selected.address.pinCode}"/>
                     </div>
                   </div>
 
@@ -561,47 +561,63 @@
         });
 
         $('#submitBtn').on('click', () => {
-          var url = "hrms/role?action=insertEmployee";
-          <c:if test="${action == 'updateEmployee'}">
-            url = "hrms/role?action=updateEmployee";
-          </c:if>
-          let roleCode = $('#idRoleCode').val();
-          let roleName = $('#idRoleName').val();
-          let roleLevel = $('#idRoleLevel').val();
-          let roleReportingTo = $('#idReportingRole').val();
-          var data = {
-            "roleCode":roleCode,
-            "roleName":roleName,
-            "roleLevel":roleLevel,
-            "roleReportingTo":roleReportingTo
-          }
-          $.ajax({
-            type: "POST",
-            url: url,
-            data: data,
-            cache: false,
-            success: function(data){
-              var jsonData = JSON.parse(data);
-              if(jsonData["isSuccess"]){
-                $.aceToaster.add({
-                  placement: 'tr',
-                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
-                  width: 360,
-                  delay: 4000,
-                  close: true,
-                  className: 'bgc-green-d2 shadow ',
-                  bodyClass: 'border-0 p-0 text-dark-tp2',
-                  headerClass: 'd-none',
-                  progress: 'position-bl bgc-black-tp6 py-2px m-1px'
-                })
-                console.log("success")
-              }
-            },
-            error:function(data){
+    let url = "hrms/employee?action=insertEmployee";
+    <c:if test="${action == 'updateEmployee'}">
+        url = "hrms/employee?action=updateEmployee";
+    </c:if>
+    
+    let employeeData = {
+        "employeeId": $('#idRoleCode').val(),
+        "employeeFirstName": $('#firstname').val(),
+        "employeeMiddleName": $('#middlename').val(),
+        "employeeLastName": $('#lastname').val(),
+        "employeeAge": $('#age').val(),
+        "employeeDob": "1995-04-15",
+        "roleCode": $('#role').val(),
+        "department": $('#department').val(),
+        "employeeBranch": $('#homebranch').val(),
+        "reportingPersonEmployeeId": $('#reportingperson').val(),
+        "addressLine1": $('#address').val(),
+        "addressLine": $('#address').val(),
+        "country": $('#country').val(),
+        "state": $('#state').val(),
+        "city": $('#city').val(),
+        "pinCode": $('#pincode').val(),
+        "employeeIpAddress": "788787",
+        "bankName": "sjfb",
+        "bankAccNo": "6t8t",
+        "ifscNo": "t67",
+        "upiId": "tyu",
+    };
 
-            },
-          });
-        });
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: employeeData,
+        cache: false,
+        success: function(data){
+            var jsonData = JSON.parse(data);
+            if(jsonData["isSuccess"]){
+                $.aceToaster.add({
+                    placement: 'tr',
+                    body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
+                    width: 360,
+                    delay: 4000,
+                    close: true, 
+                    className: 'bgc-green-d2 shadow ',
+                    bodyClass: 'border-0 p-0 text-dark-tp2',
+                    headerClass: 'd-none',
+                    progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+                });
+                console.log("success");
+            }
+        },
+        error: function(data){
+            console.error("An error occurred while processing the request.");
+        }
+    });
+});
+
 
         $('[id^=editBtn-]').click(function() {
         var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID

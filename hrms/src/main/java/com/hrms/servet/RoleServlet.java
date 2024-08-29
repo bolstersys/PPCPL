@@ -29,7 +29,7 @@ public class RoleServlet extends HttpServlet {
 		case "updateRole":
 			roleService.loadRoleForm(request, response);
 			break;
-		case "delete":
+		case "deleteRole":
 			roleService.deleteRole(request, response);
 			break;
 		default:
@@ -49,7 +49,7 @@ public class RoleServlet extends HttpServlet {
 			case "updateRole":
 				roleService.updateRole(request, response);
 				break;
-			case "delete":
+			case "deleteRole":
 				roleService.deleteRole(request, response);
 				break;
 			default:

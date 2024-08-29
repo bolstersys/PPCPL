@@ -35,7 +35,7 @@ public class RoleServiceImpl implements RoleService {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/roles/role.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			logger.severe("Error  in RoleServiceImpl --> getAllRoles "+e.getMessage());
 		}
 	}
@@ -119,10 +119,15 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void deleteRole(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String roleCode = request.getParameter("");
-			boolean isDeleted = roleDao.deleteRole(roleCode);
-			request.setAttribute("isDeleted", isDeleted);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/roles/role.jsp");
+			String roleCode = request.getParameter("roleId");
+			roleDao.deleteRole(roleCode);
+			ResponseBean responseBean = new ResponseBean();
+			responseBean.setSuccess(true);
+			responseBean.setMessage("Role Deleted Successfully.");
+			request.setAttribute("action", "ajaxCommonResponse");
+			Gson gson = new Gson();
+			request.setAttribute("message", gson.toJson(responseBean));
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/common/ajax.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 //			e.printStackTrace();
