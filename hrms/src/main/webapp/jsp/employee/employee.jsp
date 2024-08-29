@@ -230,7 +230,6 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="idReportingRole">
-                        <option value="">&nbsp;</option>
                         <c:if test="${not empty roleList}">
                             <c:forEach items="${roleList}" var="item" varStatus="loop">
                                 <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
@@ -249,7 +248,6 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="department">
-                        <option value=""></option>
                         <option value="1">IT</option>
                         <option value="2">Management</option>
                         <option value="3">Printing</option>
@@ -259,14 +257,13 @@
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
                       <label for="homebranch" class="mb-0">
-                        Home Brnach
+                        Home Branch
                       </label>
                     </div>
                     <div class="col-sm-9">
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="homebranch">
-                        <option value=""></option>
                         <option value="1">Mumbai</option>
                         <option value="2">Ahemdabad</option>
                         <option value="3">Delhi</option>
@@ -283,7 +280,6 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="reportingperson">
-                        <option value="">&nbsp;</option>
                         <c:if test="${not empty employeeList}">
                             <c:forEach items="${employeeList}" var="item" varStatus="loop">
                                 <option value='${item.employeeId}' <c:if test="${item.employeeId == selected.reportingPerson}">selected</c:if>>${item.employeeFirstName} ${item.employeeLastName}</option>
@@ -314,10 +310,9 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="country">
-                        <option value=""></option>
-                        <option value="1">IT</option>
-                        <option value="2">Management</option>
-                        <option value="3">Printing</option>
+                        <option value="india">India</option>
+                        <option value="usa">USA</option>
+                        <option value="isreal">Isreal</option>
                       </select>
                     </div>
                   </div>
@@ -331,10 +326,9 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="state">
-                        <option value=""></option>
-                        <option value="1">IT</option>
-                        <option value="2">Management</option>
-                        <option value="3">Printing</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="maharashtra">Maharashtra</option>
+                        <option value="mp">Madhya Pradesh</option>
                       </select>
                     </div>
                   </div>
@@ -348,10 +342,9 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="city">
-                        <option value=""></option>
-                        <option value="1">IT</option>
-                        <option value="2">Management</option>
-                        <option value="3">Printing</option>
+                        <option value="surat">Surat</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="delhi">Delhi</option>
                       </select>
                     </div>
                   </div>

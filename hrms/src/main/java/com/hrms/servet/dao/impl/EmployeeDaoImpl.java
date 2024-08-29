@@ -19,11 +19,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	private static final String GET_EMPLOYEE_DETAILS_BY_ID_QUERY =
 			"SELECT e.employee_id, e.employee_first_name, e.employee_middle_name, e.employee_last_name, " +
 					"e.employee_age, e.employee_dob, e.employee_branch, e.reporting_person_employee_id, e.employee_ip_address, " +
-					"r.role_code, r.role_name, r.role_level, r.role_reporting_to, " +
+					"r.role_id, r.role_name, r.role_level, r.role_reporting_to, " +
 					"a.address_id, a.address_line1, a.address_line2, a.city, a.state, a.country, a.pin_code, " +
 					"b.bank_detail_id, b.bank_name, b.bank_acc_no, b.ifsc_no, b.upi_id " +
 					"FROM employees e " +
-					"LEFT JOIN roles r ON e.role_id = r.role_code " +
+					"LEFT JOIN roles r ON e.role_id = r.role_id " +
 					"LEFT JOIN addresses a ON e.employee_id = a.employee_id " +
 					"LEFT JOIN bank_details b ON e.employee_id = b.employee_id " +
 					"WHERE e.employee_id = ?";
@@ -87,14 +87,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				role.setRoleCode(roleId);
 				employee.setRole(role);
 
-//				Address address = new Address();
-//				address.setSrNo(addressId);
-//				employee.setAddress(address);
-//
-//				BankDetail bankDetail = new BankDetail();
-//				bankDetail.setSrNo(employeeBankSrNo);
-//				employee.setBankDetail(bankDetail);
-
 				employeeList.add(employee);
 			}
 
@@ -127,7 +119,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employee.setEmployeeIpAddress(rs.getString("employee_ip_address"));
 
 				Role role = new Role();
-				role.setRoleCode(rs.getString("role_code"));
+				role.setRoleCode(rs.getString("role_id"));
 				role.setRoleName(rs.getString("role_name"));
 				role.setRoleLevel(rs.getString("role_level"));
 				role.setRoleReportingTo(rs.getString("role_reporting_to"));
@@ -161,7 +153,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public boolean insertEmployee(Employee employee) throws SQLException, ClassNotFoundException {
+	public void insertEmployee(Employee employee) throws SQLException, ClassNotFoundException {
 		boolean isInserted = false;
 		Connection connection = null;
 
@@ -236,11 +228,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			}
 		}
 
-		return isInserted;
 	}
 
 	@Override
-	public boolean updateEmployee(Employee employee) throws SQLException, ClassNotFoundException {
+	public void updateEmployee(Employee employee) throws SQLException, ClassNotFoundException {
 		boolean isUpdated = false;
 		Connection connection = null;
 
@@ -314,11 +305,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			}
 		}
 
-		return isUpdated;
 	}
 
 	@Override
-	public boolean deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException {
+	public void deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException {
 		boolean isDeleted = false;
 		Connection connection = null;
 
@@ -367,7 +357,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			}
 		}
 
-		return isDeleted;
 	}
 
 

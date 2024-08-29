@@ -10,9 +10,9 @@ public interface EmployeeDao {
 
 	public Employee getEmployeeById(String employeeId) throws SQLException, ClassNotFoundException;
 
-	public boolean insertEmployee(Employee employee) throws SQLException, ClassNotFoundException;
+	public void insertEmployee(Employee employee) throws SQLException, ClassNotFoundException;
 
-	public boolean updateEmployee(Employee employee) throws SQLException, ClassNotFoundException;
+	public void updateEmployee(Employee employee) throws SQLException, ClassNotFoundException;
 
-	public boolean deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException;
+	public void deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException;
 }
