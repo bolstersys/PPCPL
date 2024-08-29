@@ -413,7 +413,7 @@
     // Edit function - Redirect to the edit page
     function editRecord(id) {
         // Redirect to edit page with the record ID
-        window.location.href = '/editRecord?id=' + id;
+        window.location.href = 'hrms/role?action=updateRole&roleId=' + id;
     }
 
     // Delete function - Confirm and redirect
@@ -423,7 +423,7 @@
 
         // If confirmed, redirect to delete action
         if (confirmation) {
-            window.location.href = '/deleteRecord?id=' + id;
+            window.location.href = 'hrms/role?action=deleteRole&roleId=' + id;
         }
     }
       })
