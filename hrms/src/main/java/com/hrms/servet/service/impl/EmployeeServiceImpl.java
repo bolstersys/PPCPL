@@ -29,20 +29,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private final EmployeeDao employeeDao = new EmployeeDaoImpl();
 	private RoleDao roleDao = new RoleDaoImpl();
-	private static final Logger logger = Logger.getLogger(RoleServiceImpl.class.getName());
+	private static final Logger logger = Logger.getLogger(EmployeeServiceImpl.class.getName());
 
-	static {
-		FileHandler fileHandler;
-		try {
-			fileHandler = new FileHandler("D:/STS extract/STS-4.24/workspace/logs/mylog.log", true);
-		
-        fileHandler.setFormatter(new SimpleFormatter());
-        logger.addHandler(fileHandler);
-        logger.setLevel(Level.ALL);
-		} catch (SecurityException | IOException e) {
-			logger.severe("Error  in RoleServiceImpl --> logger "+e.getMessage());
-		}
-	}
 	@Override
 	public void getAllEmployee(HttpServletRequest request, HttpServletResponse response) {
 		try {

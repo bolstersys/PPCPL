@@ -136,10 +136,10 @@
 
                     <td class="align-middle">
                       <span class="d-none d-lg-inline">
-                        <button id="editBtn-${item.roleCode }" class="btn btn-outline-light btn-h-light-blue btn-a-light-blue border-b-2 text-600 px-3 mb-1">
+                        <button id="editBtn-${item.employeeId }" class="btn btn-outline-light btn-h-light-blue btn-a-light-blue border-b-2 text-600 px-3 mb-1">
                           <i class="fa fa-pencil-alt text-110 text-blue-d2 mr-1"></i>
                         </button>
-                        <button id="deleteBtn-${item.roleCode }" class="btn btn-outline-light btn-h-light-danger btn-a-light-danger border-b-2 text-600 px-3 mb-1">
+                        <button id="deleteBtn-${item.employeeId }" class="btn btn-outline-light btn-h-light-danger btn-a-light-danger border-b-2 text-600 px-3 mb-1">
                           <i class="fa fa-trash-alt text-110 text-danger-d2 mr-1"></i>
                         </button>
                       </span>

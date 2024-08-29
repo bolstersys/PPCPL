@@ -24,21 +24,6 @@ public class EmployeeServlet extends HttpServlet {
 	private final EmployeeService employeeService = new EmployeeServiceImpl();
 	private static final Logger logger = Logger.getLogger(EmployeeServlet.class.getName());
 
-	@Override
-	public void init() {
-		// Create a FileHandler
-		FileHandler fileHandler;
-		try {
-			fileHandler = new FileHandler("D:/STS extract/STS-4.24/workspace/logs/mylog.log", true);
-
-			fileHandler.setFormatter(new SimpleFormatter());
-			logger.addHandler(fileHandler);
-			logger.setLevel(Level.ALL);
-		} catch (SecurityException | IOException e) {
-			logger.severe("Error  in EmployeeServlet --> logger " + e.getMessage());
-		}
-	}
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
