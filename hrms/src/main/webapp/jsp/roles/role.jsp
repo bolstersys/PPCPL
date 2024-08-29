@@ -80,10 +80,10 @@
 
                     <td class="align-middle">
                       <span class="d-none d-lg-inline">
-                        <button class="btn btn-outline-light btn-h-light-blue btn-a-light-blue border-b-2 text-600 px-3 mb-1">
+                        <button id="editBtn-${item.roleCode }" class="btn btn-outline-light btn-h-light-blue btn-a-light-blue border-b-2 text-600 px-3 mb-1">
                           <i class="fa fa-pencil-alt text-110 text-blue-d2 mr-1"></i>
                         </button>
-                        <button class="btn btn-outline-light btn-h-light-danger btn-a-light-danger border-b-2 text-600 px-3 mb-1">
+                        <button id="deleteBtn-${item.roleCode }" class="btn btn-outline-light btn-h-light-danger btn-a-light-danger border-b-2 text-600 px-3 mb-1">
                           <i class="fa fa-trash-alt text-110 text-danger-d2 mr-1"></i>
                         </button>
                       </span>
@@ -398,7 +398,34 @@
             },
           });
         });
+        
+        $('[id^=editBtn-]').click(function() {
+        var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
+        editRecord(id);
+    });
 
+    // Delete button click handler
+    $('[id^=deleteBtn-]').click(function() {
+        var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
+        deleteRecord(id);
+    });
+
+    // Edit function - Redirect to the edit page
+    function editRecord(id) {
+        // Redirect to edit page with the record ID
+        window.location.href = '/editRecord?id=' + id;
+    }
+
+    // Delete function - Confirm and redirect
+    function deleteRecord(id) {
+        // Confirm with the user
+        var confirmation = confirm('Are you sure you want to delete this record?');
+
+        // If confirmed, redirect to delete action
+        if (confirmation) {
+            window.location.href = '/deleteRecord?id=' + id;
+        }
+    }
       })
     </script>
 
