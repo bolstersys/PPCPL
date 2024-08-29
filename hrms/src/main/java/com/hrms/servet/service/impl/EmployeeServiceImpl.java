@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 //			e.printStackTrace();
-			logger.severe("Error  in RoleServiceImpl --> getAllRoles "+e.getMessage());
+			logger.severe("Error  in RoleServiceImpl --> getAllEmployee "+e.getMessage());
 		}
 		
 	}

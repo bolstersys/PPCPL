@@ -111,7 +111,7 @@
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.roleId }
+                      ${item.role.roleCode }
                     </td>
 
                     <td class="text-105 align-middle">
