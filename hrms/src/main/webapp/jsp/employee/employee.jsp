@@ -32,16 +32,44 @@
                     No.
                   </th>
 
+                  <th class="border-0 bgc-white pl-3 pl-md-4 shadow-sm">
+                    Id
+                  </th>
+
+                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
+                    First Name 
+                  </th>
+
+                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
+                    Middle Name
+                  </th>
+
+                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
+                    Last Name
+                  </th>
+
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
                     Role Id
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    Role Name
+                    Age
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    Role Level
+                    Date Of Birth
+                  </th>
+
+                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
+                    Branch
+                  </th>
+
+                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
+                    Reporting Person Id
+                  </th>
+
+                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
+                    Ip Address
                   </th>
 
                   <th class="border-0 bgc-white shadow-sm w-8">
@@ -67,15 +95,43 @@
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.roleCode }
+                      ${item.employeeId }
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.roleName }
+                      ${item.employeeFirstName }
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.roleLevel }
+                      ${item.employeeMiddleName }
+                    </td>
+
+                    <td class="text-105 align-middle">
+                      ${item.employeeLastName }
+                    </td>
+
+                    <td class="text-105 align-middle">
+                      ${item.roleId }
+                    </td>
+
+                    <td class="text-105 align-middle">
+                      ${item.employeeAge }
+                    </td>
+
+                    <td class="text-105 align-middle">
+                      ${item.employeeDob }
+                    </td>
+
+                    <td class="text-105 align-middle">
+                      ${item.employeeBranch }
+                    </td>
+
+                    <td class="text-105 align-middle">
+                      ${item.reportingPersonEmployeeId }
+                    </td>
+
+                    <td class="text-105 align-middle">
+                      ${item.employeeIpAddress }
                     </td>
 
                     <td class="align-middle">
@@ -107,7 +163,7 @@
               <div class="card h-100">
                 <div class="card-header">
                   <span class="card-title text-125">
-                    Employee Form
+                    Role Form
                   </span>
                 </div>
 
@@ -121,12 +177,12 @@
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="employeeFirstName" class="mb-0">
+                      <label for="firstname" class="mb-0">
                         First Name
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="employeeFirstName" value="${selected.employeeFirstName}"/>
+                      <input type="text" class="form-control" id="firstname" value="${selected.employeeFirstName}"/>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -173,7 +229,8 @@
                     <div class="col-sm-9">
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="role">
+                        id="idReportingRole">
+                        <option value="">&nbsp;</option>
                         <c:if test="${not empty roleList}">
                             <c:forEach items="${roleList}" var="item" varStatus="loop">
                                 <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
@@ -192,15 +249,10 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="department">
-                        <option value="">&nbsp</option>
-                        <option value="it">IT</option>
-                        <option value="servicing">Servicing</option>
-                        <option value="management">Management</option>
-                        <%-- <c:if test="${not empty cityList}">
-                            <c:forEach items="${cityList}" var="item" varStatus="loop">
-                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
-                            </c:forEach>
-                        </c:if> --%>
+                        <option value=""></option>
+                        <option value="1">IT</option>
+                        <option value="2">Management</option>
+                        <option value="3">Printing</option>
                       </select>
                     </div>
                   </div>
@@ -214,15 +266,10 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="homebranch">
-                        <option value="">&nbsp</option>
-                        <option value="mumbai">Mumbai</option>
-                        <option value="delhi">Delhi</option>
-                        <option value="surat">Surat</option>
-                        <%-- <c:if test="${not empty cityList}">
-                            <c:forEach items="${cityList}" var="item" varStatus="loop">
-                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
-                            </c:forEach>
-                        </c:if> --%>
+                        <option value=""></option>
+                        <option value="1">Mumbai</option>
+                        <option value="2">Ahemdabad</option>
+                        <option value="3">Delhi</option>
                       </select>
                     </div>
                   </div>
@@ -236,6 +283,7 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="reportingperson">
+                        <option value="">&nbsp;</option>
                         <c:if test="${not empty employeeList}">
                             <c:forEach items="${employeeList}" var="item" varStatus="loop">
                                 <option value='${item.employeeId}' <c:if test="${item.employeeId == selected.reportingPerson}">selected</c:if>>${item.employeeFirstName} ${item.employeeLastName}</option>
@@ -266,11 +314,10 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="country">
-                        <c:if test="${not empty cityList}">
-                            <c:forEach items="${cityList}" var="item" varStatus="loop">
-                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
-                            </c:forEach>
-                        </c:if>
+                        <option value=""></option>
+                        <option value="1">IT</option>
+                        <option value="2">Management</option>
+                        <option value="3">Printing</option>
                       </select>
                     </div>
                   </div>
@@ -284,11 +331,10 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="state">
-                        <c:if test="${not empty cityList}">
-                            <c:forEach items="${cityList}" var="item" varStatus="loop">
-                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
-                            </c:forEach>
-                        </c:if>
+                        <option value=""></option>
+                        <option value="1">IT</option>
+                        <option value="2">Management</option>
+                        <option value="3">Printing</option>
                       </select>
                     </div>
                   </div>
@@ -302,70 +348,25 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="city">
-                        <c:if test="${not empty cityList}">
-                            <c:forEach items="${cityList}" var="item" varStatus="loop">
-                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
-                            </c:forEach>
-                        </c:if>
+                        <option value=""></option>
+                        <option value="1">IT</option>
+                        <option value="2">Management</option>
+                        <option value="3">Printing</option>
                       </select>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="pinCode" class="mb-0">
+                      <label for="pincode" class="mb-0">
                         Pincode
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=7 id="pinCode" value="${selected.pinCode}"/>
+                      <input type="number" class="form-control" min=0 max=7 id="pincode" value="${selected.pincode}"/>
                     </div>
                   </div>
 
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="employeeIpAddress" class="mb-0">
-                        MAC Address
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="employeeIpAddress" value="${selected.employeeIpAddress}"/>
-                    </div>
-                  </div>
-
-                  
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="bankName" class="mb-0">
-                        Bank Name
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bankName" value="${selected.bankName}"/>
-                    </div>
-                  </div>
-                  
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="bankAccNo" class="mb-0">
-                        Bank Account No.
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bankAccNo" value="${selected.bankAccNo}"/>
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="ifscNo" class="mb-0">
-                        IFSC code
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="ifscNo" value="${selected.ifscNo}"/>
-                    </div>
-                  </div>
                     
 
                   
@@ -567,60 +568,47 @@
         });
 
         $('#submitBtn').on('click', () => {
-            let url = "hrms/employee?action=insertEmployee";
-            <c:if test="${action == 'updateEmployee'}">
-                url = "hrms/employee?action=updateEmployee";
-            </c:if>
-            
-            let employeeData = {
-                "employeeId": $('#idRoleCode').val(),
-                "employeeFirstName": $('#employeeFirstName').val(),
-                "employeeMiddleName": $('#middlename').val(),
-                "employeeLastName": $('#lastname').val(),
-                "age": $('#age').val(),
-                "role": $('#role').val(),
-                "department": $('#department').val(),
-                "employeeBranch": $('#homebranch').val(),
-                "reportingPersonEmployeeId": $('#reportingperson').val(),
-                "addressLine1": $('#address').val(),
-                "country": $('#country').val(),
-                "state": $('#state').val(),
-                "city": $('#city').val(),
-                "pinCode": $('#pinCode').val(),
-                "employeeIpAddress": $('#employeeIpAddress').val(),
-                "bankName": $('#bankName').val(),
-                "bankAccNo": $('#bankAccNo').val(),
-                "ifscNo": $('#ifscNo').val()
-            };
+          var url = "hrms/role?action=insertEmployee";
+          <c:if test="${action == 'updateEmployee'}">
+            url = "hrms/role?action=updateEmployee";
+          </c:if>
+          let roleCode = $('#idRoleCode').val();
+          let roleName = $('#idRoleName').val();
+          let roleLevel = $('#idRoleLevel').val();
+          let roleReportingTo = $('#idReportingRole').val();
+          var data = {
+            "roleCode":roleCode,
+            "roleName":roleName,
+            "roleLevel":roleLevel,
+            "roleReportingTo":roleReportingTo
+          }
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            cache: false,
+            success: function(data){
+              var jsonData = JSON.parse(data);
+              if(jsonData["isSuccess"]){
+                $.aceToaster.add({
+                  placement: 'tr',
+                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
+                  width: 360,
+                  delay: 4000,
+                  close: true,
+                  className: 'bgc-green-d2 shadow ',
+                  bodyClass: 'border-0 p-0 text-dark-tp2',
+                  headerClass: 'd-none',
+                  progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+                })
+                console.log("success")
+              }
+            },
+            error:function(data){
 
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: employeeData,
-                cache: false,
-                success: function(data){
-                    var jsonData = JSON.parse(data);
-                    if(jsonData["isSuccess"]){
-                        $.aceToaster.add({
-                            placement: 'tr',
-                            body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
-                            width: 360,
-                            delay: 4000,
-                            close: true, 
-                            className: 'bgc-green-d2 shadow ',
-                            bodyClass: 'border-0 p-0 text-dark-tp2',
-                            headerClass: 'd-none',
-                            progress: 'position-bl bgc-black-tp6 py-2px m-1px'
-                        });
-                        console.log("success");
-                    }
-                },
-                error: function(data){
-                    console.error("An error occurred while processing the request.");
-                }
-            });
+            },
+          });
         });
-
 
         $('[id^=editBtn-]').click(function() {
         var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
