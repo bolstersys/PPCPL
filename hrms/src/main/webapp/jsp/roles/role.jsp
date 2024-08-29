@@ -127,7 +127,72 @@
 
 
 <c:if test="${action == 'insertRole' || action == 'updateRole'}">
+  <div class="page-content container container-plus">
+    <form autocomplete="off" class="mt-475">
+      <div class="form-group row">
+        <div class="col-lg-6">
+          <div class="card h-100">
+            <div class="card-header">
+              <span class="card-title text-125">
+                Role Form
+            </span>
+            </div>
 
+            <div class="card-body">
+                <div class="form-group row">
+                  <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                    <label for="idRoleName" class="mb-0">
+                      Role Name
+                    </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="idRoleName" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                    <label for="idRoleLevel" class="mb-0">
+                          Role Level
+                    </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control" min=0 max=999 id="idRoleLevel" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                    <label for="idReportingRole" class="mb-0">
+                      Reporting Role
+                    </label>
+                  </div>
+                  <div class="col-sm-9">
+                      <select class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1" id="idReportingRole">
+                        <option value="">&nbsp;</option>
+                        <c:if test="${not empty roleList}">
+                            <c:forEach items="${roleList}" var="item" varStatus="loop">
+                                <option value='${item.roleCode}'>${item.roleName}</option>
+                            </c:forEach>
+                        </c:if>
+                      </select>
+                  </div>
+                </div>
+                <div class="form-group text-center">
+                    <button class="btn btn-info btn-bold px-4 text-sm-right" id="submitBtn" type="button">
+                        <i class="fa fa-check mr-1"></i>Submit
+                    </button>
+                    <button class="btn btn-outline-lightgrey btn-bgc-white btn-bold ml-2 px-4" type="reset">
+                        <i class="fa fa-undo mr-1"></i>Reset
+                    </button>
+                </div>
+
+              </div>
+          </div><!-- /.card -->
+        </div><!-- /.col -->
+      </div>
+    </form>
+  </div>
 
 </c:if>
 
@@ -306,6 +371,10 @@ jQuery(function($) {
 
     $('#addBtn').on('click',()=>{
         window.location.href="/hrms/role?action=insertRole"
+    });
+
+    $('#submitBtn').on('click',()=>{
+
     });
 
 })
