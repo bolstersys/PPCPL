@@ -26,6 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class EmployeeServiceImpl implements EmployeeService {
 
 	private final EmployeeDao employeeDao = new EmployeeDaoImpl();
+	private RoleDao roleDao = new RoleDaoImpl();
 	private static final Logger logger = Logger.getLogger(RoleServiceImpl.class.getName());
 
 	static {
@@ -90,6 +91,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 				Map selectedRoleMap = gson.fromJson(gson.toJson(selectedRoleList.get(0)), Map.class);
 				request.setAttribute("selectedEmployee", selectedRoleMap);
 			}
+			List<Role> roleList = roleDao.getAllRoles();
+			request.setAttribute("roleList", roleList);
 			request.setAttribute("action", action);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/employee/employee.jsp");
 			dispatcher.forward(request, response);

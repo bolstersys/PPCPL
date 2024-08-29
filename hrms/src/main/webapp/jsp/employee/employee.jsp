@@ -115,36 +115,59 @@
 
                   <div class="form-group row">
                     <div class="col-sm-9">
-                      <input type="hidden" class="form-control" id="idRoleCode" value="${selectedRole.roleCode}"/>
+                      <input type="hidden" class="form-control" id="idRoleCode" value="${selected.employeeId}"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="idRoleName" class="mb-0">
-                        Role Name
+                      <label for="firstname" class="mb-0">
+                        First Name
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="idRoleName" value="${selectedRole.roleName}"/>
+                      <input type="text" class="form-control" id="firstname" value="${selected.employeeFirstName}"/>
                     </div>
                   </div>
-
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="idRoleLevel" class="mb-0">
-                        Role Level
+                      <label for="middlename" class="mb-0">
+                        Middle Name
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=999 id="idRoleLevel" value="${selectedRole.roleLevel}"/>
+                      <input type="text" class="form-control" id="middlename" value="${selected.employeeMiddleName}"/>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="lastname" class="mb-0">
+                        Last Name
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="lastname" value="${selected.employeeLastName}"/>
                     </div>
                   </div>
 
+
+                  
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="idReportingRole" class="mb-0">
-                        Reporting Role
+                      <label for="age" class="mb-0">
+                        Age
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" min=0 max=999 id="age" value="${selected.age}"/>
+                    </div>
+                  </div>
+                  
+                  
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="role" class="mb-0">
+                        Role
                       </label>
                     </div>
                     <div class="col-sm-9">
@@ -154,12 +177,144 @@
                         <option value="">&nbsp;</option>
                         <c:if test="${not empty roleList}">
                             <c:forEach items="${roleList}" var="item" varStatus="loop">
-                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selectedRole.roleReportingTo}">selected</c:if>>${item.roleName}</option>
+                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
                             </c:forEach>
                         </c:if>
                       </select>
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="department" class="mb-0">
+                        Department
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                        id="department">
+                        <option value=""></option>
+                        <option value="1">IT</option>
+                        <option value="2">Management</option>
+                        <option value="3">Printing</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="homebranch" class="mb-0">
+                        Home Brnach
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                        id="homebranch">
+                        <option value=""></option>
+                        <option value="1">Mumbai</option>
+                        <option value="2">Ahemdabad</option>
+                        <option value="3">Delhi</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="reportingperson" class="mb-0">
+                        Reporting Person
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                        id="reportingperson">
+                        <option value="">&nbsp;</option>
+                        <c:if test="${not empty employeeList}">
+                            <c:forEach items="${employeeList}" var="item" varStatus="loop">
+                                <option value='${item.employeeId}' <c:if test="${item.employeeId == selected.reportingPerson}">selected</c:if>>${item.employeeFirstName} ${item.employeeLastName}</option>
+                            </c:forEach>
+                        </c:if>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="address" class="mb-0">
+                        Address
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <textarea class="form-control" id="address" maxlength="50"></textarea>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="country" class="mb-0">
+                        Country
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                        id="country">
+                        <option value=""></option>
+                        <option value="1">IT</option>
+                        <option value="2">Management</option>
+                        <option value="3">Printing</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="state" class="mb-0">
+                        State
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                        id="state">
+                        <option value=""></option>
+                        <option value="1">IT</option>
+                        <option value="2">Management</option>
+                        <option value="3">Printing</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="city" class="mb-0">
+                        City
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                        id="city">
+                        <option value=""></option>
+                        <option value="1">IT</option>
+                        <option value="2">Management</option>
+                        <option value="3">Printing</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="pincode" class="mb-0">
+                        Pincode
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" min=0 max=7 id="pincode" value="${selected.pincode}"/>
+                    </div>
+                  </div>
+
+                    
+
+                  
+
                   <div class="form-group text-center">
                     <button class="btn btn-info btn-bold px-4 text-sm-right" id="submitBtn" type="button">
                       <i class="fa fa-check mr-1"></i>Submit
