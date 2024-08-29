@@ -62,7 +62,21 @@ public class RoleServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action =  request.getParameter("action");
+		switch (action) {
+			case "insertRole":
+				roleService.insertRole(request, response);
+				break;
+			case "updateRole":
+				roleService.updateRole(request, response);
+				break;
+			case "delete":
+				roleService.deleteRole(request, response);
+				break;
+			default:
+				doGet(request, response);
+				break;
+		}
 	}
 
 }

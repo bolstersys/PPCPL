@@ -51,6 +51,8 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void loadRoleForm(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			List<Role> roleList = roleDao.getAllRoles();
+			request.setAttribute("roleList", roleList);
 			request.setAttribute("action", "insertRole");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/roles/role.jsp");
 			dispatcher.forward(request, response);
@@ -76,9 +78,9 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void insertRole(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String roleName = request.getParameter("");
-			String roleLevel = request.getParameter("");
-			String roleReportingTo = request.getParameter("");
+			String roleName = request.getParameter("roleName");
+			String roleLevel = request.getParameter("roleLevel");
+			String roleReportingTo = request.getParameter("roleReportingTo");
 			Role role = new Role();
 			role.setRoleName(roleName);
 			role.setRoleLevel(roleLevel);
