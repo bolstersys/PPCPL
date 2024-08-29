@@ -8,7 +8,7 @@ import com.hrms.servet.model.Employee;
 public interface EmployeeDao {
 	public List<Employee> getAllEmployee() throws SQLException, ClassNotFoundException;
 
-	public List<Employee> getEmployeeById(String employeeId) throws SQLException, ClassNotFoundException;
+	public Employee getEmployeeById(String employeeId) throws SQLException, ClassNotFoundException;
 
 	public boolean insertEmployee(Employee employee) throws SQLException, ClassNotFoundException;
 

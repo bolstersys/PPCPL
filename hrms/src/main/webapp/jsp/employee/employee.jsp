@@ -121,12 +121,12 @@
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="firstname" class="mb-0">
+                      <label for="employeeFirstName" class="mb-0">
                         First Name
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="firstname" value="${selected.employeeFirstName}"/>
+                      <input type="text" class="form-control" id="employeeFirstName" value="${selected.employeeFirstName}"/>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -174,8 +174,8 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="role">
-                        <c:if test="${not empty cityList}">
-                            <c:forEach items="${cityList}" var="item" varStatus="loop">
+                        <c:if test="${not empty roleList}">
+                            <c:forEach items="${roleList}" var="item" varStatus="loop">
                                 <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
                             </c:forEach>
                         </c:if>
@@ -192,11 +192,15 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="department">
-                        <c:if test="${not empty cityList}">
+                        <option value="">&nbsp</option>
+                        <option value="it">IT</option>
+                        <option value="servicing">Servicing</option>
+                        <option value="management">Management</option>
+                        <%-- <c:if test="${not empty cityList}">
                             <c:forEach items="${cityList}" var="item" varStatus="loop">
                                 <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
                             </c:forEach>
-                        </c:if>
+                        </c:if> --%>
                       </select>
                     </div>
                   </div>
@@ -210,11 +214,15 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="homebranch">
-                        <c:if test="${not empty cityList}">
+                        <option value="">&nbsp</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="surat">Surat</option>
+                        <%-- <c:if test="${not empty cityList}">
                             <c:forEach items="${cityList}" var="item" varStatus="loop">
                                 <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
                             </c:forEach>
-                        </c:if>
+                        </c:if> --%>
                       </select>
                     </div>
                   </div>
@@ -559,47 +567,60 @@
         });
 
         $('#submitBtn').on('click', () => {
-          var url = "hrms/role?action=insertEmployee";
-          <c:if test="${action == 'updateEmployee'}">
-            url = "hrms/role?action=updateEmployee";
-          </c:if>
-          let roleCode = $('#idRoleCode').val();
-          let roleName = $('#idRoleName').val();
-          let roleLevel = $('#idRoleLevel').val();
-          let roleReportingTo = $('#idReportingRole').val();
-          var data = {
-            "roleCode":roleCode,
-            "roleName":roleName,
-            "roleLevel":roleLevel,
-            "roleReportingTo":roleReportingTo
-          }
-          $.ajax({
-            type: "POST",
-            url: url,
-            data: data,
-            cache: false,
-            success: function(data){
-              var jsonData = JSON.parse(data);
-              if(jsonData["isSuccess"]){
-                $.aceToaster.add({
-                  placement: 'tr',
-                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
-                  width: 360,
-                  delay: 4000,
-                  close: true,
-                  className: 'bgc-green-d2 shadow ',
-                  bodyClass: 'border-0 p-0 text-dark-tp2',
-                  headerClass: 'd-none',
-                  progress: 'position-bl bgc-black-tp6 py-2px m-1px'
-                })
-                console.log("success")
-              }
-            },
-            error:function(data){
+            let url = "hrms/employee?action=insertEmployee";
+            <c:if test="${action == 'updateEmployee'}">
+                url = "hrms/employee?action=updateEmployee";
+            </c:if>
+            
+            let employeeData = {
+                "employeeId": $('#idRoleCode').val(),
+                "employeeFirstName": $('#employeeFirstName').val(),
+                "employeeMiddleName": $('#middlename').val(),
+                "employeeLastName": $('#lastname').val(),
+                "age": $('#age').val(),
+                "role": $('#role').val(),
+                "department": $('#department').val(),
+                "employeeBranch": $('#homebranch').val(),
+                "reportingPersonEmployeeId": $('#reportingperson').val(),
+                "addressLine1": $('#address').val(),
+                "country": $('#country').val(),
+                "state": $('#state').val(),
+                "city": $('#city').val(),
+                "pinCode": $('#pinCode').val(),
+                "employeeIpAddress": $('#employeeIpAddress').val(),
+                "bankName": $('#bankName').val(),
+                "bankAccNo": $('#bankAccNo').val(),
+                "ifscNo": $('#ifscNo').val()
+            };
 
-            },
-          });
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: employeeData,
+                cache: false,
+                success: function(data){
+                    var jsonData = JSON.parse(data);
+                    if(jsonData["isSuccess"]){
+                        $.aceToaster.add({
+                            placement: 'tr',
+                            body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
+                            width: 360,
+                            delay: 4000,
+                            close: true, 
+                            className: 'bgc-green-d2 shadow ',
+                            bodyClass: 'border-0 p-0 text-dark-tp2',
+                            headerClass: 'd-none',
+                            progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+                        });
+                        console.log("success");
+                    }
+                },
+                error: function(data){
+                    console.error("An error occurred while processing the request.");
+                }
+            });
         });
+
 
         $('[id^=editBtn-]').click(function() {
         var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID

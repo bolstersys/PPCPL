@@ -14,6 +14,8 @@ import com.hrms.servet.dao.EmployeeDao;
 import com.hrms.servet.dao.RoleDao;
 import com.hrms.servet.dao.impl.EmployeeDaoImpl;
 import com.hrms.servet.dao.impl.RoleDaoImpl;
+import com.hrms.servet.model.Address;
+import com.hrms.servet.model.BankDetail;
 import com.hrms.servet.model.Employee;
 import com.hrms.servet.model.Role;
 import com.hrms.servet.service.EmployeeService;
@@ -59,25 +61,107 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void getEmployeeById(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void insertEmployee(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
+		Employee employee = new Employee();
+		employee.setEmployeeId(request.getParameter("employeeId"));  // Employee ID created by user
+		employee.setEmployeeFirstName(request.getParameter("employeeFirstName"));
+		employee.setEmployeeMiddleName(request.getParameter("employeeMiddleName"));
+		employee.setEmployeeLastName(request.getParameter("employeeLastName"));
+		employee.setEmployeeAge(request.getParameter("employeeAge"));
+		employee.setEmployeeDob(request.getParameter("employeeDob"));
+		employee.setEmployeeBranch(request.getParameter("employeeBranch"));
+		employee.setEmployeeIpAddress(request.getParameter("employeeIpAddress"));
+		employee.setReportingPersonEmployeeId(request.getParameter("reportingPersonEmployeeId"));
+
+		// Set Role
+		Role role = new Role();
+		role.setRoleCode(request.getParameter("roleCode"));
+		employee.setRole(role);
+
+		// Set Address
+		Address address = new Address();
+		address.setAddressLine1(request.getParameter("addressLine1"));
+		address.setAddressLine2(request.getParameter("addressLine2"));
+		address.setCity(request.getParameter("city"));
+		address.setState(request.getParameter("state"));
+		address.setCountry(request.getParameter("country"));
+		address.setPinCode(request.getParameter("pinCode"));
+		employee.setAddress(address);
+
+		// Set Bank Details
+		BankDetail bankDetail = new BankDetail();
+		bankDetail.setBankName(request.getParameter("bankName"));
+		bankDetail.setBankAccNo(request.getParameter("bankAccNo"));
+		bankDetail.setIfscNo(request.getParameter("ifscNo"));
+		bankDetail.setUpiId(request.getParameter("upiId"));
+		employee.setBankDetail(bankDetail);
+
+		try {
+			employeeDao.insertEmployee(employee);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void updateEmployee(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
+		Employee employee = new Employee();
+		employee.setEmployeeId(request.getParameter("employeeId"));  // Employee ID created by user
+		employee.setEmployeeFirstName(request.getParameter("employeeFirstName"));
+		employee.setEmployeeMiddleName(request.getParameter("employeeMiddleName"));
+		employee.setEmployeeLastName(request.getParameter("employeeLastName"));
+		employee.setEmployeeAge(request.getParameter("employeeAge"));
+		employee.setEmployeeDob(request.getParameter("employeeDob"));
+		employee.setEmployeeBranch(request.getParameter("employeeBranch"));
+		employee.setEmployeeIpAddress(request.getParameter("employeeIpAddress"));
+		employee.setReportingPersonEmployeeId(request.getParameter("reportingPersonEmployeeId"));
+
+		// Set Role
+		Role role = new Role();
+		role.setRoleCode(request.getParameter("roleCode"));
+		employee.setRole(role);
+
+		// Set Address
+		Address address = new Address();
+		address.setAddressLine1(request.getParameter("addressLine1"));
+		address.setAddressLine2(request.getParameter("addressLine2"));
+		address.setCity(request.getParameter("city"));
+		address.setState(request.getParameter("state"));
+		address.setCountry(request.getParameter("country"));
+		address.setPinCode(request.getParameter("pinCode"));
+		employee.setAddress(address);
+
+		// Set Bank Details
+		BankDetail bankDetail = new BankDetail();
+		bankDetail.setBankName(request.getParameter("bankName"));
+		bankDetail.setBankAccNo(request.getParameter("bankAccNo"));
+		bankDetail.setIfscNo(request.getParameter("ifscNo"));
+		bankDetail.setUpiId(request.getParameter("upiId"));
+		employee.setBankDetail(bankDetail);
+
+		try {
+			employeeDao.updateEmployee(employee);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			logger.severe("Error  in RoleServiceImpl --> updateEmployee "+e.getMessage());
+		}
 	}
 
 	@Override
 	public void deleteEmployee(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
+		String employeeId = request.getParameter("employeeId");
+
+		try {
+			employeeDao.deleteEmployee(employeeId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.severe("Error  in RoleServiceImpl --> deleteEmployee "+e.getMessage());
+		}
 	}
 
 	@Override
@@ -86,12 +170,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 			String action = request.getParameter("action");
 			if(action.equals("updateEmployee")){
 				String employeeId = request.getParameter("employeeId");
-				List<Employee> selectedRoleList = employeeDao.getEmployeeById(employeeId);
+				Employee employee = employeeDao.getEmployeeById(employeeId);
 				Gson gson = new Gson();
-				Map selectedRoleMap = gson.fromJson(gson.toJson(selectedRoleList.get(0)), Map.class);
+				Map selectedRoleMap = gson.fromJson(gson.toJson(employee), Map.class);
 				request.setAttribute("selectedEmployee", selectedRoleMap);
 			}
+			List<Employee> employeeList = employeeDao.getAllEmployee();
 			List<Role> roleList = roleDao.getAllRoles();
+			request.setAttribute("employeeList", employeeList);
 			request.setAttribute("roleList", roleList);
 			request.setAttribute("action", action);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/employee/employee.jsp");
@@ -101,6 +187,4 @@ public class EmployeeServiceImpl implements EmployeeService {
 			logger.severe("Error  in RoleServiceImpl --> loadRoleForm "+e.getMessage());
 		}
 	}
-
-
 }
