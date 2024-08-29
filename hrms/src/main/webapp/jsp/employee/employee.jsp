@@ -353,7 +353,7 @@
         }, 0)
 
         $('#addBtn').on('click', () => {
-          window.location.href = "/hrms/role?action=insertEmployee"
+          window.location.href = "/hrms/employee?action=insertEmployee"
         });
 
         $('#submitBtn').on('click', () => {

@@ -3,11 +3,13 @@ package com.hrms.servet.service.impl;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import com.google.gson.Gson;
 import com.hrms.servet.dao.EmployeeDao;
 import com.hrms.servet.dao.RoleDao;
 import com.hrms.servet.dao.impl.EmployeeDaoImpl;
@@ -79,7 +81,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void loadEmployeeForm(HttpServletRequest request, HttpServletResponse response) {
-
+		try {
+			String action = request.getParameter("action");
+			if(action.equals("updateEmployee")){
+				String employeeId = request.getParameter("employeeId");
+				List<Employee> selectedRoleList = employeeDao.getEmployeeById(employeeId);
+				Gson gson = new Gson();
+				Map selectedRoleMap = gson.fromJson(gson.toJson(selectedRoleList.get(0)), Map.class);
+				request.setAttribute("selectedEmployee", selectedRoleMap);
+			}
+			request.setAttribute("action", action);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/employee/employee.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.severe("Error  in RoleServiceImpl --> loadRoleForm "+e.getMessage());
+		}
 	}
 
 
