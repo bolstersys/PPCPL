@@ -22,7 +22,7 @@ import com.hrms.servet.service.impl.EmployeeServiceImpl;
 public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final EmployeeService employeeService = new EmployeeServiceImpl();
-	private static final Logger logger = Logger.getLogger(RoleServlet.class.getName());
+	private static final Logger logger = Logger.getLogger(EmployeeServlet.class.getName());
 
 	@Override
 	public void init() {
@@ -47,44 +47,36 @@ public class EmployeeServlet extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action =  request.getParameter("action");
 		switch (action) {
-		case "insertEmployee":
-			employeeService.insertEmployee(request, response);
-			break;
-
-		case "deleteEmployee":
-			employeeService.deleteEmployee(request, response);
-			break;
-
-		case "getEmpoyeeById":
-			employeeService.getEmployeeById(request, response);
-			break;
-			
-		case "updateEmployee":
-			employeeService.updateEmployee(request, response);
-			break;
-
-		default:
-			employeeService.getAllEmployee(request, response);
-			break;
+			case "insertEmployee", "updateEmployee":
+				employeeService.loadEmployeeForm(request, response);
+				break;
+			case "deleteEmployee":
+				employeeService.deleteEmployee(request, response);
+				break;
+			default:
+				employeeService.getAllEmployee(request, response);
+				break;
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action =  request.getParameter("action");
+		switch (action) {
+			case "insertEmployee":
+				employeeService.insertEmployee(request, response);
+				break;
+			case "updateEmployee":
+				employeeService.updateEmployee(request, response);
+				break;
+			default:
+				doGet(request, response);
+				break;
+		}
 	}
-
 }

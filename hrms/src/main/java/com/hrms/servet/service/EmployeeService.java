@@ -18,4 +18,6 @@ public interface EmployeeService {
 	public void updateEmployee(HttpServletRequest request, HttpServletResponse response);
 
 	public void deleteEmployee(HttpServletRequest request, HttpServletResponse response);
+
+	public void loadEmployeeForm(HttpServletRequest request, HttpServletResponse response);
 }

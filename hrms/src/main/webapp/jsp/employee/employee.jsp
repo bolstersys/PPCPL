@@ -99,7 +99,7 @@
     </c:if>
 
 
-    <c:if test="${action == 'insertRole' || action == 'updateRole'}">
+    <c:if test="${action == 'insertEmployee' || action == 'updateEmployee'}">
       <div class="page-content container container-plus">
         <form autocomplete="off" class="mt-475">
           <div class="form-group row">
@@ -353,13 +353,13 @@
         }, 0)
 
         $('#addBtn').on('click', () => {
-          window.location.href = "/hrms/role?action=insertRole"
+          window.location.href = "/hrms/role?action=insertEmployee"
         });
 
         $('#submitBtn').on('click', () => {
-          var url = "hrms/role?action=insertRole";
-          <c:if test="${action == 'updateRole'}">
-            url = "hrms/role?action=updateRole";
+          var url = "hrms/role?action=insertEmployee";
+          <c:if test="${action == 'updateEmployee'}">
+            url = "hrms/role?action=updateEmployee";
           </c:if>
           let roleCode = $('#idRoleCode').val();
           let roleName = $('#idRoleName').val();
@@ -413,7 +413,7 @@
     // Edit function - Redirect to the edit page
     function editRecord(id) {
         // Redirect to edit page with the record ID
-        window.location.href = 'hrms/role?action=updateRole&roleId=' + id;
+        window.location.href = 'hrms/role?action=updateEmployee&employeeId=' + id;
     }
 
     // Delete function - Confirm and redirect
@@ -423,7 +423,7 @@
 
         // If confirmed, redirect to delete action
         if (confirmation) {
-            window.location.href = 'hrms/role?action=deleteRole&roleId=' + id;
+            window.location.href = 'hrms/role?action=deleteEmployee&employeeId=' + id;
         }
     }
       })
