@@ -3,7 +3,6 @@ package com.hrms.servet.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import com.mysql.cj.jdbc.Driver;
 
 public class Utility {
 	private static String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";

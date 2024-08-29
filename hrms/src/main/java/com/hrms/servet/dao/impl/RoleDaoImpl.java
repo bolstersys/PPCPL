@@ -32,17 +32,13 @@ public class RoleDaoImpl implements RoleDao {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			// Process the ResultSet object
-			while (rs.next()) {
-				String roleId = rs.getString("role_id");
-				String roleName = rs.getString("role_name");
-				String roleLevel = rs.getString("role_level");
-				String roleReportingTo = rs.getString("role_reporting_to");
+			while (rs.next()) {;
 
 				Role role = new Role();
-				role.setRoleCode(roleId);
-				role.setRoleName(roleName);
-				role.setRoleLevel(roleLevel);
-				role.setRoleReportingTo(roleReportingTo);
+				role.setRoleCode(rs.getString("role_id"));
+				role.setRoleName(rs.getString("role_name"));
+				role.setRoleLevel(rs.getString("role_level"));
+				role.setRoleReportingTo(rs.getString("role_reporting_to"));
 				roleList.add(role);
 			}
 
