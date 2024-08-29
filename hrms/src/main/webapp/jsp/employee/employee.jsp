@@ -173,10 +173,9 @@
                     <div class="col-sm-9">
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="idReportingRole">
-                        <option value="">&nbsp;</option>
-                        <c:if test="${not empty roleList}">
-                            <c:forEach items="${roleList}" var="item" varStatus="loop">
+                        id="role">
+                        <c:if test="${not empty cityList}">
+                            <c:forEach items="${cityList}" var="item" varStatus="loop">
                                 <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
                             </c:forEach>
                         </c:if>
@@ -193,10 +192,11 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="department">
-                        <option value=""></option>
-                        <option value="1">IT</option>
-                        <option value="2">Management</option>
-                        <option value="3">Printing</option>
+                        <c:if test="${not empty cityList}">
+                            <c:forEach items="${cityList}" var="item" varStatus="loop">
+                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
+                            </c:forEach>
+                        </c:if>
                       </select>
                     </div>
                   </div>
@@ -210,10 +210,11 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="homebranch">
-                        <option value=""></option>
-                        <option value="1">Mumbai</option>
-                        <option value="2">Ahemdabad</option>
-                        <option value="3">Delhi</option>
+                        <c:if test="${not empty cityList}">
+                            <c:forEach items="${cityList}" var="item" varStatus="loop">
+                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
+                            </c:forEach>
+                        </c:if>
                       </select>
                     </div>
                   </div>
@@ -227,7 +228,6 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="reportingperson">
-                        <option value="">&nbsp;</option>
                         <c:if test="${not empty employeeList}">
                             <c:forEach items="${employeeList}" var="item" varStatus="loop">
                                 <option value='${item.employeeId}' <c:if test="${item.employeeId == selected.reportingPerson}">selected</c:if>>${item.employeeFirstName} ${item.employeeLastName}</option>
@@ -258,10 +258,11 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="country">
-                        <option value=""></option>
-                        <option value="1">IT</option>
-                        <option value="2">Management</option>
-                        <option value="3">Printing</option>
+                        <c:if test="${not empty cityList}">
+                            <c:forEach items="${cityList}" var="item" varStatus="loop">
+                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
+                            </c:forEach>
+                        </c:if>
                       </select>
                     </div>
                   </div>
@@ -275,10 +276,11 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="state">
-                        <option value=""></option>
-                        <option value="1">IT</option>
-                        <option value="2">Management</option>
-                        <option value="3">Printing</option>
+                        <c:if test="${not empty cityList}">
+                            <c:forEach items="${cityList}" var="item" varStatus="loop">
+                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
+                            </c:forEach>
+                        </c:if>
                       </select>
                     </div>
                   </div>
@@ -292,25 +294,70 @@
                       <select
                         class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
                         id="city">
-                        <option value=""></option>
-                        <option value="1">IT</option>
-                        <option value="2">Management</option>
-                        <option value="3">Printing</option>
+                        <c:if test="${not empty cityList}">
+                            <c:forEach items="${cityList}" var="item" varStatus="loop">
+                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
+                            </c:forEach>
+                        </c:if>
                       </select>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="pincode" class="mb-0">
+                      <label for="pinCode" class="mb-0">
                         Pincode
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=7 id="pincode" value="${selected.pincode}"/>
+                      <input type="number" class="form-control" min=0 max=7 id="pinCode" value="${selected.pinCode}"/>
                     </div>
                   </div>
 
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="employeeIpAddress" class="mb-0">
+                        MAC Address
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="employeeIpAddress" value="${selected.employeeIpAddress}"/>
+                    </div>
+                  </div>
+
+                  
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="bankName" class="mb-0">
+                        Bank Name
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="bankName" value="${selected.bankName}"/>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="bankAccNo" class="mb-0">
+                        Bank Account No.
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="bankAccNo" value="${selected.bankAccNo}"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="ifscNo" class="mb-0">
+                        IFSC code
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="ifscNo" value="${selected.ifscNo}"/>
+                    </div>
+                  </div>
                     
 
                   
