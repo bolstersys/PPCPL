@@ -36,7 +36,8 @@ public class EmployeeServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String action =  request.getParameter("action");
 		switch (action) {
-			case "insertEmployee", "updateEmployee":
+			case "insertEmployee":
+			case "updateEmployee":
 				employeeService.loadEmployeeForm(request, response);
 				break;
 			case "deleteEmployee":

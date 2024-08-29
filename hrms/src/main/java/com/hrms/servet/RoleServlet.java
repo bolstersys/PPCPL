@@ -20,27 +20,13 @@ public class RoleServlet extends HttpServlet {
 	private RoleService roleService = new RoleServiceImpl();
 
     private static final Logger logger = Logger.getLogger(RoleServlet.class.getName());
-
-    @Override
-    public void init() {
-        // Create a FileHandler
-        FileHandler fileHandler;
-		try {
-			fileHandler = new FileHandler("D:/STS extract/STS-4.24/workspace/logs/mylog.log", true);
-		
-        fileHandler.setFormatter(new SimpleFormatter());
-        logger.addHandler(fileHandler);
-        logger.setLevel(Level.ALL);
-		} catch (SecurityException | IOException e) {
-			logger.severe("Error  in RoleServlet --> logger "+e.getMessage());
-		}
-    }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action =  request.getParameter("action");
 		switch (action) {
-		case "insertRole", "updateRole":
+		case "insertRole":
+		case "updateRole":
 			roleService.loadRoleForm(request, response);
 			break;
 		case "delete":
