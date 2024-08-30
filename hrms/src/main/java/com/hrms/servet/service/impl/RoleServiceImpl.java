@@ -31,7 +31,6 @@ public class RoleServiceImpl implements RoleService {
 			List<Role> roleList = roleDao.getAllRoles();
 			request.setAttribute("roleList", roleList);
 			request.setAttribute("action", "getAllRoleData");
-			logger.severe("Error  in RoleServiceImpl --> getAllRoles ");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/roles/role.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {

@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class Utility {
 	private static String DRIVER_CLASS_NAME = "oracle.jdbc.OracleDriver";
-	private static String JDBC_URL = "jdbc:oracle:thin:@apex.oracle.com:1521:ppcpl_erp_modules/WKSP_BOLSTERSYS";
-	private static String JDBC_USER_NAME = "bolstersys";
+	private static String JDBC_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	private static String JDBC_USER_NAME = "system";
 	private static String JDBC_PASSWORD = "123456";
 
 	public static Connection getConnection() {

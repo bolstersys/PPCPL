@@ -1,4 +1,7 @@
+create database emp_management_sys;
+
 use emp_management_sys;
+
 CREATE TABLE employees (
   employee_id INT AUTO_INCREMENT NOT NULL,
   employee_first_name VARCHAR(50) NOT NULL,
