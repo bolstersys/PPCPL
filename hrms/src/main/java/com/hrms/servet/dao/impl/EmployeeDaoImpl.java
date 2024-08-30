@@ -17,31 +17,22 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	private static final Logger logger = Logger.getLogger(EmployeeDaoImpl.class.getName());
 	private static final String GET_ALL_EMPLOYEE_QUERY = "SELECT * FROM employees";
-	private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT `employees`.`employee_id`,`employees`.`employee_first_name`, `employees`.`employee_middle_name`, `employees`.`employee_last_name`, `employees`.`role_id`, `employees`.`employee_age`, `employees`.`employee_dob`, `employees`.`employee_branch`, `employees`.`reporting_person_employee_id`, `employees`.`employee_ip_address` FROM `emp_management_sys`.`employees` WHERE `employees`.`employee_id` = ?";
+	private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT employees.employee_id, employees.employee_first_name, employees.employee_middle_name, employees.employee_last_name, employees.role_id, employees.employee_age, employees.employee_dob, employees.employee_branch, employees.reporting_person_employee_id, employees.employee_ip_address FROM emp_management_sys.employees WHERE employees.employee_id = ?";
 
-	private static final String GET_EMPLOYEE_DETAILS_BY_ID_QUERY =
-			"SELECT e.employee_id, e.employee_first_name, e.employee_middle_name, e.employee_last_name, " +
-					"e.employee_age, e.employee_dob, e.employee_branch, e.reporting_person_employee_id, e.employee_ip_address, " +
-					"r.role_id, r.role_name, r.role_level, r.role_reporting_to, " +
-					"a.address_id, a.address_line1, a.address_line2, a.city, a.state, a.country, a.pin_code, " +
-					"b.bank_detail_id, b.bank_name, b.bank_acc_no, b.ifsc_no, b.upi_id " +
-					"FROM employees e " +
-					"LEFT JOIN roles r ON e.role_id = r.role_id " +
-					"LEFT JOIN addresses a ON e.employee_id = a.employee_id " +
-					"LEFT JOIN bank_details b ON e.employee_id = b.employee_id " +
-					"WHERE e.employee_id = ?";
+	private static final String GET_EMPLOYEE_DETAILS_BY_ID_QUERY = "SELECT e.employee_id, e.employee_first_name, e.employee_middle_name, e.employee_last_name, e.employee_age, e.employee_dob, e.employee_branch, e.reporting_person_employee_id, e.employee_ip_address, r.role_id, r.role_name, r.role_level, r.role_reporting_to, a.address_id, a.address_line1, a.address_line2, a.city, a.state, a.country, a.pin_code, b.bank_detail_id, b.bank_name, b.bank_acc_no, b.ifsc_no, b.upi_id FROM employees e LEFT JOIN roles r ON e.role_id = r.role_id LEFT JOIN addresses a ON e.employee_id = a.employee_id LEFT JOIN bank_details b ON e.employee_id = b.employee_id WHERE e.employee_id = ?\n";
 
-	private static final String INSERT_EMPLOYEE_QUERY = "INSERT INTO `emp_management_sys`.`employees` (`employee_id`, `employee_first_name`, `employee_middle_name`, `employee_last_name`, `role_id`, `employee_age`, `employee_dob`, `employee_branch`, `reporting_person_employee_id`, `employee_ip_address`) VALUES (?,?,?,?,?,?,?,?,?,?)";
-	private static final String INSERT_ADDRESS_QUERY = "INSERT INTO `emp_management_sys`.`addresses` (`employee_id`, `address_line1`, `address_line2`, `city`, `state`, `country`, `pin_code`, `created_date`, `updated_date`) VALUES (?,?,?,?,?,?,?,?,?)";
-	private static final String INSERT_BANK_DTL_QUERY = "INSERT INTO `emp_management_sys`.`bank_details` (`employee_id`, `bank_name`, `bank_acc_no`, `ifsc_no`, `upi_id`) VALUES (?,?,?,?,?)";
+	private static final String INSERT_EMPLOYEE_QUERY = "INSERT INTO emp_management_sys.employees (employee_id, employee_first_name, employee_middle_name, employee_last_name, role_id, employee_age, employee_dob, employee_branch, reporting_person_employee_id, employee_ip_address) VALUES (?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_ADDRESS_QUERY = "INSERT INTO emp_management_sys.addresses (employee_id, address_line1, address_line2, city, state, country, pin_code, created_date, updated_date) VALUES (?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_BANK_DTL_QUERY = "INSERT INTO emp_management_sys.bank_details (employee_id, bank_name, bank_acc_no, ifsc_no, upi_id) VALUES (?,?,?,?,?)";
 
-	private static final String UPDATE_EMPLOYEES_QUERY = "UPDATE `emp_management_sys`.`employees` SET `employee_first_name` = ?, `employee_middle_name` = ?, `employee_last_name` = ?, `role_id` = ?, `employee_age` = ?, `employee_dob` = ?, `employee_branch` = ?, `reporting_person_employee_id` = ?, `employee_ip_address` = ? WHERE `employee_id` = ?";
-	private static final String UPDATE_ADDRESS_QUERY = "UPDATE `emp_management_sys`.`addresses` SET `address_line1` = ?, `address_line2` = ?, `city` = ?, `state` = ?, `country` = ?, `pin_code` = ?, `updated_date` = ? WHERE `employee_id` = ?";
-	private static final String UPDATE_BANK_DTL_QUERY = "UPDATE `emp_management_sys`.`bank_details` SET `bank_name` = ?, `bank_acc_no` = ?, `ifsc_no` = ?, `upi_id` = ? WHERE `employee_id` = ?";
+	private static final String UPDATE_EMPLOYEES_QUERY = "UPDATE emp_management_sys.employees SET employee_first_name = ?, employee_middle_name = ?, employee_last_name = ?, role_id = ?, employee_age = ?, employee_dob = ?, employee_branch = ?, reporting_person_employee_id = ?, employee_ip_address = ? WHERE employee_id = ?";
+	private static final String UPDATE_ADDRESS_QUERY = "UPDATE emp_management_sys.addresses SET address_line1 = ?, address_line2 = ?, city = ?, state = ?, country = ?, pin_code = ?, updated_date = ? WHERE employee_id = ?";
+	private static final String UPDATE_BANK_DTL_QUERY = "UPDATE emp_management_sys.bank_details SET bank_name = ?, bank_acc_no = ?, ifsc_no = ?, upi_id = ? WHERE employee_id = ?";
 
-	private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM `emp_management_sys`.`employees` WHERE `employee_id` = ?";
-	private static final String DELETE_ADDRESS_QUERY = "DELETE FROM `emp_management_sys`.`addresses` WHERE `employee_id` = ?";
-	private static final String DELETE_BANK_DTL_QUERY = "DELETE FROM `emp_management_sys`.`bank_details` WHERE `employee_id` = ?";
+	private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM emp_management_sys.employees WHERE employee_id = ?";
+	private static final String DELETE_ADDRESS_QUERY = "DELETE FROM emp_management_sys.addresses WHERE employee_id = ?";
+	private static final String DELETE_BANK_DTL_QUERY = "DELETE FROM emp_management_sys.bank_details WHERE employee_id = ?";
+
 
 
 	@Override
