@@ -16,7 +16,7 @@ import com.hrms.servet.util.Utility;
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	private static final Logger logger = Logger.getLogger(EmployeeDaoImpl.class.getName());
-	private static final String GET_ALL_EMPLOYEE_QUERY = "SELECT `employees`.`employee_id`,`employees`.`employee_first_name`, `employees`.`employee_middle_name`, `employees`.`employee_last_name`, `employees`.`role_id`, `employees`.`employee_age`, `employees`.`employee_dob`, `employees`.`employee_branch`, `employees`.`reporting_person_employee_id`, `employees`.`employee_ip_address` FROM `emp_management_sys`.`employees`";
+	private static final String GET_ALL_EMPLOYEE_QUERY = "SELECT * FROM employees";
 	private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT `employees`.`employee_id`,`employees`.`employee_first_name`, `employees`.`employee_middle_name`, `employees`.`employee_last_name`, `employees`.`role_id`, `employees`.`employee_age`, `employees`.`employee_dob`, `employees`.`employee_branch`, `employees`.`reporting_person_employee_id`, `employees`.`employee_ip_address` FROM `emp_management_sys`.`employees` WHERE `employees`.`employee_id` = ?";
 
 	private static final String GET_EMPLOYEE_DETAILS_BY_ID_QUERY =
