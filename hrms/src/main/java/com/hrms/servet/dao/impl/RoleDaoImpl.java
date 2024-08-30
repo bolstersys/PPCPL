@@ -13,11 +13,11 @@ import com.hrms.servet.util.Utility;
 
 public class RoleDaoImpl implements RoleDao {
 
-	private static String GET_ALL_ROLE_QUERY = "SELECT * FROM roles";
-	private static String GET_ROLE_BY_ID_QUERY = "SELECT `roles`.`role_id`, `roles`.`role_name`, `roles`.`role_level`,  `roles`.`role_reporting_to`,  `roles`.`created_date`, `roles`.`updated_date` FROM `emp_management_sys`.`roles` WHERE `roles`.`role_id` = ?";
-	private static String INSERT_ROLE_QUERY = "INSERT INTO `emp_management_sys`.`roles`( `role_name`, `role_level`, `role_reporting_to`) VALUES (?,?,?)";
-	private static String UPDATE_ROLE_QUERY = "UPDATE `emp_management_sys`.`roles` SET `role_name` = ?, `role_level` = ?, `role_reporting_to` = ? WHERE `role_id` = ?";
-	private static String DELETE_ROLE_QUERY = "DELETE FROM `emp_management_sys`.`roles` WHERE `role_id` = ?";
+	private static String GET_ALL_ROLE_QUERY = "SELECT * FROM role";
+	private static String GET_ROLE_BY_ID_QUERY = "SELECT role.role_id, role.role_name, role.role_level, role.reporting_role_id, role.created_date, role.updated_date FROM role WHERE role.role_id = ?";
+	private static String INSERT_ROLE_QUERY = "INSERT INTO role (role_name, role_level, reporting_role_id) VALUES (?, ?, ?)";
+	private static String UPDATE_ROLE_QUERY = "UPDATE role SET role_name = ?, role_level = ?, reporting_role_id = ? WHERE role_id = ?";
+	private static String DELETE_ROLE_QUERY = "DELETE FROM role WHERE role_id = ?";
 
 	@Override
 	public List<Role> getAllRoles() throws SQLException, ClassNotFoundException {
@@ -38,7 +38,7 @@ public class RoleDaoImpl implements RoleDao {
 				role.setRoleCode(rs.getString("role_id"));
 				role.setRoleName(rs.getString("role_name"));
 				role.setRoleLevel(rs.getString("role_level"));
-				role.setRoleReportingTo(rs.getString("role_reporting_to"));
+				role.setRoleReportingTo(rs.getString("reporting_role_id"));
 				roleList.add(role);
 			}
 
@@ -66,7 +66,7 @@ public class RoleDaoImpl implements RoleDao {
 				String roleid = rs.getString("role_id");
 				String roleName = rs.getString("role_name");
 				String roleLevel = rs.getString("role_level");
-				String roleReportingTo = rs.getString("role_reporting_to");
+				String roleReportingTo = rs.getString("reporting_role_id");
 
 				Role role = new Role();
 				role.setRoleCode(roleid);

@@ -57,7 +57,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void insertEmployee(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			Employee employee = new Employee();
-			employee.setEmployeeId(request.getParameter("employeeId"));  // Employee ID created by user
 			employee.setEmployeeFirstName(request.getParameter("employeeFirstName"));
 			employee.setEmployeeMiddleName(request.getParameter("employeeMiddleName"));
 			employee.setEmployeeLastName(request.getParameter("employeeLastName"));
@@ -109,7 +108,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void updateEmployee(HttpServletRequest request, HttpServletResponse response) {
 		Employee employee = new Employee();
-		employee.setEmployeeId(request.getParameter("employeeId"));  // Employee ID created by user
+		employee.setEmployeeId((int) Double.parseDouble(request.getParameter("employeeId")));  // Employee ID created by user
 		employee.setEmployeeFirstName(request.getParameter("employeeFirstName"));
 		employee.setEmployeeMiddleName(request.getParameter("employeeMiddleName"));
 		employee.setEmployeeLastName(request.getParameter("employeeLastName"));

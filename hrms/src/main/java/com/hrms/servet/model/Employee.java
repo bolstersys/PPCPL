@@ -2,7 +2,7 @@ package com.hrms.servet.model;
 
 public class Employee {
 
-	private String employeeId;
+	private Integer employeeId;
 	private String employeeFirstName;
 	private String employeeMiddleName;
 	private String employeeLastName;
@@ -14,10 +14,10 @@ public class Employee {
 	private String reportingPersonEmployeeId;
 	private String employeeIpAddress;
 	private BankDetail bankDetail;
-	public String getEmployeeId() {
+	public Integer getEmployeeId() {
 		return employeeId;
 	}
-	public void setEmployeeId(String employeeId) {
+	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
 	public String getEmployeeFirstName() {

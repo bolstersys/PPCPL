@@ -384,13 +384,15 @@
                   body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
                   width: 360,
                   delay: 4000,
-                  close: true, 
+                  close: true,
                   className: 'bgc-green-d2 shadow ',
                   bodyClass: 'border-0 p-0 text-dark-tp2',
                   headerClass: 'd-none',
                   progress: 'position-bl bgc-black-tp6 py-2px m-1px'
                 })
-                console.log("success")
+                  <c:if test="${action == 'insertRole'}">
+                    window.location.href = "hrms/role?action=getAllRoles";
+                  </c:if>
               }
             },
             error:function(data){
