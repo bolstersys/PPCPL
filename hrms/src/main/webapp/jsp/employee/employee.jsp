@@ -136,7 +136,7 @@
 
                     <td class="align-middle">
                       <span class="d-none d-lg-inline">
-                        <button id="editBtn-${item.employeeId }" class="btn btn-outline-light btn-h-light-blue btn-a-light-blue border-b-2 text-600 px-3 mb-1">
+                        <button id="editBtn-${item.employeeId}" class="btn btn-outline-light btn-h-light-blue btn-a-light-blue border-b-2 text-600 px-3 mb-1">
                           <i class="fa fa-pencil-alt text-110 text-blue-d2 mr-1"></i>
                         </button>
                         <button id="deleteBtn-${item.employeeId }" class="btn btn-outline-light btn-h-light-danger btn-a-light-danger border-b-2 text-600 px-3 mb-1">
@@ -609,6 +609,9 @@
                     headerClass: 'd-none',
                     progress: 'position-bl bgc-black-tp6 py-2px m-1px'
                 });
+                setTimeout(function() {
+                    window.location.href = "hrms/employee?action=getAllEmployee";  // Replace with the URL you want to redirect to
+                }, 1500);
                 console.log("success");
             }
         },
@@ -618,14 +621,18 @@
     });
 });
 
-
-        $('[id^=editBtn-]').click(function() {
-        var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
-        editRecord(id);
-    });
+    // Edit button click handler
+        $(document).on('click', '[id^=editBtn-]', function(e) {
+            e.preventDefault(); // Prevent any default action
+            e.stopPropagation(); // Stop the event from propagating to parent elements
+            var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
+            editRecord(id);
+        });
 
     // Delete button click handler
-    $('[id^=deleteBtn-]').click(function() {
+    $(document).on('click', '[id^=deleteBtn-]', function(e) {
+        e.preventDefault(); // Prevent any default action
+        e.stopPropagation(); // Stop the event from propagating to parent elements
         var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
         deleteRecord(id);
     });
@@ -633,7 +640,7 @@
     // Edit function - Redirect to the edit page
     function editRecord(id) {
         // Redirect to edit page with the record ID
-        window.location.href = 'hrms/role?action=updateEmployee&employeeId=' + id;
+        window.location.href = 'hrms/employee?action=updateEmployee&employeeId=' + id;
     }
 
     // Delete function - Confirm and redirect
@@ -643,7 +650,7 @@
 
         // If confirmed, redirect to delete action
         if (confirmation) {
-            window.location.href = 'hrms/role?action=deleteEmployee&employeeId=' + id;
+            window.location.href = 'hrms/employee?action=deleteEmployee&employeeId=' + id;
         }
     }
       })

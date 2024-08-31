@@ -390,6 +390,9 @@
                   headerClass: 'd-none',
                   progress: 'position-bl bgc-black-tp6 py-2px m-1px'
                 })
+                setTimeout(function() {
+                    window.location.href = "hrms/role?action=getAllRoles";  // Replace with the URL you want to redirect to
+                }, 1500);
                   <c:if test="${action == 'insertRole'}">
                     window.location.href = "hrms/role?action=getAllRoles";
                   </c:if>
@@ -401,13 +404,18 @@
           });
         });
         
-        $('[id^=editBtn-]').click(function() {
-        var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
-        editRecord(id);
-    });
+// Edit button click handler
+        $(document).on('click', '[id^=editBtn-]', function(e) {
+            e.preventDefault(); // Prevent any default action
+            e.stopPropagation(); // Stop the event from propagating to parent elements
+            var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
+            editRecord(id);
+        });
 
     // Delete button click handler
-    $('[id^=deleteBtn-]').click(function() {
+    $(document).on('click', '[id^=deleteBtn-]', function(e) {
+        e.preventDefault(); // Prevent any default action
+        e.stopPropagation(); // Stop the event from propagating to parent elements
         var id = $(this).attr('id').split('-')[1]; // Extract ID from the button's ID
         deleteRecord(id);
     });
