@@ -178,62 +178,41 @@
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
                       <label for="firstname" class="mb-0">
-                        First Name
+                        Name
                       </label>
                     </div>
                     <div class="col-sm-9">
                       <input type="text" class="form-control" id="firstname" value="${selected.employeeFirstName}"/>
                     </div>
                   </div>
+
+
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="middlename" class="mb-0">
-                        Middle Name
+                      <label for="categoryOfEmployment" class="mb-0">
+                        Category of Employment
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="middlename" value="${selected.employeeMiddleName}"/>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="lastname" class="mb-0">
-                        Last Name
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="lastname" value="${selected.employeeLastName}"/>
+                      <input type="text" class="form-control" id="categoryOfEmployment" value="${selected.employeeFirstName}"/>
                     </div>
                   </div>
 
 
-                  
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="age" class="mb-0">
-                        Age
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=999 id="age" value="${selected.employeeAge}"/>
-                    </div>
-                  </div>
-                  
-                  
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="role" class="mb-0">
-                        Role
+                      <label for="designation" class="mb-0">
+                        Designation
                       </label>
                     </div>
                     <div class="col-sm-9">
                       <select
-                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="role">
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="designation">
                         <c:if test="${not empty roleList}">
-                            <c:forEach items="${roleList}" var="item" varStatus="loop">
-                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
-                            </c:forEach>
+                          <c:forEach items="${roleList}" var="item" varStatus="loop">
+                            <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
+                          </c:forEach>
                         </c:if>
                       </select>
                     </div>
@@ -246,8 +225,8 @@
                     </div>
                     <div class="col-sm-9">
                       <select
-                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="department">
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="department">
                         <option value="1">IT</option>
                         <option value="2">Management</option>
                         <option value="3">Printing</option>
@@ -256,113 +235,597 @@
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="homebranch" class="mb-0">
-                        Home Branch
+                      <label for="reportingTo" class="mb-0">
+                        Reporting To
                       </label>
                     </div>
                     <div class="col-sm-9">
                       <select
-                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="homebranch">
-                        <option value="1">Mumbai</option>
-                        <option value="2">Ahemdabad</option>
-                        <option value="3">Delhi</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="reportingperson" class="mb-0">
-                        Reporting Person
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <select
-                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="reportingperson">
-                        <c:if test="${not empty employeeList}">
-                            <c:forEach items="${employeeList}" var="item" varStatus="loop">
-                                <option value='${item.employeeId}' <c:if test="${item.employeeId == selected.reportingPerson}">selected</c:if>>${item.employeeFirstName} ${item.employeeLastName}</option>
-                            </c:forEach>
-                        </c:if>
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="reportingTo">
+                        <option value="1">xyz</option>
+                        <option value="2">qas</option>
+                        <option value="3">dws</option>
                       </select>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="address" class="mb-0">
-                        Address
+                      <label for="doj" class="mb-0">
+                        DOJ
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <textarea class="form-control" id="address" maxlength="50">${selected.address.addressLine1}</textarea>
+                      <input type="date" class="form-control" id="doj" value=""/>
                     </div>
                   </div>
-                  
+
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="country" class="mb-0">
-                        Country
+                      <label for="month" class="mb-0">
+                        Month
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="month" value="jan" disabled/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="yearsOfCompletion" class="mb-0">
+                        Years Of Completion
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="yearsOfCompletion" value="2.2" disabled/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="approxYrsCompletion" class="mb-0">
+                        Approx Yrs Completion
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="approxYrsCompletion" value="2" disabled/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="probationPeriod" class="mb-0">
+                        Probation Period
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="probationPeriod" value="" />
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="doc" class="mb-0">
+                        DOC
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="doc" value="7-Jul-24" disabled/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="location" class="mb-0">
+                        Location
                       </label>
                     </div>
                     <div class="col-sm-9">
                       <select
-                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="country">
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="location">
                         <option value="india">India</option>
                         <option value="usa">USA</option>
                         <option value="isreal">Isreal</option>
                       </select>
                     </div>
                   </div>
+
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="state" class="mb-0">
-                        State
+                      <label for="dob" class="mb-0">
+                        DOB
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="date" class="form-control" id="dob" value=""/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="ageTillDate" class="mb-0">
+                        Age Till Date
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="ageTillDate" value="2.2" disabled/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="dateOfMonth" class="mb-0">
+                        Date Of Month
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="dateOfMonth" value="2" disabled/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="appointmentLetter" class="mb-0">
+                        Appointment Letter
                       </label>
                     </div>
                     <div class="col-sm-9">
                       <select
-                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="state">
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="appointmentLetter">
                         <option value="gujarat">Gujarat</option>
                         <option value="maharashtra">Maharashtra</option>
                         <option value="mp">Madhya Pradesh</option>
                       </select>
                     </div>
                   </div>
+
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="city" class="mb-0">
-                        City
+                      <label for="nda" class="mb-0">
+                        NDA
                       </label>
                     </div>
                     <div class="col-sm-9">
                       <select
-                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="city">
-                        <option value="surat">Surat</option>
-                        <option value="mumbai">Mumbai</option>
-                        <option value="delhi">Delhi</option>
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="nda">
+                        <option value="gujarat">Gujarat</option>
+                        <option value="maharashtra">Maharashtra</option>
+                        <option value="mp">Madhya Pradesh</option>
                       </select>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="pincode" class="mb-0">
-                        Pincode
+                      <label for="confProb" class="mb-0">
+                        Conformation/Probation
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=7 id="pincode" value="${selected.address.pinCode}"/>
+                      <select
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="confProb">
+                        <option value="conformation">Conformation</option>
+                        <option value="probation">Probation</option>
+                      </select>
                     </div>
                   </div>
 
-                    
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="idCard" class="mb-0">
+                        ID Card
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="idCard">
+                        <option value="Issued">Issued</option>
+                        <option value="Not Issued">Not Issued</option>
+                      </select>
+                    </div>
+                  </div>
 
-                  
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="account" class="mb-0">
+                        Kotak Account/Axis Account
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="account" value="GGG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="bankAccount" class="mb-0">
+                        Bank Account
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="bankAccount" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="ifscCode" class="mb-0">
+                        IFSC Code
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="ifscCode" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="UanNum" class="mb-0">
+                        UAN NUM
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="UanNum" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="pfNum" class="mb-0">
+                        PF NUM
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="pfNum" value="563G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="married" class="mb-0">
+                        Married/UnMarried
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="married">
+                        <option value="married">Married</option>
+                        <option value="unMarried">UnMarried</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="gender" class="mb-0">
+                        Gender
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="officialContact" class="mb-0">
+                        Official Contact No.
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="officialContact" value="9874563211"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="personalNo" class="mb-0">
+                        Personal No
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="personalNo" value="9874563211"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="alternateNo" class="mb-0">
+                        Alternate No
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="alternateNo" value="9874563211"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="personalEmail" class="mb-0">
+                        Personal Email ID
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="personalEmail" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="officialEmail" class="mb-0">
+                        Official Email ID
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="officialEmail" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="bloodGroup" class="mb-0">
+                        Blood Group
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="bloodGroup">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="currentAddress" class="mb-0">
+                        Current Address
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="currentAddress" value="9874563211"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="permanentAddress" class="mb-0">
+                        Permanent Address
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="permanentAddress" value="9874563211"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="qualification" class="mb-0">
+                        Highest Qualification
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="qualification" value="9874563211"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="totalExp" class="mb-0">
+                        Total Exp
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="totalExp" value="9874563211"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="relevantExp" class="mb-0">
+                        Relevant Exp
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="relevantExp" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="previousCompany" class="mb-0">
+                        Previous Company
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="previousCompany" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="designationInPreviousCompany" class="mb-0">
+                        Designation In Previous Company
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="designationInPreviousCompany" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="expWithPPT" class="mb-0">
+                        Exp With PPT
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="expWithPPT" value="2" disabled/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="DOR" class="mb-0">
+                        DOR
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="date" class="form-control" id="DOR" value=""/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="RetirementDate" class="mb-0">
+                        Retirement Date
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="RetirementDate" value="2-Apr-24"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="exitDate" class="mb-0">
+                        Exit Date
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="exitDate" value="2-Apr-24" disabled/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="educationCertificate" class="mb-0">
+                        Education Certificate
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="file" class="form-control" id="educationCertificate" value=""/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="rationCard" class="mb-0">
+                        Ration Card
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="file" class="form-control" id="rationCard" value=""/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="panCard" class="mb-0">
+                        PAN Card
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="file" class="form-control" id="panCard" value=""/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="aadharCard" class="mb-0">
+                        Aadhar Card
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="file" class="form-control" id="aadharCard" value=""/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="drivingLicense" class="mb-0">
+                        Driving License
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="file" class="form-control" id="drivingLicense" value=""/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="passport" class="mb-0">
+                        Passport
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="file" class="form-control" id="passport" value=""/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="bankName" class="mb-0">
+                        Bank Name
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="bankName" value="GGG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="nameAsPerBank" class="mb-0">
+                        Name As Per Bank
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="nameAsPerBank" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="accountNo" class="mb-0">
+                        Account No
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="accountNo" value="G5662GG"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="ifscCodeBankAccount" class="mb-0">
+                        IFSC Code
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="ifscCodeBankAccount" value="G5662GG"/>
+                    </div>
+                  </div>
 
                   <div class="form-group text-center">
                     <button class="btn btn-info btn-bold px-4 text-sm-right" id="submitBtn" type="button">

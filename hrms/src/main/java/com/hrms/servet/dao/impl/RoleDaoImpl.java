@@ -43,8 +43,8 @@ public class RoleDaoImpl implements RoleDao {
 			}
 
 		} catch (Exception e) {
-//			e.printStackTrace();
-			throw e;
+			e.printStackTrace();
+//			throw e;
 		}
 		return roleList;
 	}
