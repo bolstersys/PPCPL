@@ -281,7 +281,7 @@
 
                 <li class="nav-item dropdown order-first order-lg-last">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img id="id-navbar-user-image" class="d-none d-lg-inline-block radius-round border-2 brc-white-tp1 mr-2 w-6" src="assets/image/avatar/avatar6.jpg" alt="Jason's Photo">
+                    <img id="id-navbar-user-image" class="d-none d-lg-inline-block radius-round border-2 brc-white-tp1 mr-2 w-6" src="/hrms/assets/image/avatar/avatar6.jpg" alt="Jason's Photo">
                     <span class="d-inline-block d-lg-none d-xl-inline-block">
                               <span class="text-90" id="id-user-welcome">Welcome,</span>
                     <span class="nav-user-name">Jason</span>
@@ -402,6 +402,51 @@
 
                         </a>
 
+                      </li>
+
+                    </ul>
+                  </div>
+
+                  <b class="sub-arrow"></b>
+
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link dropdown-toggle collapsed">
+                    <i class="nav-icon fa fa-desktop"></i>
+                    <span class="nav-text fadeable">
+               	      <span>Service</span>
+                    </span>
+                    <b class="caret fa fa-angle-left rt-n90"></b>
+                  </a>
+                  <div class="hideable submenu collapse">
+                    <ul class="submenu-inner">
+                      <li class="nav-item">
+                        <a href="html/ServiceList.html" class="nav-link">
+                          <span class="nav-text">
+               				  <span>Service List</span>
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="html/SingleList.html" class="nav-link">
+                          <span class="nav-text">
+               				  <span>Single List</span>
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="html/ItineraryList.html" class="nav-link">
+                          <span class="nav-text">
+               				  <span>Itinerary List</span>
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="html/RatecardList.html" class="nav-link">
+                          <span class="nav-text">
+               				  <span>Rate Card List</span>
+                          </span>
+                        </a>
                       </li>
 
                     </ul>
