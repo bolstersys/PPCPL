@@ -38,7 +38,6 @@ public class RoleDaoImpl implements RoleDao {
 				role.setRoleCode(rs.getString("role_id"));
 				role.setRoleName(rs.getString("role_name"));
 				role.setRoleLevel(rs.getString("role_level"));
-				role.setRoleReportingTo(rs.getString("reporting_role_id"));
 				roleList.add(role);
 			}
 
@@ -72,7 +71,6 @@ public class RoleDaoImpl implements RoleDao {
 				role.setRoleCode(roleid);
 				role.setRoleName(roleName);
 				role.setRoleLevel(roleLevel);
-				role.setRoleReportingTo(roleReportingTo);
 				roleList.add(role);
 			}
 
@@ -90,7 +88,6 @@ public class RoleDaoImpl implements RoleDao {
 
 			preparedStatement.setString(1, role.getRoleName());
 			preparedStatement.setString(2, role.getRoleLevel());
-			preparedStatement.setString(3, role.getRoleReportingTo());
 
 			System.out.println(preparedStatement);
 
@@ -108,7 +105,6 @@ public class RoleDaoImpl implements RoleDao {
 
 			preparedStatement.setString(1, role.getRoleName());
 			preparedStatement.setString(2, role.getRoleLevel());
-			preparedStatement.setString(3, role.getRoleReportingTo());
 			preparedStatement.setString(4, role.getRoleCode());
 
 			System.out.println(preparedStatement);

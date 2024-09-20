@@ -70,7 +70,6 @@ public class RoleServiceImpl implements RoleService {
 			Role role = new Role();
 			role.setRoleName(roleName);
 			role.setRoleLevel(roleLevel);
-			role.setRoleReportingTo(roleReportingTo);
 
 			roleDao.insertRole(role);
 			ResponseBean responseBean = new ResponseBean();
@@ -98,7 +97,6 @@ public class RoleServiceImpl implements RoleService {
 			role.setRoleCode(roleCode);
 			role.setRoleName(roleName);
 			role.setRoleLevel(roleLevel);
-			role.setRoleReportingTo(roleReportingTo);
 
 			roleDao.updateRole(role);
 			ResponseBean responseBean = new ResponseBean();

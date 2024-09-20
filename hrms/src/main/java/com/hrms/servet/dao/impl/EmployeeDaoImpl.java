@@ -1,6 +1,7 @@
 package com.hrms.servet.dao.impl;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,13 +22,34 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	private static final String GET_ALL_EMPLOYEE_QUERY = "SELECT * FROM employees";
 	private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT employees.employee_id, employees.employee_first_name, employees.employee_middle_name, employees.employee_last_name, employees.role_id, employees.employee_age, employees.employee_dob, employees.employee_branch, employees.reporting_person_employee_id, employees.employee_ip_address FROM employees WHERE employees.employee_id = ?";
 
-	private static final String GET_EMPLOYEE_DETAILS_BY_ID_QUERY = "SELECT e.employee_id, e.employee_first_name, e.employee_middle_name, e.employee_last_name, e.employee_age, e.employee_dob, e.employee_branch, e.reporting_person_employee_id, e.employee_ip_address, r.role_id, r.role_name, r.role_level, r.reporting_role_id, a.address_id, a.address_line1, a.address_line2, a.city, a.state, a.country, a.pin_code, b.bank_detail_id, b.bank_name, b.bank_acc_no, b.ifsc_no, b.upi_id FROM employees e LEFT JOIN role r ON e.role_id = r.role_id LEFT JOIN addresses a ON e.employee_id = a.employee_id LEFT JOIN bank_details b ON e.employee_id = b.employee_id WHERE e.employee_id = ?";
+	private static final String GET_EMPLOYEE_DETAILS_BY_ID_QUERY = "SELECT e.employee_id, e.name, e.category_of_employment, e.department, e.reporting_to, " +
+			"e.date_of_joining, e.month, e.years_of_completion, e.approx_years_completion, e.probation_period, " +
+			"e.date_of_confirmation, e.location, e.date_of_birth, e.age_till_date, e.date_of_month, e.appointment_letter, " +
+			"e.nda, e.confirmation_or_probation, e.id_card, e.kotak_account, e.axis_account, e.bank_account, " +
+			"e.ifsc_code, e.uan_number, e.pf_number, e.marital_status, e.gender, e.official_contact_no, " +
+			"e.personal_contact_no, e.alternate_contact_no, e.personal_email_id, e.official_email_id, " +
+			"e.blood_group, e.current_address, e.permanent_address, e.highest_qualification, e.total_experience, " +
+			"e.relevant_experience, e.previous_company, e.designation_in_previous_company, e.experience_with_ppt, " +
+			"e.date_of_resignation, e.retirement_date, e.exit_date, e.education_certificate, e.ration_card, " +
+			"e.pan_card, e.aadhar_card, e.driving_license, e.passport, e.bank_name, e.name_as_per_bank, " +
+			"e.account_number, e.ifsc_code_bank, r.role_code, r.role_name, r.role_level " +
+			"FROM employee e LEFT JOIN role r ON e.role_code = r.role_code WHERE e.employee_id = ?";
 
-	private static final String INSERT_EMPLOYEE_QUERY = "INSERT INTO employees (employee_first_name, employee_middle_name, employee_last_name, role_id, employee_age, employee_dob, employee_branch, reporting_person_employee_id, employee_ip_address) VALUES (?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_EMPLOYEE_QUERY = "INSERT INTO employee ("
+			+ "name, category_of_employment, role_code, department, reporting_to, date_of_joining, month, "
+			+ "years_of_completion, approx_years_completion, probation_period, date_of_confirmation, location, "
+			+ "date_of_birth, age_till_date, date_of_month, appointment_letter, nda, confirmation_or_probation, "
+			+ "id_card, kotak_account, axis_account, bank_account, ifsc_code, uan_number, pf_number, marital_status, "
+			+ "gender, official_contact_no, personal_contact_no, alternate_contact_no, personal_email_id, official_email_id, "
+			+ "blood_group, current_address, permanent_address, highest_qualification, total_experience, relevant_experience, "
+			+ "previous_company, designation_in_previous_company, experience_with_ppt, date_of_resignation, retirement_date, "
+			+ "exit_date, education_certificate, ration_card, pan_card, aadhar_card, driving_license, passport, bank_name, "
+			+ "name_as_per_bank, account_number, ifsc_code_bank) "
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String INSERT_ADDRESS_QUERY = "INSERT INTO addresses (employee_id, address_line1, address_line2, city, state, country, pin_code, created_date, updated_date) VALUES (?,?,?,?,?,?,?,?,?)";
 	private static final String INSERT_BANK_DTL_QUERY = "INSERT INTO bank_details (employee_id, bank_name, bank_acc_no, ifsc_no, upi_id) VALUES (?,?,?,?,?)";
 
-	private static final String UPDATE_EMPLOYEES_QUERY = "UPDATE employees SET employee_first_name = ?, employee_middle_name = ?, employee_last_name = ?, role_id = ?, employee_age = ?, employee_dob = ?, employee_branch = ?, reporting_person_employee_id = ?, employee_ip_address = ? WHERE employee_id = ?";
+	private static final String UPDATE_EMPLOYEES_QUERY = "UPDATE employee SET name = ?, category_of_employment = ?, role_code = ?, department = ?, reporting_to = ?, date_of_joining = ?, month = ?, years_of_completion = ?, approx_years_completion = ?, probation_period = ?, date_of_confirmation = ?, location = ?, date_of_birth = ?, age_till_date = ?, date_of_month = ?, appointment_letter = ?, nda = ?, confirmation_or_probation = ?, id_card = ?, kotak_account = ?, axis_account = ?, bank_account = ?, ifsc_code = ?, uan_number = ?, pf_number = ?, marital_status = ?, gender = ?, official_contact_no = ?, personal_contact_no = ?, alternate_contact_no = ?, personal_email_id = ?, official_email_id = ?, blood_group = ?, current_address = ?, permanent_address = ?, highest_qualification = ?, total_experience = ?, relevant_experience = ?, previous_company = ?, designation_in_previous_company = ?, experience_with_ppt = ?, date_of_resignation = ?, retirement_date = ?, exit_date = ?, education_certificate = ?, ration_card = ?, pan_card = ?, aadhar_card = ?, driving_license = ?, passport = ?, bank_name = ?, name_as_per_bank = ?, account_number = ?, ifsc_code_bank = ? WHERE employee_id = ?";
 	private static final String UPDATE_ADDRESS_QUERY = "UPDATE addresses SET address_line1 = ?, address_line2 = ?, city = ?, state = ?, country = ?, pin_code = ?, updated_date = ? WHERE employee_id = ?";
 	private static final String UPDATE_BANK_DTL_QUERY = "UPDATE bank_details SET bank_name = ?, bank_acc_no = ?, ifsc_no = ?, upi_id = ? WHERE employee_id = ?";
 
@@ -46,42 +68,73 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			System.out.println(preparedStatement);
 
 			// Execute the query or update query
-			ResultSet rs = preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery();
 
 			// Process the ResultSet object
-			while (rs.next()) {
-				String employeeId = rs.getString("employee_id");
-				String employeeFirstName = rs.getString("employee_first_name");
-				String employeeMiddleName = rs.getString("employee_middle_name");
-				String employeeLastName = rs.getString("employee_last_name");
-
-				String roleId = rs.getString("role_id");
-
-				String employeeAge = rs.getString("employee_age");
-				String employeeDob = rs.getString("employee_dob");
-				String employeeBranch = rs.getString("employee_branch");
-
-//				String addressId = rs.getString("roleCode");
-
-				String reportingPersonEmployeeId = rs.getString("reporting_person_employee_id");
-				String employeeIpAddress = rs.getString("employee_ip_address");
-
-//				String employeeBankSrNo = rs.getString("roleReportingTo");
-
+			while (resultSet.next()) {
 				Employee employee = new Employee();
-				employee.setEmployeeId(Integer.parseInt(employeeId));
-				employee.setEmployeeFirstName(employeeFirstName);
-				employee.setEmployeeMiddleName(employeeMiddleName);
-				employee.setEmployeeLastName(employeeLastName);
-				employee.setEmployeeAge(employeeAge);
-				employee.setEmployeeDob(employeeDob);
-				employee.setEmployeeBranch(employeeBranch);
-				employee.setReportingPersonEmployeeId(reportingPersonEmployeeId);
-				employee.setEmployeeIpAddress(employeeIpAddress);
+				employee.setEmployeeId(resultSet.getInt("employee_id"));
+				employee.setName(resultSet.getString("name"));
+				employee.setCategoryOfEmployment(resultSet.getString("category_of_employment"));
 
-				Role role = new Role();
-				role.setRoleCode(roleId);
-				employee.setRole(role);
+				// Retrieve the roleCode (primary key) from the database
+				String roleCode = resultSet.getString("role_code");
+
+				// Assuming you have a method to get Role by its code, e.g., Role.getRoleByCode(roleCode)
+				Role role = (new RoleDaoImpl()).getRoleById(roleCode).get(0); // You need to implement this method
+				employee.setDesignation(role);
+
+				employee.setDepartment(resultSet.getString("department"));
+				employee.setReportingTo(resultSet.getString("reporting_to"));
+				employee.setDateOfJoining(resultSet.getObject("date_of_joining", LocalDate.class));
+				employee.setMonth(resultSet.getString("month"));
+				employee.setYearsOfCompletion(resultSet.getFloat("years_of_completion"));
+				employee.setApproxYearsCompletion(resultSet.getInt("approx_years_completion"));
+				employee.setProbationPeriod(resultSet.getInt("probation_period"));
+				employee.setDateOfConfirmation(resultSet.getObject("date_of_confirmation", LocalDate.class));
+				employee.setLocation(resultSet.getString("location"));
+				employee.setDateOfBirth(resultSet.getObject("date_of_birth", LocalDate.class));
+				employee.setAgeTillDate(resultSet.getInt("age_till_date"));
+				employee.setDateOfMonth(resultSet.getInt("date_of_month"));
+				employee.setAppointmentLetter(resultSet.getString("appointment_letter"));
+				employee.setNda(resultSet.getString("nda"));
+				employee.setConfirmationOrProbation(resultSet.getString("confirmation_or_probation"));
+				employee.setIdCard(resultSet.getString("id_card"));
+				employee.setKotakAccount(resultSet.getString("kotak_account"));
+				employee.setAxisAccount(resultSet.getString("axis_account"));
+				employee.setBankAccount(resultSet.getString("bank_account"));
+				employee.setIfscCode(resultSet.getString("ifsc_code"));
+				employee.setUanNumber(resultSet.getString("uan_number"));
+				employee.setPfNumber(resultSet.getString("pf_number"));
+				employee.setMaritalStatus(resultSet.getString("marital_status"));
+				employee.setGender(resultSet.getString("gender"));
+				employee.setOfficialContactNo(resultSet.getString("official_contact_no"));
+				employee.setPersonalContactNo(resultSet.getString("personal_contact_no"));
+				employee.setAlternateContactNo(resultSet.getString("alternate_contact_no"));
+				employee.setPersonalEmailId(resultSet.getString("personal_email_id"));
+				employee.setOfficialEmailId(resultSet.getString("official_email_id"));
+				employee.setBloodGroup(resultSet.getString("blood_group"));
+				employee.setCurrentAddress(resultSet.getString("current_address"));
+				employee.setPermanentAddress(resultSet.getString("permanent_address"));
+				employee.setHighestQualification(resultSet.getString("highest_qualification"));
+				employee.setTotalExperience(resultSet.getInt("total_experience"));
+				employee.setRelevantExperience(resultSet.getInt("relevant_experience"));
+				employee.setPreviousCompany(resultSet.getString("previous_company"));
+				employee.setDesignationInPreviousCompany(resultSet.getString("designation_in_previous_company"));
+				employee.setExperienceWithPPT(resultSet.getString("experience_with_ppt"));
+				employee.setDateOfResignation(resultSet.getObject("date_of_resignation", LocalDate.class));
+				employee.setRetirementDate(resultSet.getObject("retirement_date", LocalDate.class));
+				employee.setExitDate(resultSet.getObject("exit_date", LocalDate.class));
+				employee.setEducationCertificate(resultSet.getString("education_certificate"));
+				employee.setRationCard(resultSet.getString("ration_card"));
+				employee.setPanCard(resultSet.getString("pan_card"));
+				employee.setAadharCard(resultSet.getString("aadhar_card"));
+				employee.setDrivingLicense(resultSet.getString("driving_license"));
+				employee.setPassport(resultSet.getString("passport"));
+				employee.setBankName(resultSet.getString("bank_name"));
+				employee.setNameAsPerBank(resultSet.getString("name_as_per_bank"));
+				employee.setAccountNumber(resultSet.getString("account_number"));
+				employee.setIfscCodeBank(resultSet.getString("ifsc_code_bank"));
 
 				employeeList.add(employee);
 			}
@@ -100,44 +153,72 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			 PreparedStatement stmt = connection.prepareStatement(GET_EMPLOYEE_DETAILS_BY_ID_QUERY)) {
 
 			stmt.setString(1, employeeId);
-			ResultSet rs = stmt.executeQuery();
+			ResultSet resultSet = stmt.executeQuery();
 
-			if (rs.next()) {
+			if (resultSet.next()) {
 				employee = new Employee();
-				employee.setEmployeeId(Integer.parseInt(rs.getString("employee_id")));
-				employee.setEmployeeFirstName(rs.getString("employee_first_name"));
-				employee.setEmployeeMiddleName(rs.getString("employee_middle_name"));
-				employee.setEmployeeLastName(rs.getString("employee_last_name"));
-				employee.setEmployeeAge(rs.getString("employee_age"));
-				employee.setEmployeeDob(rs.getString("employee_dob"));
-				employee.setEmployeeBranch(rs.getString("employee_branch"));
-				employee.setReportingPersonEmployeeId(rs.getString("reporting_person_employee_id"));
-				employee.setEmployeeIpAddress(rs.getString("employee_ip_address"));
+				employee.setEmployeeId(resultSet.getInt("employee_id"));
+				employee.setName(resultSet.getString("name"));
+				employee.setCategoryOfEmployment(resultSet.getString("category_of_employment"));
+				employee.setDepartment(resultSet.getString("department"));
+				employee.setReportingTo(resultSet.getString("reporting_to"));
+				employee.setDateOfJoining(resultSet.getObject("date_of_joining", LocalDate.class));
+				employee.setMonth(resultSet.getString("month"));
+				employee.setYearsOfCompletion(resultSet.getFloat("years_of_completion"));
+				employee.setApproxYearsCompletion(resultSet.getInt("approx_years_completion"));
+				employee.setProbationPeriod(resultSet.getInt("probation_period"));
+				employee.setDateOfConfirmation(resultSet.getObject("date_of_confirmation", LocalDate.class));
+				employee.setLocation(resultSet.getString("location"));
+				employee.setDateOfBirth(resultSet.getObject("date_of_birth", LocalDate.class));
+				employee.setAgeTillDate(resultSet.getInt("age_till_date"));
+				employee.setDateOfMonth(resultSet.getInt("date_of_month"));
+				employee.setAppointmentLetter(resultSet.getString("appointment_letter"));
+				employee.setNda(resultSet.getString("nda"));
+				employee.setConfirmationOrProbation(resultSet.getString("confirmation_or_probation"));
+				employee.setIdCard(resultSet.getString("id_card"));
+				employee.setKotakAccount(resultSet.getString("kotak_account"));
+				employee.setAxisAccount(resultSet.getString("axis_account"));
+				employee.setBankAccount(resultSet.getString("bank_account"));
+				employee.setIfscCode(resultSet.getString("ifsc_code"));
+				employee.setUanNumber(resultSet.getString("uan_number"));
+				employee.setPfNumber(resultSet.getString("pf_number"));
+				employee.setMaritalStatus(resultSet.getString("marital_status"));
+				employee.setGender(resultSet.getString("gender"));
+				employee.setOfficialContactNo(resultSet.getString("official_contact_no"));
+				employee.setPersonalContactNo(resultSet.getString("personal_contact_no"));
+				employee.setAlternateContactNo(resultSet.getString("alternate_contact_no"));
+				employee.setPersonalEmailId(resultSet.getString("personal_email_id"));
+				employee.setOfficialEmailId(resultSet.getString("official_email_id"));
+				employee.setBloodGroup(resultSet.getString("blood_group"));
+				employee.setCurrentAddress(resultSet.getString("current_address"));
+				employee.setPermanentAddress(resultSet.getString("permanent_address"));
+				employee.setHighestQualification(resultSet.getString("highest_qualification"));
+				employee.setTotalExperience(resultSet.getInt("total_experience"));
+				employee.setRelevantExperience(resultSet.getInt("relevant_experience"));
+				employee.setPreviousCompany(resultSet.getString("previous_company"));
+				employee.setDesignationInPreviousCompany(resultSet.getString("designation_in_previous_company"));
+				employee.setExperienceWithPPT(resultSet.getString("experience_with_ppt"));
+				employee.setDateOfResignation(resultSet.getObject("date_of_resignation", LocalDate.class));
+				employee.setRetirementDate(resultSet.getObject("retirement_date", LocalDate.class));
+				employee.setExitDate(resultSet.getObject("exit_date", LocalDate.class));
+				employee.setEducationCertificate(resultSet.getString("education_certificate"));
+				employee.setRationCard(resultSet.getString("ration_card"));
+				employee.setPanCard(resultSet.getString("pan_card"));
+				employee.setAadharCard(resultSet.getString("aadhar_card"));
+				employee.setDrivingLicense(resultSet.getString("driving_license"));
+				employee.setPassport(resultSet.getString("passport"));
+				employee.setBankName(resultSet.getString("bank_name"));
+				employee.setNameAsPerBank(resultSet.getString("name_as_per_bank"));
+				employee.setAccountNumber(resultSet.getString("account_number"));
+				employee.setIfscCodeBank(resultSet.getString("ifsc_code_bank"));
 
+				// Process Role attributes
 				Role role = new Role();
-				role.setRoleCode(rs.getString("role_id"));
-				role.setRoleName(rs.getString("role_name"));
-				role.setRoleLevel(rs.getString("role_level"));
-				role.setRoleReportingTo(rs.getString("reporting_role_id"));
-				employee.setRole(role);
+				role.setRoleCode(resultSet.getString("role_code"));
+				role.setRoleName(resultSet.getString("role_name"));
+				role.setRoleLevel(resultSet.getString("role_level"));
 
-				Address address = new Address();
-				address.setSrNo(rs.getString("address_id"));
-				address.setAddressLine1(rs.getString("address_line1"));
-				address.setAddressLine2(rs.getString("address_line2"));
-				address.setCity(rs.getString("city"));
-				address.setState(rs.getString("state"));
-				address.setCountry(rs.getString("country"));
-				address.setPinCode(rs.getString("pin_code"));
-				employee.setAddress(address);
-
-				BankDetail bankDetail = new BankDetail();
-				bankDetail.setSrNo(rs.getString("bank_detail_id"));
-				bankDetail.setBankName(rs.getString("bank_name"));
-				bankDetail.setBankAccNo(rs.getString("bank_acc_no"));
-				bankDetail.setIfscNo(rs.getString("ifsc_no"));
-				bankDetail.setUpiId(rs.getString("upi_id"));
-				employee.setBankDetail(bankDetail);
+				employee.setDesignation(role);
 			}
 
 		} catch (SQLException e) {
@@ -159,15 +240,60 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			// Insert into employees table and retrieve the generated employee_id
 			try (PreparedStatement employeeStmt = connection.prepareStatement(INSERT_EMPLOYEE_QUERY)) {
 
-				employeeStmt.setString(1, employee.getEmployeeFirstName());
-				employeeStmt.setString(2, employee.getEmployeeMiddleName());
-				employeeStmt.setString(3, employee.getEmployeeLastName());
-				employeeStmt.setInt(4, Integer.parseInt(employee.getRole().getRoleCode()));
-				employeeStmt.setString(5, employee.getEmployeeAge());
-				employeeStmt.setDate(6, Date.valueOf(employee.getEmployeeDob()));
-				employeeStmt.setString(7, employee.getEmployeeBranch());
-				employeeStmt.setInt(8, employee.getReportingPersonEmployeeId().isEmpty() ? Types.NULL : Integer.parseInt(employee.getReportingPersonEmployeeId()));
-				employeeStmt.setString(9, employee.getEmployeeIpAddress());
+				employeeStmt.setString(1, employee.getName());
+				employeeStmt.setString(2, employee.getCategoryOfEmployment());
+				employeeStmt.setString(3, employee.getDesignation().getRoleCode());
+				employeeStmt.setString(4, employee.getDepartment());
+				employeeStmt.setString(5, employee.getReportingTo());
+				employeeStmt.setObject(6, employee.getDateOfJoining()); // Assuming LocalDate
+				employeeStmt.setString(7, employee.getMonth());
+				employeeStmt.setFloat(8, employee.getYearsOfCompletion());
+				employeeStmt.setInt(9, employee.getApproxYearsCompletion());
+				employeeStmt.setInt(10, employee.getProbationPeriod());
+				employeeStmt.setObject(11, employee.getDateOfConfirmation());
+				employeeStmt.setString(12, employee.getLocation());
+				employeeStmt.setObject(13, employee.getDateOfBirth());
+				employeeStmt.setInt(14, employee.getAgeTillDate());
+				employeeStmt.setInt(15, employee.getDateOfMonth());
+				employeeStmt.setString(16, employee.getAppointmentLetter());
+				employeeStmt.setString(17, employee.getNda());
+				employeeStmt.setString(18, employee.getConfirmationOrProbation());
+				employeeStmt.setString(19, employee.getIdCard());
+				employeeStmt.setString(20, employee.getKotakAccount());
+				employeeStmt.setString(21, employee.getAxisAccount());
+				employeeStmt.setString(22, employee.getBankAccount());
+				employeeStmt.setString(23, employee.getIfscCode());
+				employeeStmt.setString(24, employee.getUanNumber());
+				employeeStmt.setString(25, employee.getPfNumber());
+				employeeStmt.setString(26, employee.getMaritalStatus());
+				employeeStmt.setString(27, employee.getGender());
+				employeeStmt.setString(28, employee.getOfficialContactNo());
+				employeeStmt.setString(29, employee.getPersonalContactNo());
+				employeeStmt.setString(30, employee.getAlternateContactNo());
+				employeeStmt.setString(31, employee.getPersonalEmailId());
+				employeeStmt.setString(32, employee.getOfficialEmailId());
+				employeeStmt.setString(33, employee.getBloodGroup());
+				employeeStmt.setString(34, employee.getCurrentAddress());
+				employeeStmt.setString(35, employee.getPermanentAddress());
+				employeeStmt.setString(36, employee.getHighestQualification());
+				employeeStmt.setInt(37, employee.getTotalExperience());
+				employeeStmt.setInt(38, employee.getRelevantExperience());
+				employeeStmt.setString(39, employee.getPreviousCompany());
+				employeeStmt.setString(40, employee.getDesignationInPreviousCompany());
+				employeeStmt.setString(41, employee.getExperienceWithPPT());
+				employeeStmt.setObject(42, employee.getDateOfResignation());
+				employeeStmt.setObject(43, employee.getRetirementDate());
+				employeeStmt.setObject(44, employee.getExitDate());
+				employeeStmt.setString(45, employee.getEducationCertificate());
+				employeeStmt.setString(46, employee.getRationCard());
+				employeeStmt.setString(47, employee.getPanCard());
+				employeeStmt.setString(48, employee.getAadharCard());
+				employeeStmt.setString(49, employee.getDrivingLicense());
+				employeeStmt.setString(50, employee.getPassport());
+				employeeStmt.setString(51, employee.getBankName());
+				employeeStmt.setString(52, employee.getNameAsPerBank());
+				employeeStmt.setString(53, employee.getAccountNumber());
+				employeeStmt.setString(54, employee.getIfscCodeBank());
 
 
 				int affectedRows = employeeStmt.executeUpdate();
@@ -245,46 +371,93 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			// Update employees table
 			try (PreparedStatement employeeStmt = connection.prepareStatement(UPDATE_EMPLOYEES_QUERY)) {
-				employeeStmt.setString(1, employee.getEmployeeFirstName());
-				employeeStmt.setString(2, employee.getEmployeeMiddleName());
-				employeeStmt.setString(3, employee.getEmployeeLastName());
-				employeeStmt.setInt(4, Integer.parseInt(employee.getRole().getRoleCode()));
-				employeeStmt.setString(5, employee.getEmployeeAge());
-				employeeStmt.setDate(6, Date.valueOf(employee.getEmployeeDob()));
-				employeeStmt.setString(7, employee.getEmployeeBranch());
-				employeeStmt.setInt(8, employee.getReportingPersonEmployeeId().isEmpty() ? Types.NULL : Integer.parseInt(employee.getReportingPersonEmployeeId()));
-				employeeStmt.setString(9, employee.getEmployeeIpAddress());
-				employeeStmt.setInt(10, employee.getEmployeeId());  // Use employee_id in WHERE clause
+				employeeStmt.setString(1, employee.getName());
+				employeeStmt.setString(2, employee.getCategoryOfEmployment());
+				employeeStmt.setString(3, employee.getDesignation().getRoleCode()); // Assuming Role has a getRoleCode() method
+				employeeStmt.setString(4, employee.getDepartment());
+				employeeStmt.setString(5, employee.getReportingTo());
+				employeeStmt.setObject(6, employee.getDateOfJoining()); // For LocalDate
+				employeeStmt.setString(7, employee.getMonth());
+				employeeStmt.setFloat(8, employee.getYearsOfCompletion());
+				employeeStmt.setInt(9, employee.getApproxYearsCompletion());
+				employeeStmt.setInt(10, employee.getProbationPeriod());
+				employeeStmt.setObject(11, employee.getDateOfConfirmation());
+				employeeStmt.setString(12, employee.getLocation());
+				employeeStmt.setObject(13, employee.getDateOfBirth());
+				employeeStmt.setInt(14, employee.getAgeTillDate());
+				employeeStmt.setInt(15, employee.getDateOfMonth());
+				employeeStmt.setString(16, employee.getAppointmentLetter());
+				employeeStmt.setString(17, employee.getNda());
+				employeeStmt.setString(18, employee.getConfirmationOrProbation());
+				employeeStmt.setString(19, employee.getIdCard());
+				employeeStmt.setString(20, employee.getKotakAccount());
+				employeeStmt.setString(21, employee.getAxisAccount());
+				employeeStmt.setString(22, employee.getBankAccount());
+				employeeStmt.setString(23, employee.getIfscCode());
+				employeeStmt.setString(24, employee.getUanNumber());
+				employeeStmt.setString(25, employee.getPfNumber());
+				employeeStmt.setString(26, employee.getMaritalStatus());
+				employeeStmt.setString(27, employee.getGender());
+				employeeStmt.setString(28, employee.getOfficialContactNo());
+				employeeStmt.setString(29, employee.getPersonalContactNo());
+				employeeStmt.setString(30, employee.getAlternateContactNo());
+				employeeStmt.setString(31, employee.getPersonalEmailId());
+				employeeStmt.setString(32, employee.getOfficialEmailId());
+				employeeStmt.setString(33, employee.getBloodGroup());
+				employeeStmt.setString(34, employee.getCurrentAddress());
+				employeeStmt.setString(35, employee.getPermanentAddress());
+				employeeStmt.setString(36, employee.getHighestQualification());
+				employeeStmt.setInt(37, employee.getTotalExperience());
+				employeeStmt.setInt(38, employee.getRelevantExperience());
+				employeeStmt.setString(39, employee.getPreviousCompany());
+				employeeStmt.setString(40, employee.getDesignationInPreviousCompany());
+				employeeStmt.setString(41, employee.getExperienceWithPPT());
+				employeeStmt.setObject(42, employee.getDateOfResignation());
+				employeeStmt.setObject(43, employee.getRetirementDate());
+				employeeStmt.setObject(44, employee.getExitDate());
+				employeeStmt.setString(45, employee.getEducationCertificate());
+				employeeStmt.setString(46, employee.getRationCard());
+				employeeStmt.setString(47, employee.getPanCard());
+				employeeStmt.setString(48, employee.getAadharCard());
+				employeeStmt.setString(49, employee.getDrivingLicense());
+				employeeStmt.setString(50, employee.getPassport());
+				employeeStmt.setString(51, employee.getBankName());
+				employeeStmt.setString(52, employee.getNameAsPerBank());
+				employeeStmt.setString(53, employee.getAccountNumber());
+				employeeStmt.setString(54, employee.getIfscCodeBank());
+
+				// Set the employee_id to update the specific employee record
+				employeeStmt.setInt(55, employee.getEmployeeId());  // Use employee_id in WHERE clause
 
 				employeeStmt.executeUpdate();
 			}
 
-			// Update address table
-			try (PreparedStatement addressStmt = connection.prepareStatement(UPDATE_ADDRESS_QUERY)) {
-				Address address = employee.getAddress();
-				addressStmt.setString(1, address.getAddressLine1());
-				addressStmt.setString(2, address.getAddressLine2());
-				addressStmt.setString(3, address.getCity());
-				addressStmt.setString(4, address.getState());
-				addressStmt.setString(5, address.getCountry());
-				addressStmt.setString(6, address.getPinCode());
-				addressStmt.setTimestamp(7, new Timestamp(System.currentTimeMillis()));  // updated_date
-				addressStmt.setInt(8, employee.getEmployeeId());  // Use employee_id in WHERE clause
-
-				addressStmt.executeUpdate();
-			}
-
-			// Update bank details table
-			try (PreparedStatement bankStmt = connection.prepareStatement(UPDATE_BANK_DTL_QUERY)) {
-				BankDetail bankDetail = employee.getBankDetail();
-				bankStmt.setString(1, bankDetail.getBankName());
-				bankStmt.setString(2, bankDetail.getBankAccNo());
-				bankStmt.setString(3, bankDetail.getIfscNo());
-				bankStmt.setString(4, bankDetail.getUpiId());
-				bankStmt.setInt(5, employee.getEmployeeId());  // Use employee_id in WHERE clause
-
-				bankStmt.executeUpdate();
-			}
+//			// Update address table
+//			try (PreparedStatement addressStmt = connection.prepareStatement(UPDATE_ADDRESS_QUERY)) {
+//				Address address = employee.getAddress();
+//				addressStmt.setString(1, address.getAddressLine1());
+//				addressStmt.setString(2, address.getAddressLine2());
+//				addressStmt.setString(3, address.getCity());
+//				addressStmt.setString(4, address.getState());
+//				addressStmt.setString(5, address.getCountry());
+//				addressStmt.setString(6, address.getPinCode());
+//				addressStmt.setTimestamp(7, new Timestamp(System.currentTimeMillis()));  // updated_date
+//				addressStmt.setInt(8, employee.getEmployeeId());  // Use employee_id in WHERE clause
+//
+//				addressStmt.executeUpdate();
+//			}
+//
+//			// Update bank details table
+//			try (PreparedStatement bankStmt = connection.prepareStatement(UPDATE_BANK_DTL_QUERY)) {
+//				BankDetail bankDetail = employee.getBankDetail();
+//				bankStmt.setString(1, bankDetail.getBankName());
+//				bankStmt.setString(2, bankDetail.getBankAccNo());
+//				bankStmt.setString(3, bankDetail.getIfscNo());
+//				bankStmt.setString(4, bankDetail.getUpiId());
+//				bankStmt.setInt(5, employee.getEmployeeId());  // Use employee_id in WHERE clause
+//
+//				bankStmt.executeUpdate();
+//			}
 
 			connection.commit();  // Commit transaction if all updates succeed
 
@@ -319,17 +492,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			connection = Utility.getConnection();
 			connection.setAutoCommit(false);  // Start transaction
 
-			// Delete from addresses table
-			try (PreparedStatement addressStmt = connection.prepareStatement(DELETE_ADDRESS_QUERY)) {
-				addressStmt.setString(1, employeeId);
-				addressStmt.executeUpdate();
-			}
-
-			// Delete from bank_details table
-			try (PreparedStatement bankStmt = connection.prepareStatement(DELETE_BANK_DTL_QUERY)) {
-				bankStmt.setString(1, employeeId);
-				bankStmt.executeUpdate();
-			}
+//			// Delete from addresses table
+//			try (PreparedStatement addressStmt = connection.prepareStatement(DELETE_ADDRESS_QUERY)) {
+//				addressStmt.setString(1, employeeId);
+//				addressStmt.executeUpdate();
+//			}
+//
+//			// Delete from bank_details table
+//			try (PreparedStatement bankStmt = connection.prepareStatement(DELETE_BANK_DTL_QUERY)) {
+//				bankStmt.setString(1, employeeId);
+//				bankStmt.executeUpdate();
+//			}
 
 			// Delete from employees table
 			try (PreparedStatement employeeStmt = connection.prepareStatement(DELETE_EMPLOYEE_QUERY)) {

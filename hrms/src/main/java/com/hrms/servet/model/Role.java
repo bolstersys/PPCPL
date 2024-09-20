@@ -5,7 +5,6 @@ public class Role {
 	private String roleCode;
 	private String roleName;
 	private String roleLevel;
-	private String roleReportingTo;
 
 	public String getRoleCode() {
 		return roleCode;
@@ -31,18 +30,10 @@ public class Role {
 		this.roleLevel = roleLevel;
 	}
 
-	public String getRoleReportingTo() {
-		return roleReportingTo;
-	}
-
-	public void setRoleReportingTo(String roleReportingTo) {
-		this.roleReportingTo = roleReportingTo;
-	}
-
 	@Override
 	public String toString() {
 		return "Role [roleCode=" + roleCode + ", roleName=" + roleName + ", roleLevel=" + roleLevel
-				+ ", roleReportingTo=" + roleReportingTo + "]";
+				+ "]";
 	}
 
 }

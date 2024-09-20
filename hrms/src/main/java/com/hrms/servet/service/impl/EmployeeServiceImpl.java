@@ -2,6 +2,7 @@ package com.hrms.servet.service.impl;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.FileHandler;
@@ -57,38 +58,88 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void insertEmployee(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			Employee employee = new Employee();
-			employee.setEmployeeFirstName(request.getParameter("employeeFirstName"));
-			employee.setEmployeeMiddleName(request.getParameter("employeeMiddleName"));
-			employee.setEmployeeLastName(request.getParameter("employeeLastName"));
-			employee.setEmployeeAge(request.getParameter("employeeAge"));
-			employee.setEmployeeDob(request.getParameter("employeeDob"));
-			employee.setEmployeeBranch(request.getParameter("employeeBranch"));
-			employee.setEmployeeIpAddress(request.getParameter("employeeIpAddress"));
-			employee.setReportingPersonEmployeeId(request.getParameter("reportingPersonEmployeeId"));
-
-			// Set Role
+			employee.setName(request.getParameter("name"));
+			employee.setCategoryOfEmployment(request.getParameter("categoryOfEmployment"));
+			String roleCode = request.getParameter("roleCode");
 			Role role = new Role();
-			role.setRoleCode(request.getParameter("roleCode"));
+			role.setRoleCode(roleCode);
+			employee.setDesignation(role); // Store Role object in designation
 
-			employee.setRole(role);
+// Set department independently if needed
+			employee.setDepartment(request.getParameter("department"));
 
-			// Set Address
-			Address address = new Address();
-			address.setAddressLine1(request.getParameter("addressLine1"));
-			address.setAddressLine2(request.getParameter("addressLine2"));
-			address.setCity(request.getParameter("city"));
-			address.setState(request.getParameter("state"));
-			address.setCountry(request.getParameter("country"));
-			address.setPinCode(request.getParameter("pinCode"));
-			employee.setAddress(address);
+// Set other attributes
+			employee.setReportingTo(request.getParameter("reportingTo"));
 
-			// Set Bank Details
-			BankDetail bankDetail = new BankDetail();
-			bankDetail.setBankName(request.getParameter("bankName"));
-			bankDetail.setBankAccNo(request.getParameter("bankAccNo"));
-			bankDetail.setIfscNo(request.getParameter("ifscNo"));
-			bankDetail.setUpiId(request.getParameter("upiId"));
-			employee.setBankDetail(bankDetail);
+// Setting date fields with appropriate parsing
+			String dateOfJoining = request.getParameter("dateOfJoining");
+			if (dateOfJoining != null && !dateOfJoining.isEmpty()) {
+				employee.setDateOfJoining(LocalDate.parse(dateOfJoining));
+			}
+
+			String dateOfBirth = request.getParameter("dateOfBirth");
+			if (dateOfBirth != null && !dateOfBirth.isEmpty()) {
+				employee.setDateOfBirth(LocalDate.parse(dateOfBirth));
+			}
+
+			employee.setAgeTillDate(Integer.parseInt(request.getParameter("ageTillDate")));
+			employee.setDateOfMonth(Integer.parseInt(request.getParameter("dateOfMonth")));
+			employee.setAppointmentLetter(request.getParameter("appointmentLetter"));
+			employee.setNda(request.getParameter("nda"));
+			employee.setConfirmationOrProbation(request.getParameter("confirmationOrProbation"));
+			employee.setIdCard(request.getParameter("idCard"));
+			employee.setKotakAccount(request.getParameter("kotakAccount"));
+			employee.setAxisAccount(request.getParameter("axisAccount"));
+			employee.setBankAccount(request.getParameter("bankAccount"));
+			employee.setIfscCode(request.getParameter("ifscCode"));
+			employee.setUanNumber(request.getParameter("uanNumber"));
+			employee.setPfNumber(request.getParameter("pfNumber"));
+			employee.setMaritalStatus(request.getParameter("maritalStatus"));
+			employee.setGender(request.getParameter("gender"));
+			employee.setOfficialContactNo(request.getParameter("officialContactNo"));
+			employee.setPersonalContactNo(request.getParameter("personalContactNo"));
+			employee.setAlternateContactNo(request.getParameter("alternateContactNo"));
+			employee.setPersonalEmailId(request.getParameter("personalEmailId"));
+			employee.setOfficialEmailId(request.getParameter("officialEmailId"));
+			employee.setBloodGroup(request.getParameter("bloodGroup"));
+			employee.setCurrentAddress(request.getParameter("currentAddress"));
+			employee.setPermanentAddress(request.getParameter("permanentAddress"));
+			employee.setHighestQualification(request.getParameter("highestQualification"));
+			employee.setTotalExperience(Integer.parseInt(request.getParameter("totalExperience")));
+			employee.setRelevantExperience(Integer.parseInt(request.getParameter("relevantExperience")));
+			employee.setPreviousCompany(request.getParameter("previousCompany"));
+			employee.setDesignationInPreviousCompany(request.getParameter("designationInPreviousCompany"));
+			employee.setExperienceWithPPT(request.getParameter("experienceWithPPT"));
+
+// Setting resignation and retirement dates
+			String dateOfResignation = request.getParameter("dateOfResignation");
+			if (dateOfResignation != null && !dateOfResignation.isEmpty()) {
+				employee.setDateOfResignation(LocalDate.parse(dateOfResignation));
+			}
+
+			String retirementDate = request.getParameter("retirementDate");
+			if (retirementDate != null && !retirementDate.isEmpty()) {
+				employee.setRetirementDate(LocalDate.parse(retirementDate));
+			}
+
+			String exitDate = request.getParameter("exitDate");
+			if (exitDate != null && !exitDate.isEmpty()) {
+				employee.setExitDate(LocalDate.parse(exitDate));
+			}
+
+			employee.setEducationCertificate(request.getParameter("educationCertificate"));
+			employee.setRationCard(request.getParameter("rationCard"));
+			employee.setPanCard(request.getParameter("panCard"));
+			employee.setAadharCard(request.getParameter("aadharCard"));
+			employee.setDrivingLicense(request.getParameter("drivingLicense"));
+			employee.setPassport(request.getParameter("passport"));
+			employee.setBankName(request.getParameter("bankName"));
+			employee.setNameAsPerBank(request.getParameter("nameAsPerBank"));
+			employee.setAccountNumber(request.getParameter("accountNumber"));
+			employee.setIfscCodeBank(request.getParameter("ifscCodeBank"));
+
+			// Set reporting person employee ID if applicable
+			employee.setReportingTo(request.getParameter("reportingPersonEmployeeId"));
 
 			employeeDao.insertEmployee(employee);
 			ResponseBean responseBean = new ResponseBean();
@@ -109,37 +160,88 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void updateEmployee(HttpServletRequest request, HttpServletResponse response) {
 		Employee employee = new Employee();
 		employee.setEmployeeId((int) Double.parseDouble(request.getParameter("employeeId")));  // Employee ID created by user
-		employee.setEmployeeFirstName(request.getParameter("employeeFirstName"));
-		employee.setEmployeeMiddleName(request.getParameter("employeeMiddleName"));
-		employee.setEmployeeLastName(request.getParameter("employeeLastName"));
-		employee.setEmployeeAge(request.getParameter("employeeAge"));
-		employee.setEmployeeDob(request.getParameter("employeeDob"));
-		employee.setEmployeeBranch(request.getParameter("employeeBranch"));
-		employee.setEmployeeIpAddress(request.getParameter("employeeIpAddress"));
-		employee.setReportingPersonEmployeeId(request.getParameter("reportingPersonEmployeeId"));
-
-		// Set Role
+		employee.setName(request.getParameter("name"));
+		employee.setCategoryOfEmployment(request.getParameter("categoryOfEmployment"));
+		String roleCode = request.getParameter("roleCode");
 		Role role = new Role();
-		role.setRoleCode(request.getParameter("roleCode"));
-		employee.setRole(role);
+		role.setRoleCode(roleCode);
+		employee.setDesignation(role); // Store Role object in designation
 
-		// Set Address
-		Address address = new Address();
-		address.setAddressLine1(request.getParameter("addressLine1"));
-		address.setAddressLine2(request.getParameter("addressLine2"));
-		address.setCity(request.getParameter("city"));
-		address.setState(request.getParameter("state"));
-		address.setCountry(request.getParameter("country"));
-		address.setPinCode(request.getParameter("pinCode"));
-		employee.setAddress(address);
+		// Set department independently if needed
+		employee.setDepartment(request.getParameter("department"));
 
-		// Set Bank Details
-		BankDetail bankDetail = new BankDetail();
-		bankDetail.setBankName(request.getParameter("bankName"));
-		bankDetail.setBankAccNo(request.getParameter("bankAccNo"));
-		bankDetail.setIfscNo(request.getParameter("ifscNo"));
-		bankDetail.setUpiId(request.getParameter("upiId"));
-		employee.setBankDetail(bankDetail);
+		// Set other attributes
+		employee.setReportingTo(request.getParameter("reportingTo"));
+
+		// Setting date fields with appropriate parsing
+		String dateOfJoining = request.getParameter("dateOfJoining");
+		if (dateOfJoining != null && !dateOfJoining.isEmpty()) {
+			employee.setDateOfJoining(LocalDate.parse(dateOfJoining));
+		}
+
+		String dateOfBirth = request.getParameter("dateOfBirth");
+		if (dateOfBirth != null && !dateOfBirth.isEmpty()) {
+			employee.setDateOfBirth(LocalDate.parse(dateOfBirth));
+		}
+
+		employee.setAgeTillDate(Integer.parseInt(request.getParameter("ageTillDate")));
+		employee.setDateOfMonth(Integer.parseInt(request.getParameter("dateOfMonth")));
+		employee.setAppointmentLetter(request.getParameter("appointmentLetter"));
+		employee.setNda(request.getParameter("nda"));
+		employee.setConfirmationOrProbation(request.getParameter("confirmationOrProbation"));
+		employee.setIdCard(request.getParameter("idCard"));
+		employee.setKotakAccount(request.getParameter("kotakAccount"));
+		employee.setAxisAccount(request.getParameter("axisAccount"));
+		employee.setBankAccount(request.getParameter("bankAccount"));
+		employee.setIfscCode(request.getParameter("ifscCode"));
+		employee.setUanNumber(request.getParameter("uanNumber"));
+		employee.setPfNumber(request.getParameter("pfNumber"));
+		employee.setMaritalStatus(request.getParameter("maritalStatus"));
+		employee.setGender(request.getParameter("gender"));
+		employee.setOfficialContactNo(request.getParameter("officialContactNo"));
+		employee.setPersonalContactNo(request.getParameter("personalContactNo"));
+		employee.setAlternateContactNo(request.getParameter("alternateContactNo"));
+		employee.setPersonalEmailId(request.getParameter("personalEmailId"));
+		employee.setOfficialEmailId(request.getParameter("officialEmailId"));
+		employee.setBloodGroup(request.getParameter("bloodGroup"));
+		employee.setCurrentAddress(request.getParameter("currentAddress"));
+		employee.setPermanentAddress(request.getParameter("permanentAddress"));
+		employee.setHighestQualification(request.getParameter("highestQualification"));
+		employee.setTotalExperience(Integer.parseInt(request.getParameter("totalExperience")));
+		employee.setRelevantExperience(Integer.parseInt(request.getParameter("relevantExperience")));
+		employee.setPreviousCompany(request.getParameter("previousCompany"));
+		employee.setDesignationInPreviousCompany(request.getParameter("designationInPreviousCompany"));
+		employee.setExperienceWithPPT(request.getParameter("experienceWithPPT"));
+
+		// Setting resignation and retirement dates
+		String dateOfResignation = request.getParameter("dateOfResignation");
+		if (dateOfResignation != null && !dateOfResignation.isEmpty()) {
+			employee.setDateOfResignation(LocalDate.parse(dateOfResignation));
+		}
+
+		String retirementDate = request.getParameter("retirementDate");
+		if (retirementDate != null && !retirementDate.isEmpty()) {
+			employee.setRetirementDate(LocalDate.parse(retirementDate));
+		}
+
+		String exitDate = request.getParameter("exitDate");
+		if (exitDate != null && !exitDate.isEmpty()) {
+			employee.setExitDate(LocalDate.parse(exitDate));
+		}
+
+		employee.setEducationCertificate(request.getParameter("educationCertificate"));
+		employee.setRationCard(request.getParameter("rationCard"));
+		employee.setPanCard(request.getParameter("panCard"));
+		employee.setAadharCard(request.getParameter("aadharCard"));
+		employee.setDrivingLicense(request.getParameter("drivingLicense"));
+		employee.setPassport(request.getParameter("passport"));
+		employee.setBankName(request.getParameter("bankName"));
+		employee.setNameAsPerBank(request.getParameter("nameAsPerBank"));
+		employee.setAccountNumber(request.getParameter("accountNumber"));
+		employee.setIfscCodeBank(request.getParameter("ifscCodeBank"));
+
+		// Set reporting person employee ID if applicable
+		employee.setReportingTo(request.getParameter("reportingPersonEmployeeId"));
 
 		try {
 			employeeDao.updateEmployee(employee);
