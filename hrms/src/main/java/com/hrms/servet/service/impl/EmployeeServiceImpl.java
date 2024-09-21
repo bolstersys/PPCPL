@@ -1,14 +1,9 @@
 package com.hrms.servet.service.impl;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import com.google.gson.Gson;
 import com.hrms.servet.bean.ResponseBean;
@@ -16,14 +11,11 @@ import com.hrms.servet.dao.EmployeeDao;
 import com.hrms.servet.dao.RoleDao;
 import com.hrms.servet.dao.impl.EmployeeDaoImpl;
 import com.hrms.servet.dao.impl.RoleDaoImpl;
-import com.hrms.servet.model.Address;
-import com.hrms.servet.model.BankDetail;
 import com.hrms.servet.model.Employee;
 import com.hrms.servet.model.Role;
 import com.hrms.servet.service.EmployeeService;
 
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -60,7 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			Employee employee = new Employee();
 			employee.setName(request.getParameter("name"));
 			employee.setCategoryOfEmployment(request.getParameter("categoryOfEmployment"));
-			String roleCode = request.getParameter("roleCode");
+			String roleCode = request.getParameter("designation");
 			Role role = new Role();
 			role.setRoleCode(roleCode);
 			employee.setDesignation(role); // Store Role object in designation
@@ -72,28 +64,33 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setReportingTo(request.getParameter("reportingTo"));
 
 // Setting date fields with appropriate parsing
-			String dateOfJoining = request.getParameter("dateOfJoining");
+			String dateOfJoining = request.getParameter("doj");
 			if (dateOfJoining != null && !dateOfJoining.isEmpty()) {
 				employee.setDateOfJoining(LocalDate.parse(dateOfJoining));
 			}
+			employee.setMonth(request.getParameter("month"));
 
-			String dateOfBirth = request.getParameter("dateOfBirth");
+			employee.setYearsOfCompletion(Float.parseFloat(request.getParameter("yearsOfCompletion")));
+			employee.setApproxYearsCompletion(Integer.parseInt(request.getParameter("approxYrsCompletion")));
+			employee.setProbationPeriod(Integer.parseInt(request.getParameter("probationPeriod")));
+			employee.setDateOfConfirmation(LocalDate.parse(request.getParameter("doc")));
+			employee.setLocation(request.getParameter("location"));
+
+			String dateOfBirth = request.getParameter("dob");
 			if (dateOfBirth != null && !dateOfBirth.isEmpty()) {
 				employee.setDateOfBirth(LocalDate.parse(dateOfBirth));
 			}
-
 			employee.setAgeTillDate(Integer.parseInt(request.getParameter("ageTillDate")));
 			employee.setDateOfMonth(Integer.parseInt(request.getParameter("dateOfMonth")));
 			employee.setAppointmentLetter(request.getParameter("appointmentLetter"));
 			employee.setNda(request.getParameter("nda"));
-			employee.setConfirmationOrProbation(request.getParameter("confirmationOrProbation"));
+			employee.setConfirmationOrProbation(request.getParameter("confProb"));
 			employee.setIdCard(request.getParameter("idCard"));
-			employee.setKotakAccount(request.getParameter("kotakAccount"));
-			employee.setAxisAccount(request.getParameter("axisAccount"));
+			employee.setAccount(request.getParameter("account"));
 			employee.setBankAccount(request.getParameter("bankAccount"));
 			employee.setIfscCode(request.getParameter("ifscCode"));
-			employee.setUanNumber(request.getParameter("uanNumber"));
-			employee.setPfNumber(request.getParameter("pfNumber"));
+			employee.setUanNumber(request.getParameter("UanNum"));
+			employee.setPfNumber(request.getParameter("pfNum"));
 			employee.setMaritalStatus(request.getParameter("maritalStatus"));
 			employee.setGender(request.getParameter("gender"));
 			employee.setOfficialContactNo(request.getParameter("officialContactNo"));
@@ -105,14 +102,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setCurrentAddress(request.getParameter("currentAddress"));
 			employee.setPermanentAddress(request.getParameter("permanentAddress"));
 			employee.setHighestQualification(request.getParameter("highestQualification"));
-			employee.setTotalExperience(Integer.parseInt(request.getParameter("totalExperience")));
-			employee.setRelevantExperience(Integer.parseInt(request.getParameter("relevantExperience")));
+			employee.setTotalExperience(Integer.parseInt(request.getParameter("totalExp")));
+			employee.setRelevantExperience(Integer.parseInt(request.getParameter("relevantExp")));
 			employee.setPreviousCompany(request.getParameter("previousCompany"));
 			employee.setDesignationInPreviousCompany(request.getParameter("designationInPreviousCompany"));
-			employee.setExperienceWithPPT(request.getParameter("experienceWithPPT"));
+			employee.setExperienceWithPPT(request.getParameter("expWithPPT"));
 
-// Setting resignation and retirement dates
-			String dateOfResignation = request.getParameter("dateOfResignation");
+			// Setting resignation and retirement dates
+			String dateOfResignation = request.getParameter("DOR");
 			if (dateOfResignation != null && !dateOfResignation.isEmpty()) {
 				employee.setDateOfResignation(LocalDate.parse(dateOfResignation));
 			}
@@ -138,9 +135,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setAccountNumber(request.getParameter("accountNumber"));
 			employee.setIfscCodeBank(request.getParameter("ifscCodeBank"));
 
-			// Set reporting person employee ID if applicable
-			employee.setReportingTo(request.getParameter("reportingPersonEmployeeId"));
-
 			employeeDao.insertEmployee(employee);
 			ResponseBean responseBean = new ResponseBean();
 			responseBean.setSuccess(true);
@@ -159,43 +153,47 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void updateEmployee(HttpServletRequest request, HttpServletResponse response) {
 		Employee employee = new Employee();
-		employee.setEmployeeId((int) Double.parseDouble(request.getParameter("employeeId")));  // Employee ID created by user
 		employee.setName(request.getParameter("name"));
 		employee.setCategoryOfEmployment(request.getParameter("categoryOfEmployment"));
-		String roleCode = request.getParameter("roleCode");
+		String roleCode = request.getParameter("designation");
 		Role role = new Role();
 		role.setRoleCode(roleCode);
 		employee.setDesignation(role); // Store Role object in designation
 
-		// Set department independently if needed
+// Set department independently if needed
 		employee.setDepartment(request.getParameter("department"));
 
-		// Set other attributes
+// Set other attributes
 		employee.setReportingTo(request.getParameter("reportingTo"));
 
-		// Setting date fields with appropriate parsing
-		String dateOfJoining = request.getParameter("dateOfJoining");
+// Setting date fields with appropriate parsing
+		String dateOfJoining = request.getParameter("doj");
 		if (dateOfJoining != null && !dateOfJoining.isEmpty()) {
 			employee.setDateOfJoining(LocalDate.parse(dateOfJoining));
 		}
+		employee.setMonth(request.getParameter("month"));
 
-		String dateOfBirth = request.getParameter("dateOfBirth");
+		employee.setYearsOfCompletion(Float.parseFloat(request.getParameter("yearsOfCompletion")));
+		employee.setApproxYearsCompletion(Integer.parseInt(request.getParameter("approxYrsCompletion")));
+		employee.setProbationPeriod(Integer.parseInt(request.getParameter("probationPeriod")));
+		employee.setDateOfConfirmation(LocalDate.parse(request.getParameter("doc")));
+		employee.setLocation(request.getParameter("location"));
+
+		String dateOfBirth = request.getParameter("dob");
 		if (dateOfBirth != null && !dateOfBirth.isEmpty()) {
 			employee.setDateOfBirth(LocalDate.parse(dateOfBirth));
 		}
-
 		employee.setAgeTillDate(Integer.parseInt(request.getParameter("ageTillDate")));
 		employee.setDateOfMonth(Integer.parseInt(request.getParameter("dateOfMonth")));
 		employee.setAppointmentLetter(request.getParameter("appointmentLetter"));
 		employee.setNda(request.getParameter("nda"));
-		employee.setConfirmationOrProbation(request.getParameter("confirmationOrProbation"));
+		employee.setConfirmationOrProbation(request.getParameter("confProb"));
 		employee.setIdCard(request.getParameter("idCard"));
-		employee.setKotakAccount(request.getParameter("kotakAccount"));
-		employee.setAxisAccount(request.getParameter("axisAccount"));
+		employee.setAccount(request.getParameter("account"));
 		employee.setBankAccount(request.getParameter("bankAccount"));
 		employee.setIfscCode(request.getParameter("ifscCode"));
-		employee.setUanNumber(request.getParameter("uanNumber"));
-		employee.setPfNumber(request.getParameter("pfNumber"));
+		employee.setUanNumber(request.getParameter("UanNum"));
+		employee.setPfNumber(request.getParameter("pfNum"));
 		employee.setMaritalStatus(request.getParameter("maritalStatus"));
 		employee.setGender(request.getParameter("gender"));
 		employee.setOfficialContactNo(request.getParameter("officialContactNo"));
@@ -207,14 +205,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setCurrentAddress(request.getParameter("currentAddress"));
 		employee.setPermanentAddress(request.getParameter("permanentAddress"));
 		employee.setHighestQualification(request.getParameter("highestQualification"));
-		employee.setTotalExperience(Integer.parseInt(request.getParameter("totalExperience")));
-		employee.setRelevantExperience(Integer.parseInt(request.getParameter("relevantExperience")));
+		employee.setTotalExperience(Integer.parseInt(request.getParameter("totalExp")));
+		employee.setRelevantExperience(Integer.parseInt(request.getParameter("relevantExp")));
 		employee.setPreviousCompany(request.getParameter("previousCompany"));
 		employee.setDesignationInPreviousCompany(request.getParameter("designationInPreviousCompany"));
-		employee.setExperienceWithPPT(request.getParameter("experienceWithPPT"));
+		employee.setExperienceWithPPT(request.getParameter("expWithPPT"));
 
 		// Setting resignation and retirement dates
-		String dateOfResignation = request.getParameter("dateOfResignation");
+		String dateOfResignation = request.getParameter("DOR");
 		if (dateOfResignation != null && !dateOfResignation.isEmpty()) {
 			employee.setDateOfResignation(LocalDate.parse(dateOfResignation));
 		}
@@ -239,9 +237,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setNameAsPerBank(request.getParameter("nameAsPerBank"));
 		employee.setAccountNumber(request.getParameter("accountNumber"));
 		employee.setIfscCodeBank(request.getParameter("ifscCodeBank"));
-
-		// Set reporting person employee ID if applicable
-		employee.setReportingTo(request.getParameter("reportingPersonEmployeeId"));
 
 		try {
 			employeeDao.updateEmployee(employee);
@@ -289,9 +284,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 				if(employeeId != null){
 					Employee employee = employeeDao.getEmployeeById(employeeId);
 					Gson gson = new Gson();
-					Map selectedRoleMap = gson.fromJson(gson.toJson(employee), Map.class);
-					logger.severe("Error  in RoleServiceImpl --> loadEmployeeForm "+selectedRoleMap);
-					request.setAttribute("selected", selectedRoleMap);
+//					Map selectedRoleMap = gson.fromJson(gson.toJson(employee), Map.class);
+//					logger.severe("Error  in RoleServiceImpl --> loadEmployeeForm "+selectedRoleMap);
+//					request.setAttribute("selected", selectedRoleMap);
 				}else{
 					action = "insertEmployee";
 				}

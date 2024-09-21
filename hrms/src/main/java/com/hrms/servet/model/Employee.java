@@ -24,8 +24,7 @@ public class Employee {
 	private String nda; // NDA
 	private String confirmationOrProbation; // Conformation/Probation
 	private String idCard; // ID Card
-	private String kotakAccount; // Kotak Account
-	private String axisAccount; // Axis Account
+	private String account; // Account
 	private String bankAccount; // Bank Account
 	private String ifscCode; // IFSC Code
 	private String uanNumber; // UAN NUM
@@ -220,21 +219,14 @@ public class Employee {
 		this.idCard = idCard;
 	}
 
-	public String getKotakAccount() {
-		return kotakAccount;
+	public String getAccount() {
+		return account;
 	}
 
-	public void setKotakAccount(String kotakAccount) {
-		this.kotakAccount = kotakAccount;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
-	public String getAxisAccount() {
-		return axisAccount;
-	}
-
-	public void setAxisAccount(String axisAccount) {
-		this.axisAccount = axisAccount;
-	}
 
 	public String getBankAccount() {
 		return bankAccount;
@@ -523,8 +515,7 @@ public class Employee {
 				", nda='" + nda + '\'' +
 				", confirmationOrProbation='" + confirmationOrProbation + '\'' +
 				", idCard='" + idCard + '\'' +
-				", kotakAccount='" + kotakAccount + '\'' +
-				", axisAccount='" + axisAccount + '\'' +
+				", account='" + account + '\'' +
 				", bankAccount='" + bankAccount + '\'' +
 				", ifscCode='" + ifscCode + '\'' +
 				", uanNumber='" + uanNumber + '\'' +
