@@ -37,19 +37,11 @@
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    First Name 
+                    Name
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    Middle Name
-                  </th>
-
-                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    Last Name
-                  </th>
-
-                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    Role Id
+                    Role Code
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
@@ -61,7 +53,7 @@
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    Branch
+                    Department
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
@@ -69,7 +61,7 @@
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    Ip Address
+                    Location
                   </th>
 
                   <th class="border-0 bgc-white shadow-sm w-8">
@@ -99,39 +91,31 @@
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.employeeFirstName }
+                      ${item.name }
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.employeeMiddleName }
+                      ${item.designation }
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.employeeLastName }
+                      ${item.ageTillDate }
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.role.roleCode }
+                      ${item.dateOfBirth }
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.employeeAge }
+                      ${item.department }
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.employeeDob }
+                      ${item.reportingTo }
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.employeeBranch }
-                    </td>
-
-                    <td class="text-105 align-middle">
-                      ${item.reportingPersonEmployeeId }
-                    </td>
-
-                    <td class="text-105 align-middle">
-                      ${item.employeeIpAddress }
+                      ${item.location }
                     </td>
 
                     <td class="align-middle">
@@ -171,18 +155,18 @@
 
                   <div class="form-group row">
                     <div class="col-sm-9">
-                      <input type="hidden" class="form-control" id="idRoleCode" value="${selected.employeeId}"/>
+                      <input type="hidden" class="form-control" id="employeeId" name="employeeId" value="${selected.employeeId}"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="firstname" class="mb-0">
+                      <label for="name" class="mb-0">
                         Name
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="firstname" value="${selected.employeeFirstName}"/>
+                      <input type="text" class="form-control" id="name" name="name" value="${selected.employeeFirstName}"/>
                     </div>
                   </div>
 
@@ -194,7 +178,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="categoryOfEmployment" value="${selected.employeeFirstName}"/>
+                      <input type="text" class="form-control" id="categoryOfEmployment" name="categoryOfEmployment" value="${selected.employeeFirstName}"/>
                     </div>
                   </div>
 
@@ -208,7 +192,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="designation">
+                              id="designation" name="designation">
                         <c:if test="${not empty roleList}">
                           <c:forEach items="${roleList}" var="item" varStatus="loop">
                             <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
@@ -226,7 +210,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="department">
+                              id="department" name="department">
                         <option value="1">IT</option>
                         <option value="2">Management</option>
                         <option value="3">Printing</option>
@@ -242,7 +226,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="reportingTo">
+                              id="reportingTo" name="reportingTo">
                         <option value="1">xyz</option>
                         <option value="2">qas</option>
                         <option value="3">dws</option>
@@ -257,7 +241,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="date" class="form-control" id="doj" value=""/>
+                      <input type="date" class="form-control" id="doj" name="doj" value=""/>
                     </div>
                   </div>
 
@@ -268,7 +252,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="month" value="jan" disabled/>
+                      <input type="text" class="form-control" id="month" name="month" value="jan" disabled/>
                     </div>
                   </div>
 
@@ -279,7 +263,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="yearsOfCompletion" value="2.2" disabled/>
+                      <input type="text" class="form-control" id="yearsOfCompletion" name="yearsOfCompletion" value="2.2" disabled/>
                     </div>
                   </div>
 
@@ -290,7 +274,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="approxYrsCompletion" value="2" disabled/>
+                      <input type="text" class="form-control" id="approxYrsCompletion" name="approxYrsCompletion"  value="2" disabled/>
                     </div>
                   </div>
 
@@ -301,7 +285,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="probationPeriod" value="" />
+                      <input type="text" class="form-control" id="probationPeriod" name="probationPeriod" value="" />
                     </div>
                   </div>
 
@@ -312,7 +296,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="doc" value="7-Jul-24" disabled/>
+                      <input type="text" class="form-control" id="doc" name="doc" value="2023-09-21" disabled/>
                     </div>
                   </div>
 
@@ -325,7 +309,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="location">
+                              id="location" name="location">
                         <option value="india">India</option>
                         <option value="usa">USA</option>
                         <option value="isreal">Isreal</option>
@@ -340,7 +324,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="date" class="form-control" id="dob" value=""/>
+                      <input type="date" class="form-control" id="dob" name="dob" value=""/>
                     </div>
                   </div>
 
@@ -351,7 +335,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="ageTillDate" value="2.2" disabled/>
+                      <input type="text" class="form-control" id="ageTillDate" name="ageTillDate" value="2.2" disabled/>
                     </div>
                   </div>
 
@@ -362,7 +346,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="dateOfMonth" value="2" disabled/>
+                      <input type="text" class="form-control" id="dateOfMonth" name="dateOfMonth" value="2" disabled/>
                     </div>
                   </div>
 
@@ -375,7 +359,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="appointmentLetter">
+                              id="appointmentLetter" name="appointmentLetter">
                         <option value="gujarat">Gujarat</option>
                         <option value="maharashtra">Maharashtra</option>
                         <option value="mp">Madhya Pradesh</option>
@@ -392,7 +376,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="nda">
+                              id="nda" name="nda">
                         <option value="gujarat">Gujarat</option>
                         <option value="maharashtra">Maharashtra</option>
                         <option value="mp">Madhya Pradesh</option>
@@ -409,7 +393,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="confProb">
+                              id="confProb" name="confProb">
                         <option value="conformation">Conformation</option>
                         <option value="probation">Probation</option>
                       </select>
@@ -425,7 +409,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="idCard">
+                              id="idCard" name="idCard">
                         <option value="Issued">Issued</option>
                         <option value="Not Issued">Not Issued</option>
                       </select>
@@ -439,7 +423,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="account" value="GGG"/>
+                      <input type="text" class="form-control" id="account" name="account" value="GGG"/>
                     </div>
                   </div>
 
@@ -450,7 +434,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bankAccount" value="G5662GG"/>
+                      <input type="text" class="form-control" id="bankAccount"  name="bankAccount" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -461,7 +445,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="ifscCode" value="G5662GG"/>
+                      <input type="text" class="form-control" id="ifscCode" name="ifscCode" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -472,7 +456,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="UanNum" value="G5662GG"/>
+                      <input type="text" class="form-control" id="UanNum" name="UanNum" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -483,20 +467,20 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="pfNum" value="563G5662GG"/>
+                      <input type="text" class="form-control" id="pfNum" name="pfNum" value="563G5662GG"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="married" class="mb-0">
+                      <label for="maritalStatus" class="mb-0">
                         Married/UnMarried
                       </label>
                     </div>
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="married">
+                              id="maritalStatus" name="maritalStatus">
                         <option value="married">Married</option>
                         <option value="unMarried">UnMarried</option>
                       </select>
@@ -512,7 +496,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="gender">
+                              id="gender" name="gender">
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                       </select>
@@ -521,56 +505,56 @@
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="officialContact" class="mb-0">
+                      <label for="officialContactNo" class="mb-0">
                         Official Contact No.
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="officialContact" value="9874563211"/>
+                      <input type="text" class="form-control" id="officialContactNo" name="officialContactNo" value="9874563211"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="personalNo" class="mb-0">
+                      <label for="personalContactNo" class="mb-0">
                         Personal No
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="personalNo" value="9874563211"/>
+                      <input type="text" class="form-control" id="personalContactNo" name="personalContactNo" value="9874563211"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="alternateNo" class="mb-0">
+                      <label for="alternateContactNo" class="mb-0">
                         Alternate No
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="alternateNo" value="9874563211"/>
+                      <input type="text" class="form-control" id="alternateContactNo" name="alternateContactNo" value="9874563211"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="personalEmail" class="mb-0">
+                      <label for="personalEmailId" class="mb-0">
                         Personal Email ID
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="personalEmail" value="G5662GG"/>
+                      <input type="text" class="form-control" id="personalEmailId" name="personalEmailId" value="G5662GG"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="officialEmail" class="mb-0">
+                      <label for="officialEmailId" class="mb-0">
                         Official Email ID
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="officialEmail" value="G5662GG"/>
+                      <input type="text" class="form-control" id="officialEmailId" name="officialEmailId" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -583,7 +567,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="bloodGroup">
+                              id="bloodGroup" name="bloodGroup">
                         <option value="A+">A+</option>
                         <option value="A-">A-</option>
                         <option value="B+">B+</option>
@@ -603,7 +587,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="currentAddress" value="9874563211"/>
+                      <input type="text" class="form-control" id="currentAddress" name="currentAddress" value="9874563211"/>
                     </div>
                   </div>
 
@@ -614,18 +598,18 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="permanentAddress" value="9874563211"/>
+                      <input type="text" class="form-control" id="permanentAddress" name="permanentAddress" value="9874563211"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="qualification" class="mb-0">
+                      <label for="highestQualification" class="mb-0">
                         Highest Qualification
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="qualification" value="9874563211"/>
+                      <input type="text" class="form-control" id="highestQualification" name="highestQualification" value="9874563211"/>
                     </div>
                   </div>
 
@@ -636,7 +620,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="totalExp" value="9874563211"/>
+                      <input type="text" class="form-control" id="totalExp" name="totalExp" value="4"/>
                     </div>
                   </div>
 
@@ -647,7 +631,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="relevantExp" value="G5662GG"/>
+                      <input type="text" class="form-control" id="relevantExp" name="relevantExp" value="14"/>
                     </div>
                   </div>
 
@@ -658,7 +642,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="previousCompany" value="G5662GG"/>
+                      <input type="text" class="form-control" id="previousCompany" name="previousCompany" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -669,7 +653,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="designationInPreviousCompany" value="G5662GG"/>
+                      <input type="text" class="form-control" id="designationInPreviousCompany" name="designationInPreviousCompany" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -680,7 +664,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="expWithPPT" value="2" disabled/>
+                      <input type="text" class="form-control" id="expWithPPT" name="expWithPPT" value="2" disabled/>
                     </div>
                   </div>
 
@@ -691,7 +675,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="date" class="form-control" id="DOR" value=""/>
+                      <input type="date" class="form-control" id="DOR" name="DOR" value=""/>
                     </div>
                   </div>
 
@@ -702,7 +686,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="RetirementDate" value="2-Apr-24"/>
+                      <input type="text" class="form-control" id="retirementDate" name="retirementDate" value="2025-09-21"/>
                     </div>
                   </div>
 
@@ -713,7 +697,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="exitDate" value="2-Apr-24" disabled/>
+                      <input type="text" class="form-control" id="exitDate" name="exitDate" value="2025-09-21" disabled/>
                     </div>
                   </div>
 
@@ -724,7 +708,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="file" class="form-control" id="educationCertificate" value=""/>
+                      <input type="file" class="form-control" id="educationCertificate" name="educationCertificate" value=""/>
                     </div>
                   </div>
 
@@ -735,7 +719,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="file" class="form-control" id="rationCard" value=""/>
+                      <input type="file" class="form-control" id="rationCard" name="rationCard" value=""/>
                     </div>
                   </div>
 
@@ -746,7 +730,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="file" class="form-control" id="panCard" value=""/>
+                      <input type="file" class="form-control" id="panCard" name="panCard" value=""/>
                     </div>
                   </div>
 
@@ -757,7 +741,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="file" class="form-control" id="aadharCard" value=""/>
+                      <input type="file" class="form-control" id="aadharCard" name="aadharCard" value=""/>
                     </div>
                   </div>
 
@@ -768,7 +752,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="file" class="form-control" id="drivingLicense" value=""/>
+                      <input type="file" class="form-control" id="drivingLicense" name="drivingLicense" value=""/>
                     </div>
                   </div>
 
@@ -779,7 +763,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="file" class="form-control" id="passport" value=""/>
+                      <input type="file" class="form-control" id="passport" name="passport" value=""/>
                     </div>
                   </div>
 
@@ -790,7 +774,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bankName" value="GGG"/>
+                      <input type="text" class="form-control" id="bankName" name="bankName" value="GGG"/>
                     </div>
                   </div>
 
@@ -801,7 +785,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="nameAsPerBank" value="G5662GG"/>
+                      <input type="text" class="form-control" id="nameAsPerBank" name="nameAsPerBank" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -812,18 +796,18 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="accountNo" value="G5662GG"/>
+                      <input type="text" class="form-control" id="accountNo" name="accountNumber" value="G5662GG"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="ifscCodeBankAccount" class="mb-0">
+                      <label for="ifscCodeBank" class="mb-0">
                         IFSC Code
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="ifscCodeBankAccount" value="G5662GG"/>
+                      <input type="text" class="form-control" id="ifscCodeBank" name="ifscCodeBank" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -983,7 +967,7 @@
           })
 
         // don't select row when clicking on the edit icon
-        $('a[data-action=edit').on('click', function (e) {
+        $('a[data-action=edit]').on('click', function (e) {
           e.preventDefault()
           e.stopPropagation()// don't select
         })
@@ -1028,30 +1012,76 @@
     <c:if test="${action == 'updateEmployee'}">
         url = "hrms/employee?action=updateEmployee";
     </c:if>
-    
-    let employeeData = {
-        "employeeId": $('#idRoleCode').val(),
-        "employeeFirstName": $('#firstname').val(),
-        "employeeMiddleName": $('#middlename').val(),
-        "employeeLastName": $('#lastname').val(),
-        "employeeAge": $('#age').val(),
-        "employeeDob": "1995-04-15",
-        "roleCode": $('#role').val(),
-        "department": $('#department').val(),
-        "employeeBranch": $('#homebranch').val(),
-        "reportingPersonEmployeeId": $('#reportingperson').val(),
-        "addressLine1": $('#address').val(),
-        "addressLine": $('#address').val(),
-        "country": $('#country').val(),
-        "state": $('#state').val(),
-        "city": $('#city').val(),
-        "pinCode": $('#pincode').val(),
-        "employeeIpAddress": "788787",
-        "bankName": "sjfb",
-        "bankAccNo": "6t8t",
-        "ifscNo": "t67",
-        "upiId": "tyu",
-    };
+
+          let employeeData = {
+            "name": $('#name').val(),
+            "categoryOfEmployment": $('#categoryOfEmployment').val(),
+            "designation": $('#designation').val(),
+            "department": $('#department').val(),
+            "reportingTo": $('#reportingTo').val(),
+
+            // Parsing date fields
+            "doj": $('#doj').val() ? $('#doj').val() : null,
+            "month": $('#month').val(),
+
+            // Parsing numeric fields
+            "yearsOfCompletion": parseFloat($('#yearsOfCompletion').val()),
+            "approxYrsCompletion": parseInt($('#approxYrsCompletion').val()),
+            "probationPeriod": parseInt($('#probationPeriod').val()),
+
+            // Setting confirmation and location
+            "doc": $('#doc').val() ? $('#doc').val() : null,
+            "location": $('#location').val(),
+
+            // Setting date of birth and age
+            "dob": $('#dob').val() ? $('#dob').val() : null,
+            "ageTillDate": parseInt($('#ageTillDate').val()),
+            "dateOfMonth": parseInt($('#dateOfMonth').val()),
+
+            // Setting other attributes
+            "appointmentLetter": $('#appointmentLetter').val(),
+            "nda": $('#nda').val(),
+            "confProb": $('#confProb').val(),
+            "idCard": $('#idCard').val(),
+            "account": $('#account').val(),
+            "bankAccount": $('#bankAccount').val(),
+            "ifscCode": $('#ifscCode').val(),
+            "UanNum": $('#UanNum').val(),
+            "pfNum": $('#pfNum').val(),
+            "maritalStatus": $('#maritalStatus').val(),
+            "gender": $('#gender').val(),
+            "officialContactNo": $('#officialContactNo').val(),
+            "personalContactNo": $('#personalContactNo').val(),
+            "alternateContactNo": $('#alternateContactNo').val(),
+            "personalEmailId": $('#personalEmailId').val(),
+            "officialEmailId": $('#officialEmailId').val(),
+            "bloodGroup": $('#bloodGroup').val(),
+            "currentAddress": $('#currentAddress').val(),
+            "permanentAddress": $('#permanentAddress').val(),
+            "highestQualification": $('#highestQualification').val(),
+            "totalExp": parseInt($('#totalExp').val()),
+            "relevantExp": parseInt($('#relevantExp').val()),
+            "previousCompany": $('#previousCompany').val(),
+            "designationInPreviousCompany": $('#designationInPreviousCompany').val(),
+            "expWithPPT": $('#expWithPPT').val(),
+
+            // Parsing resignation and retirement dates
+            "DOR": $('#DOR').val() ? $('#DOR').val() : null,
+            "retirementDate": $('#retirementDate').val() ? $('#retirementDate').val() : null,
+            "exitDate": $('#exitDate').val() ? $('#exitDate').val() : null,
+
+            // Other attributes
+            "educationCertificate": $('#educationCertificate').val(),
+            "rationCard": $('#rationCard').val(),
+            "panCard": $('#panCard').val(),
+            "aadharCard": $('#aadharCard').val(),
+            "drivingLicense": $('#drivingLicense').val(),
+            "passport": $('#passport').val(),
+            "bankName": $('#bankName').val(),
+            "nameAsPerBank": $('#nameAsPerBank').val(),
+            "accountNumber": $('#accountNumber').val(),
+            "ifscCodeBank": $('#ifscCodeBank').val()
+          };
 
     $.ajax({
         type: "POST",
