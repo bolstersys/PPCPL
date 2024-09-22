@@ -95,7 +95,7 @@
                     </td>
 
                     <td class="text-105 align-middle">
-                      ${item.designation }
+                      ${item.designation.roleCode }
                     </td>
 
                     <td class="text-105 align-middle">
@@ -166,7 +166,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="name" name="name" value="${selected.employeeFirstName}"/>
+                      <input type="text" class="form-control" id="name" name="name" value="${selected.name}"/>
                     </div>
                   </div>
 
@@ -178,7 +178,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="categoryOfEmployment" name="categoryOfEmployment" value="${selected.employeeFirstName}"/>
+                      <input type="text" class="form-control" id="categoryOfEmployment" name="categoryOfEmployment" value="${selected.categoryOfEmployment}"/>
                     </div>
                   </div>
 
@@ -195,7 +195,7 @@
                               id="designation" name="designation">
                         <c:if test="${not empty roleList}">
                           <c:forEach items="${roleList}" var="item" varStatus="loop">
-                            <option value='${item.roleCode}' <c:if test="${item.roleCode == selected.roleCode}">selected</c:if>>${item.roleName}</option>
+                            <option value='${item.roleCode}'>${item.roleName}</option>
                           </c:forEach>
                         </c:if>
                       </select>

@@ -1,16 +1,10 @@
 package com.hrms.servet.service.impl;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import com.google.gson.Gson;
-import com.hrms.servet.RoleServlet;
 import com.hrms.servet.bean.ResponseBean;
 import com.hrms.servet.dao.RoleDao;
 import com.hrms.servet.dao.impl.RoleDaoImpl;
@@ -44,8 +38,8 @@ public class RoleServiceImpl implements RoleService {
 		try {
 			String action = request.getParameter("action");
 			if(action.equals("updateRole")){
-				String roleId = request.getParameter("roleId");
-				List<Role> selectedRoleList = roleDao.getRoleById(roleId);
+				String roleCode = request.getParameter("roleCode");
+				List<Role> selectedRoleList = roleDao.getRoleById(roleCode);
 				Gson gson = new Gson();
 				Map selectedRoleMap = gson.fromJson(gson.toJson(selectedRoleList.get(0)), Map.class);
 				request.setAttribute("selectedRole", selectedRoleMap);
@@ -66,7 +60,6 @@ public class RoleServiceImpl implements RoleService {
 		try {
 			String roleName = request.getParameter("roleName");
 			String roleLevel = request.getParameter("roleLevel");
-			String roleReportingTo = request.getParameter("roleReportingTo");
 			Role role = new Role();
 			role.setRoleName(roleName);
 			role.setRoleLevel(roleLevel);
@@ -92,7 +85,6 @@ public class RoleServiceImpl implements RoleService {
 			String roleCode = request.getParameter("roleCode");
 			String roleName = request.getParameter("roleName");
 			String roleLevel = request.getParameter("roleLevel");
-			String roleReportingTo = request.getParameter("roleReportingTo").isEmpty() ? null : request.getParameter("roleReportingTo");
 			Role role = new Role();
 			role.setRoleCode(roleCode);
 			role.setRoleName(roleName);
@@ -116,15 +108,15 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void deleteRole(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String roleCode = request.getParameter("roleId");
+			String roleCode = request.getParameter("roleCode");
 			roleDao.deleteRole(roleCode);
 			ResponseBean responseBean = new ResponseBean();
 			responseBean.setSuccess(true);
 			responseBean.setMessage("Role Deleted Successfully.");
-			request.setAttribute("action", "ajaxCommonResponse");
-			Gson gson = new Gson();
-			request.setAttribute("message", gson.toJson(responseBean));
-			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/common/ajax.jsp");
+			List<Role> roleList = roleDao.getAllRoles();
+			request.setAttribute("roleList", roleList);
+			request.setAttribute("action", "getAllRoleData");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/roles/role.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 //			e.printStackTrace();
