@@ -33,7 +33,7 @@
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
-                    Role Id
+                    Role Code
                   </th>
 
                   <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
@@ -115,49 +115,29 @@
 
                   <div class="form-group row">
                     <div class="col-sm-9">
-                      <input type="hidden" class="form-control" id="idRoleCode" value="${selectedRole.roleCode}"/>
+                      <input type="hidden" class="form-control" id="roleCode" name="roleCode" value="${selectedRole.roleCode}"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="idRoleName" class="mb-0">
+                      <label for="roleName" class="mb-0">
                         Role Name
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="idRoleName" value="${selectedRole.roleName}"/>
+                      <input type="text" class="form-control" id="roleName" name="roleName" value="${selectedRole.roleName}"/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="idRoleLevel" class="mb-0">
+                      <label for="roleLevel" class="mb-0">
                         Role Level
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=999 id="idRoleLevel" value="${selectedRole.roleLevel}"/>
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="idReportingRole" class="mb-0">
-                        Reporting Role
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <select
-                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                        id="idReportingRole">
-                        <option value="">&nbsp;</option>
-                        <c:if test="${not empty roleList}">
-                            <c:forEach items="${roleList}" var="item" varStatus="loop">
-                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selectedRole.roleReportingTo}">selected</c:if>>${item.roleName}</option>
-                            </c:forEach>
-                        </c:if>
-                      </select>
+                      <input type="number" class="form-control" min=0 max=999 id="roleLevel" name="roleLevel" value="${selectedRole.roleLevel}"/>
                     </div>
                   </div>
                   <div class="form-group text-center">
@@ -316,7 +296,7 @@
           })
 
         // don't select row when clicking on the edit icon
-        $('a[data-action=edit').on('click', function (e) {
+        $('a[data-action=edit]').on('click', function (e) {
           e.preventDefault()
           e.stopPropagation()// don't select
         })
@@ -349,7 +329,7 @@
               if (div.length == 1) $(this).tooltip({ container: 'body', title: div.parent().text() })
               else $(this).tooltip({ container: 'body', title: $(this).text() })
             })
-          $('[data-rel=tooltip').tooltip({ container: 'body' })
+          $('[data-rel=tooltip]').tooltip({ container: 'body' })
         }, 0)
 
         $('#addBtn').on('click', () => {
@@ -361,15 +341,13 @@
           <c:if test="${action == 'updateRole'}">
             url = "hrms/role?action=updateRole";
           </c:if>
-          let roleCode = $('#idRoleCode').val();
-          let roleName = $('#idRoleName').val();
-          let roleLevel = $('#idRoleLevel').val();
-          let roleReportingTo = $('#idReportingRole').val();
+          let roleCode = $('#roleCode').val();
+          let roleName = $('#roleName').val();
+          let roleLevel = $('#roleLevel').val();
           var data = {
             "roleCode":roleCode,
             "roleName":roleName,
-            "roleLevel":roleLevel,
-            "roleReportingTo":roleReportingTo
+            "roleLevel":roleLevel
           }
           $.ajax({
             type: "POST",
@@ -423,7 +401,7 @@
     // Edit function - Redirect to the edit page
     function editRecord(id) {
         // Redirect to edit page with the record ID
-        window.location.href = 'hrms/role?action=updateRole&roleId=' + id;
+        window.location.href = 'hrms/role?action=updateRole&roleCode=' + id;
     }
 
     // Delete function - Confirm and redirect
@@ -433,7 +411,7 @@
 
         // If confirmed, redirect to delete action
         if (confirmation) {
-            window.location.href = 'hrms/role?action=deleteRole&roleId=' + id;
+            window.location.href = 'hrms/role?action=deleteRole&roleCode=' + id;
         }
     }
       })

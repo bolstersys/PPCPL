@@ -264,10 +264,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 			ResponseBean responseBean = new ResponseBean();
 			responseBean.setSuccess(true);
 			responseBean.setMessage("Employee Deleted Successfully.");
-			request.setAttribute("action", "ajaxCommonResponse");
-			Gson gson = new Gson();
-			request.setAttribute("message", gson.toJson(responseBean));
-			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/common/ajax.jsp");
+			List<Employee> employeeList = employeeDao.getAllEmployee();
+			List<Role> roleList = roleDao.getAllRoles();
+			request.setAttribute("employeeList", employeeList);
+			request.setAttribute("roleList", roleList);
+			request.setAttribute("action", "getAllEmployeeData");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/employee/employee.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -283,10 +285,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				String employeeId = request.getParameter("employeeId");
 				if(employeeId != null){
 					Employee employee = employeeDao.getEmployeeById(employeeId);
-					Gson gson = new Gson();
-//					Map selectedRoleMap = gson.fromJson(gson.toJson(employee), Map.class);
-//					logger.severe("Error  in RoleServiceImpl --> loadEmployeeForm "+selectedRoleMap);
-//					request.setAttribute("selected", selectedRoleMap);
+					request.setAttribute("selected", employee);
 				}else{
 					action = "insertEmployee";
 				}
