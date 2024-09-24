@@ -274,7 +274,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="approxYrsCompletion" name="approxYrsCompletion"  value="2" disabled/>
+                      <input type="number" class="form-control" id="approxYrsCompletion" name="approxYrsCompletion"  value="2" disabled/>
                     </div>
                   </div>
 
@@ -285,7 +285,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="probationPeriod" name="probationPeriod" value="" />
+                      <input type="number" class="form-control" id="probationPeriod" name="probationPeriod" value="10" />
                     </div>
                   </div>
 
@@ -456,7 +456,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="UanNum" name="UanNum" value="G5662GG"/>
+                      <input type="number" class="form-control" id="UanNum" name="UanNum" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -467,7 +467,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="pfNum" name="pfNum" value="563G5662GG"/>
+                      <input type="number"  class="form-control" id="pfNum" name="pfNum" value="563G5662GG"/>
                     </div>
                   </div>
 
@@ -510,7 +510,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="officialContactNo" name="officialContactNo" value="9874563211"/>
+                      <input type="number" max="9999999999" class="form-control" id="officialContactNo" name="officialContactNo" value="9874563211"/>
                     </div>
                   </div>
 
@@ -521,7 +521,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="personalContactNo" name="personalContactNo" value="9874563211"/>
+                      <input type="number" max="9999999999" class="form-control" id="personalContactNo" name="personalContactNo" value="9874563211"/>
                     </div>
                   </div>
 
@@ -532,7 +532,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="alternateContactNo" name="alternateContactNo" value="9874563211"/>
+                      <input type="number" max="9999999999" class="form-control" id="alternateContactNo" name="alternateContactNo" value="9874563211"/>
                     </div>
                   </div>
 
@@ -543,7 +543,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="personalEmailId" name="personalEmailId" value="G5662GG"/>
+                      <input type="email" class="form-control" id="personalEmailId" name="personalEmailId" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -554,7 +554,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="officialEmailId" name="officialEmailId" value="G5662GG"/>
+                      <input type="email" class="form-control" id="officialEmailId" name="officialEmailId" value="G5662GG"/>
                     </div>
                   </div>
 
@@ -620,7 +620,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="totalExp" name="totalExp" value="4"/>
+                      <input type="number" class="form-control" id="totalExp" name="totalExp" value="4"/>
                     </div>
                   </div>
 
@@ -631,7 +631,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="relevantExp" name="relevantExp" value="14"/>
+                      <input type="number" class="form-control" id="relevantExp" name="relevantExp" value="14"/>
                     </div>
                   </div>
 
@@ -1014,6 +1014,7 @@
     </c:if>
 
           let employeeData = {
+            "employeeId": $('#employeeId').val(),
             "name": $('#name').val(),
             "categoryOfEmployment": $('#categoryOfEmployment').val(),
             "designation": $('#designation').val(),

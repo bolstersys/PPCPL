@@ -1,8 +1,9 @@
 package com.hrms.servet.service.impl;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
@@ -66,22 +67,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 // Setting date fields with appropriate parsing
 			String dateOfJoining = request.getParameter("doj");
 			if (dateOfJoining != null && !dateOfJoining.isEmpty()) {
-				employee.setDateOfJoining(LocalDate.parse(dateOfJoining));
+				employee.setDateOfJoining(validateDate(dateOfJoining));
 			}
 			employee.setMonth(request.getParameter("month"));
 
-			employee.setYearsOfCompletion(Float.parseFloat(request.getParameter("yearsOfCompletion")));
-			employee.setApproxYearsCompletion(Integer.parseInt(request.getParameter("approxYrsCompletion")));
-			employee.setProbationPeriod(Integer.parseInt(request.getParameter("probationPeriod")));
-			employee.setDateOfConfirmation(LocalDate.parse(request.getParameter("doc")));
+			employee.setYearsOfCompletion(validateIFloat(request.getParameter("yearsOfCompletion")));
+			employee.setApproxYearsCompletion(validateInteger(request.getParameter("approxYrsCompletion")));
+			employee.setProbationPeriod(validateInteger(request.getParameter("probationPeriod")));
+			employee.setDateOfConfirmation(validateDate(request.getParameter("doc")));
 			employee.setLocation(request.getParameter("location"));
 
 			String dateOfBirth = request.getParameter("dob");
 			if (dateOfBirth != null && !dateOfBirth.isEmpty()) {
-				employee.setDateOfBirth(LocalDate.parse(dateOfBirth));
+				employee.setDateOfBirth(validateDate(dateOfBirth));
 			}
-			employee.setAgeTillDate(Integer.parseInt(request.getParameter("ageTillDate")));
-			employee.setDateOfMonth(Integer.parseInt(request.getParameter("dateOfMonth")));
+			employee.setAgeTillDate(validateInteger(request.getParameter("ageTillDate")));
+			employee.setDateOfMonth(validateInteger(request.getParameter("dateOfMonth")));
 			employee.setAppointmentLetter(request.getParameter("appointmentLetter"));
 			employee.setNda(request.getParameter("nda"));
 			employee.setConfirmationOrProbation(request.getParameter("confProb"));
@@ -102,8 +103,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setCurrentAddress(request.getParameter("currentAddress"));
 			employee.setPermanentAddress(request.getParameter("permanentAddress"));
 			employee.setHighestQualification(request.getParameter("highestQualification"));
-			employee.setTotalExperience(Integer.parseInt(request.getParameter("totalExp")));
-			employee.setRelevantExperience(Integer.parseInt(request.getParameter("relevantExp")));
+			employee.setTotalExperience(validateInteger(request.getParameter("totalExp")));
+			employee.setRelevantExperience(validateInteger(request.getParameter("relevantExp")));
 			employee.setPreviousCompany(request.getParameter("previousCompany"));
 			employee.setDesignationInPreviousCompany(request.getParameter("designationInPreviousCompany"));
 			employee.setExperienceWithPPT(request.getParameter("expWithPPT"));
@@ -111,17 +112,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 			// Setting resignation and retirement dates
 			String dateOfResignation = request.getParameter("DOR");
 			if (dateOfResignation != null && !dateOfResignation.isEmpty()) {
-				employee.setDateOfResignation(LocalDate.parse(dateOfResignation));
+				employee.setDateOfResignation(validateDate(dateOfResignation));
 			}
 
 			String retirementDate = request.getParameter("retirementDate");
 			if (retirementDate != null && !retirementDate.isEmpty()) {
-				employee.setRetirementDate(LocalDate.parse(retirementDate));
+				employee.setRetirementDate(validateDate(retirementDate));
 			}
 
 			String exitDate = request.getParameter("exitDate");
 			if (exitDate != null && !exitDate.isEmpty()) {
-				employee.setExitDate(LocalDate.parse(exitDate));
+				employee.setExitDate(validateDate(exitDate));
 			}
 
 			employee.setEducationCertificate(request.getParameter("educationCertificate"));
@@ -153,6 +154,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void updateEmployee(HttpServletRequest request, HttpServletResponse response) {
 		Employee employee = new Employee();
+		employee.setEmployeeId(validateInteger(request.getParameter("employeeId")));
 		employee.setName(request.getParameter("name"));
 		employee.setCategoryOfEmployment(request.getParameter("categoryOfEmployment"));
 		String roleCode = request.getParameter("designation");
@@ -169,22 +171,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 // Setting date fields with appropriate parsing
 		String dateOfJoining = request.getParameter("doj");
 		if (dateOfJoining != null && !dateOfJoining.isEmpty()) {
-			employee.setDateOfJoining(LocalDate.parse(dateOfJoining));
+			employee.setDateOfJoining(validateDate(dateOfJoining));
 		}
 		employee.setMonth(request.getParameter("month"));
 
-		employee.setYearsOfCompletion(Float.parseFloat(request.getParameter("yearsOfCompletion")));
-		employee.setApproxYearsCompletion(Integer.parseInt(request.getParameter("approxYrsCompletion")));
-		employee.setProbationPeriod(Integer.parseInt(request.getParameter("probationPeriod")));
-		employee.setDateOfConfirmation(LocalDate.parse(request.getParameter("doc")));
+		employee.setYearsOfCompletion(validateIFloat(request.getParameter("yearsOfCompletion")));
+		employee.setApproxYearsCompletion(validateInteger(request.getParameter("approxYrsCompletion")));
+		employee.setProbationPeriod(validateInteger(request.getParameter("probationPeriod")));
+		employee.setDateOfConfirmation(validateDate(request.getParameter("doc")));
 		employee.setLocation(request.getParameter("location"));
 
 		String dateOfBirth = request.getParameter("dob");
 		if (dateOfBirth != null && !dateOfBirth.isEmpty()) {
-			employee.setDateOfBirth(LocalDate.parse(dateOfBirth));
+			employee.setDateOfBirth(validateDate(dateOfBirth));
 		}
-		employee.setAgeTillDate(Integer.parseInt(request.getParameter("ageTillDate")));
-		employee.setDateOfMonth(Integer.parseInt(request.getParameter("dateOfMonth")));
+		employee.setAgeTillDate(validateInteger(request.getParameter("ageTillDate")));
+		employee.setDateOfMonth(validateInteger(request.getParameter("dateOfMonth")));
 		employee.setAppointmentLetter(request.getParameter("appointmentLetter"));
 		employee.setNda(request.getParameter("nda"));
 		employee.setConfirmationOrProbation(request.getParameter("confProb"));
@@ -205,8 +207,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setCurrentAddress(request.getParameter("currentAddress"));
 		employee.setPermanentAddress(request.getParameter("permanentAddress"));
 		employee.setHighestQualification(request.getParameter("highestQualification"));
-		employee.setTotalExperience(Integer.parseInt(request.getParameter("totalExp")));
-		employee.setRelevantExperience(Integer.parseInt(request.getParameter("relevantExp")));
+		employee.setTotalExperience(validateInteger(request.getParameter("totalExp")));
+		employee.setRelevantExperience(validateInteger(request.getParameter("relevantExp")));
 		employee.setPreviousCompany(request.getParameter("previousCompany"));
 		employee.setDesignationInPreviousCompany(request.getParameter("designationInPreviousCompany"));
 		employee.setExperienceWithPPT(request.getParameter("expWithPPT"));
@@ -214,17 +216,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// Setting resignation and retirement dates
 		String dateOfResignation = request.getParameter("DOR");
 		if (dateOfResignation != null && !dateOfResignation.isEmpty()) {
-			employee.setDateOfResignation(LocalDate.parse(dateOfResignation));
+			employee.setDateOfResignation(validateDate(dateOfResignation));
 		}
 
 		String retirementDate = request.getParameter("retirementDate");
 		if (retirementDate != null && !retirementDate.isEmpty()) {
-			employee.setRetirementDate(LocalDate.parse(retirementDate));
+			employee.setRetirementDate(validateDate(retirementDate));
 		}
 
 		String exitDate = request.getParameter("exitDate");
 		if (exitDate != null && !exitDate.isEmpty()) {
-			employee.setExitDate(LocalDate.parse(exitDate));
+			employee.setExitDate(validateDate(exitDate));
 		}
 
 		employee.setEducationCertificate(request.getParameter("educationCertificate"));
@@ -302,6 +304,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.severe("Error  in RoleServiceImpl --> loadRoleForm "+e.getMessage());
+		}
+	}
+	public static LocalDate validateDate(String dateStr) {
+		try {
+            return LocalDate.parse(dateStr);
+		} catch (DateTimeParseException e) {
+			return LocalDate.now();
+		}
+	}
+	public static int validateInteger(String number) {
+		try {
+			return Integer.parseInt(number);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	public static float validateIFloat(String number) {
+		try {
+			return Float.parseFloat(number);
+		} catch (Exception e) {
+			return 1.1f;
 		}
 	}
 }
