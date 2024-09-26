@@ -44,6 +44,10 @@
                     Role Level
                   </th>
 
+                  <th class="border-0 bgc-white bgc-h-yellow-l3 shadow-sm">
+                    Reporting Role
+                  </th>
+
                   <th class="border-0 bgc-white shadow-sm w-8">
                     Action
                   </th>
@@ -76,6 +80,10 @@
 
                     <td class="text-105 align-middle">
                       ${item.roleLevel }
+                    </td>
+
+                    <td class="text-105 align-middle">
+                      ${item.reportingRole }
                     </td>
 
                     <td class="align-middle">
@@ -138,6 +146,25 @@
                     </div>
                     <div class="col-sm-9">
                       <input type="number" class="form-control" min=0 max=999 id="roleLevel" name="roleLevel" value="${selectedRole.roleLevel}"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="idReportingRole" class="mb-0">
+                        Reporting Role
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <select
+                        class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                        id="idReportingRole">
+                        <c:if test="${not empty roleList}">
+                            <c:forEach items="${roleList}" var="item" varStatus="loop">
+                                <option value='${item.roleCode}' <c:if test="${item.roleCode == selectedRole.roleReportingTo}">selected</c:if>>${item.roleName}</option>
+                            </c:forEach>
+                        </c:if>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group text-center">
@@ -344,22 +371,24 @@
           let roleCode = $('#roleCode').val();
           let roleName = $('#roleName').val();
           let roleLevel = $('#roleLevel').val();
+          let reportingRole = $('#idReportingRole').val();
           var data = {
             "roleCode":roleCode,
             "roleName":roleName,
-            "roleLevel":roleLevel
+            "roleLevel":roleLevel,
+            "reportingRole":reportingRole
           }
           $.ajax({
             type: "POST",
             url: url,
             data: data,
             cache: false,
-            success: function(data){
-              var jsonData = JSON.parse(data);
-              if(jsonData["isSuccess"]){
+            success: function(response) {
+              var jsonData = JSON.parse(response);
+              if (jsonData.isSuccess) {
                 $.aceToaster.add({
                   placement: 'tr',
-                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
+                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>" + jsonData.message + "</span></p>",
                   width: 360,
                   delay: 4000,
                   close: true,
@@ -367,17 +396,54 @@
                   bodyClass: 'border-0 p-0 text-dark-tp2',
                   headerClass: 'd-none',
                   progress: 'position-bl bgc-black-tp6 py-2px m-1px'
-                })
+                });
                 setTimeout(function() {
-                    window.location.href = "hrms/role?action=getAllRoles";  // Replace with the URL you want to redirect to
+                  window.location.href = "hrms/role?action=getAllRoles";  // Adjust the redirect URL as needed
                 }, 1500);
-                  <c:if test="${action == 'insertRole'}">
-                    window.location.href = "hrms/role?action=getAllRoles";
-                  </c:if>
+              } else {
+                // Handle failure in success callback if isSuccess is false
+                $.aceToaster.add({
+                  placement: 'tr',
+                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>" + jsonData.message + "</span></p>",
+                  width: 360,
+                  delay: 4000,
+                  close: true,
+                  className: 'bgc-red-d2 shadow ',
+                  bodyClass: 'border-0 p-0 text-dark-tp2',
+                  headerClass: 'd-none',
+                  progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+                });
               }
             },
-            error:function(data){
-
+            error: function(xhr) {
+              // In case of HTTP errors, attempt to parse the error response
+              try {
+                var jsonData = JSON.parse(xhr.responseText);
+                $.aceToaster.add({
+                  placement: 'tr',
+                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>" + jsonData.message + "</span></p>",
+                  width: 360,
+                  delay: 4000,
+                  close: true,
+                  className: 'bgc-red-d2 shadow ',
+                  bodyClass: 'border-0 p-0 text-dark-tp2',
+                  headerClass: 'd-none',
+                  progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+                });
+              } catch (e) {
+                // Fallback for non-JSON responses
+                $.aceToaster.add({
+                  placement: 'tr',
+                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>An unexpected error occurred.</span></p>",
+                  width: 360,
+                  delay: 4000,
+                  close: true,
+                  className: 'bgc-red-d2 shadow ',
+                  bodyClass: 'border-0 p-0 text-dark-tp2',
+                  headerClass: 'd-none',
+                  progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+                });
+              }
             },
           });
         });

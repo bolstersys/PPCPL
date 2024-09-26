@@ -36,7 +36,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	private static final String INSERT_ADDRESS_QUERY = "INSERT INTO addresses (employee_id, address_line1, address_line2, city, state, country, pin_code, created_date, updated_date) VALUES (?,?,?,?,?,?,?,?,?)";
 	private static final String INSERT_BANK_DTL_QUERY = "INSERT INTO bank_details (employee_id, bank_name, bank_acc_no, ifsc_no, upi_id) VALUES (?,?,?,?,?)";
 
-	private static final String UPDATE_EMPLOYEES_QUERY = "UPDATE employee SET name = ?, category_of_employment = ?, role_code = ?, department = ?, reporting_to = ?, date_of_joining = ?, month = ?, years_of_completion = ?, approx_years_completion = ?, probation_period = ?, date_of_confirmation = ?, location = ?, date_of_birth = ?, age_till_date = ?, date_of_month = ?, appointment_letter = ?, nda = ?, confirmation_or_probation = ?, id_card = ?, account = ?, bank_account = ?, ifsc_code = ?, uan_number = ?, pf_number = ?, marital_status = ?, gender = ?, official_contact_no = ?, personal_contact_no = ?, alternate_contact_no = ?, personal_email_id = ?, official_email_id = ?, blood_group = ?, current_address = ?, permanent_address = ?, highest_qualification = ?, total_experience = ?, relevant_experience = ?, previous_company = ?, designation_in_previous_company = ?, experience_with_ppt = ?, date_of_resignation = ?, retirement_date = ?, exit_date = ?, education_certificate = ?, ration_card = ?, pan_card = ?, aadhar_card = ?, driving_license = ?, passport = ?, bank_name = ?, name_as_per_bank = ?, account_number = ?, ifsc_code_bank = ? WHERE employee_id = ?";
+	private static final String UPDATE_EMPLOYEES_QUERY = "UPDATE employee SET name = ?, category_of_employment = ?, designation = ?, department = ?, reporting_to = ?, date_of_joining = ?, month = ?, years_of_completion = ?, approx_years_completion = ?, probation_period = ?, date_of_confirmation = ?, location = ?, date_of_birth = ?, age_till_date = ?, date_of_month = ?, appointment_letter = ?, nda = ?, confirmation_or_probation = ?, id_card = ?, account = ?, bank_account = ?, ifsc_code = ?, uan_number = ?, pf_number = ?, marital_status = ?, gender = ?, official_contact_no = ?, personal_contact_no = ?, alternate_contact_no = ?, personal_email_id = ?, official_email_id = ?, blood_group = ?, current_address = ?, permanent_address = ?, highest_qualification = ?, total_experience = ?, relevant_experience = ?, previous_company = ?, designation_in_previous_company = ?, experience_with_ppt = ?, date_of_resignation = ?, retirement_date = ?, exit_date = ?, education_certificate = ?, ration_card = ?, pan_card = ?, aadhar_card = ?, driving_license = ?, passport = ?, bank_name = ?, name_as_per_bank = ?, account_number = ?, ifsc_code_bank = ? WHERE employee_id = ?";
 	private static final String UPDATE_ADDRESS_QUERY = "UPDATE addresses SET address_line1 = ?, address_line2 = ?, city = ?, state = ?, country = ?, pin_code = ?, updated_date = ? WHERE employee_id = ?";
 	private static final String UPDATE_BANK_DTL_QUERY = "UPDATE bank_details SET bank_name = ?, bank_acc_no = ?, ifsc_no = ?, upi_id = ? WHERE employee_id = ?";
 
@@ -410,7 +410,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employeeStmt.setString(53, employee.getIfscCodeBank());
 
 				// Set the employee_id to update the specific employee record
-				employeeStmt.setInt(55, employee.getEmployeeId());  // Use employee_id in WHERE clause
+				employeeStmt.setInt(54, employee.getEmployeeId());  // Use employee_id in WHERE clause
 
 				employeeStmt.executeUpdate();
 			}

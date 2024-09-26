@@ -14,9 +14,9 @@ import com.hrms.servet.util.Utility;
 public class RoleDaoImpl implements RoleDao {
 
 	private static String GET_ALL_ROLE_QUERY = "SELECT * FROM role";
-	private static String GET_ROLE_BY_ID_QUERY = "SELECT role.role_code, role.role_name, role.role_level FROM role WHERE role.role_code = ?";
-	private static String INSERT_ROLE_QUERY = "INSERT INTO role (role_name, role_level) VALUES (?, ?)";
-	private static String UPDATE_ROLE_QUERY = "UPDATE role SET role_name = ?, role_level = ? WHERE role_code = ?";
+	private static String GET_ROLE_BY_ID_QUERY = "SELECT role.role_code, role.role_name, role.role_level, role.reporting_role FROM role WHERE role.role_code = ?";
+	private static String INSERT_ROLE_QUERY = "INSERT INTO role (role_name, role_level, reporting_role) VALUES (?, ?, ?)";
+	private static String UPDATE_ROLE_QUERY = "UPDATE role SET role_name = ?, role_level = ?, reporting_role = ? WHERE role_code = ?";
 	private static String DELETE_ROLE_QUERY = "DELETE FROM role WHERE role_code = ?";
 
 	@Override
@@ -38,6 +38,7 @@ public class RoleDaoImpl implements RoleDao {
 				role.setRoleCode(rs.getString("role_code"));
 				role.setRoleName(rs.getString("role_name"));
 				role.setRoleLevel(rs.getString("role_level"));
+				role.setReportingRole(rs.getString("reporting_role"));
 				roleList.add(role);
 			}
 
@@ -65,11 +66,13 @@ public class RoleDaoImpl implements RoleDao {
 				String roleCode = rs.getString("role_code");
 				String roleName = rs.getString("role_name");
 				String roleLevel = rs.getString("role_level");
+				String reportingLevel = rs.getString("reporting_role");
 
 				Role role = new Role();
 				role.setRoleCode(roleCode);
 				role.setRoleName(roleName);
 				role.setRoleLevel(roleLevel);
+				role.setReportingRole(reportingLevel);
 				roleList.add(role);
 			}
 
@@ -87,6 +90,7 @@ public class RoleDaoImpl implements RoleDao {
 
 			preparedStatement.setString(1, role.getRoleName());
 			preparedStatement.setString(2, role.getRoleLevel());
+			preparedStatement.setString(3, role.getReportingRole());
 
 			System.out.println(preparedStatement);
 
@@ -104,7 +108,8 @@ public class RoleDaoImpl implements RoleDao {
 
 			preparedStatement.setString(1, role.getRoleName());
 			preparedStatement.setString(2, role.getRoleLevel());
-			preparedStatement.setString(3, role.getRoleCode());
+			preparedStatement.setString(3, role.getReportingRole());
+			preparedStatement.setString(4, role.getRoleCode());
 
 			System.out.println(preparedStatement);
 

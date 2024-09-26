@@ -166,7 +166,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="name" name="name" value="${selected.name}"/>
+                      <input type="text" class="form-control" id="name" name="name" value="${selected.name}" required/>
                     </div>
                   </div>
 
@@ -296,7 +296,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="doc" name="doc" value="2023-09-21" disabled/>
+                      <input type="text" class="form-control" id="doc" name="doc" value="" disabled/>
                     </div>
                   </div>
 
@@ -1080,7 +1080,7 @@
             "passport": $('#passport').val(),
             "bankName": $('#bankName').val(),
             "nameAsPerBank": $('#nameAsPerBank').val(),
-            "accountNumber": $('#accountNumber').val(),
+            "accountNumber": $('#accountNo').val(),
             "ifscCodeBank": $('#ifscCodeBank').val()
           };
 
@@ -1097,21 +1097,58 @@
                     body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>"+jsonData["message"]+"</span></p>",
                     width: 360,
                     delay: 4000,
-                    close: true, 
+                    close: true,
                     className: 'bgc-green-d2 shadow ',
                     bodyClass: 'border-0 p-0 text-dark-tp2',
                     headerClass: 'd-none',
                     progress: 'position-bl bgc-black-tp6 py-2px m-1px'
                 });
                 setTimeout(function() {
-                    window.location.href = "hrms/employee?action=getAllEmployee";  // Replace with the URL you want to redirect to
+                    window.location.href = "hrms/employee?action=getAllEmployee";
                 }, 1500);
                 console.log("success");
-            }
+            } else {
+                $.aceToaster.add({
+                  placement: 'tr',
+                  body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>" + jsonData["message"] + "</span></p>",
+                  width: 360,
+                  delay: 4000,
+                  close: true,
+                  className: 'bgc-red-d2 shadow ',
+                  bodyClass: 'border-0 p-0 text-dark-tp2',
+                  headerClass: 'd-none',
+                  progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+                });
+              }
         },
-        error: function(data){
-            console.error("An error occurred while processing the request.");
+      error: function(xhr) {
+        try {
+          var jsonData = JSON.parse(xhr.responseText);
+          $.aceToaster.add({
+            placement: 'tr',
+            body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>" + jsonData.message + "</span></p>",
+            width: 360,
+            delay: 4000,
+            close: true,
+            className: 'bgc-red-d2 shadow ',
+            bodyClass: 'border-0 p-0 text-dark-tp2',
+            headerClass: 'd-none',
+            progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+          });
+        } catch (e) {
+          $.aceToaster.add({
+            placement: 'tr',
+            body: "<p class='p-3 mb-0 text-left text-white'><span class='text-125'>An unexpected error occurred.</span></p>",
+            width: 360,
+            delay: 4000,
+            close: true,
+            className: 'bgc-red-d2 shadow ',
+            bodyClass: 'border-0 p-0 text-dark-tp2',
+            headerClass: 'd-none',
+            progress: 'position-bl bgc-black-tp6 py-2px m-1px'
+          });
         }
+      }
     });
 });
 
@@ -1148,6 +1185,35 @@
         }
     }
       })
+
+      function calculateDoc() {
+        const doj = document.getElementById("doj").value;
+        const probationPeriod = parseInt(document.getElementById("probationPeriod").value, 10);
+        const docInput = document.getElementById("doc");
+
+        if (doj && !isNaN(probationPeriod)) {
+          // Create a new Date object for Date of Joining
+          const dateOfJoining = new Date(doj);
+
+          // Add the probation period (in months)
+          dateOfJoining.setMonth(dateOfJoining.getMonth() + probationPeriod);
+
+          // Format the date to YYYY-MM-DD for the input
+          const year = dateOfJoining.getFullYear();
+          const month = String(dateOfJoining.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+          const day = String(dateOfJoining.getDate()).padStart(2, '0');
+
+          // Set the calculated date to the doc input
+          docInput.value = year+'-'+month+'-'+day;
+        } else {
+          docInput.value = ""; // Clear the doc field if inputs are invalid
+        }
+      }
+
+      // Add event listeners to both inputs
+      document.getElementById("doj").addEventListener("change", calculateDoc);
+      document.getElementById("probationPeriod").addEventListener("input", calculateDoc);
+
     </script>
 
     </body>
