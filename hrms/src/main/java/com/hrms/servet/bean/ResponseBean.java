@@ -5,6 +5,7 @@ public class ResponseBean {
     private String message;
     private Object data;
     private Object metaData;
+    private int statusCode;
 
     public Boolean getSuccess() {
         return isSuccess;
@@ -38,6 +39,14 @@ public class ResponseBean {
         this.metaData = metaData;
     }
 
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -45,6 +54,7 @@ public class ResponseBean {
                 ", message='" + message + '\'' +
                 ", data=" + data +
                 ", metaData=" + metaData +
+                ", statusCode=" + statusCode +
                 '}';
     }
 }

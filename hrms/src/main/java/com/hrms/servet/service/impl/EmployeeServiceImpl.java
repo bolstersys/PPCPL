@@ -1,8 +1,9 @@
 package com.hrms.servet.service.impl;
 
+import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -17,6 +18,7 @@ import com.hrms.servet.model.Role;
 import com.hrms.servet.service.EmployeeService;
 
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -25,6 +27,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private final EmployeeDao employeeDao = new EmployeeDaoImpl();
 	private RoleDao roleDao = new RoleDaoImpl();
 	private static final Logger logger = Logger.getLogger(EmployeeServiceImpl.class.getName());
+	private static final String[] requiredFields = {"name", "categoryOfEmployment", "designation", "department", "reportingTo", "doj", "probationPeriod",
+			"location", "dob", "maritalStatus", "gender", "personalContactNo", "officialContactNo", "personalEmailId", "officialEmailId",
+			"permanentAddress", "currentAddress", "highestQualification", "totalExp", "relevantExp", "bankName", "nameAsPerBank",
+			"accountNumber", "ifscCodeBank"};
 
 	@Override
 	public void getAllEmployee(HttpServletRequest request, HttpServletResponse response) {
@@ -48,7 +54,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public void insertEmployee(HttpServletRequest request, HttpServletResponse response) {
+	public void insertEmployee(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<String> errorMessages = new ArrayList<>();
+		if (!validateRequiredFields(request, requiredFields, errorMessages)) {
+			logger.severe("All required fields are not present in EmployeeServiceImpl --> insertEmployee "+errorMessages);
+			ResponseBean responseBean = new ResponseBean();
+			responseBean.setSuccess(false);
+			responseBean.setMessage(String.join(", ", errorMessages));
+			responseBean.setStatusCode(HttpServletResponse.SC_BAD_REQUEST);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			request.setAttribute("action", "ajaxCommonResponse");
+			response.setContentType("application/json");
+			Gson gson = new Gson();
+			request.setAttribute("message", gson.toJson(responseBean));
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/common/ajax.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
 		try {
 			Employee employee = new Employee();
 			employee.setName(request.getParameter("name"));
@@ -56,15 +78,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 			String roleCode = request.getParameter("designation");
 			Role role = new Role();
 			role.setRoleCode(roleCode);
-			employee.setDesignation(role); // Store Role object in designation
-
-// Set department independently if needed
+			employee.setDesignation(role);
 			employee.setDepartment(request.getParameter("department"));
-
-// Set other attributes
 			employee.setReportingTo(request.getParameter("reportingTo"));
-
-// Setting date fields with appropriate parsing
 			String dateOfJoining = request.getParameter("doj");
 			if (dateOfJoining != null && !dateOfJoining.isEmpty()) {
 				employee.setDateOfJoining(validateDate(dateOfJoining));
@@ -108,8 +124,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setPreviousCompany(request.getParameter("previousCompany"));
 			employee.setDesignationInPreviousCompany(request.getParameter("designationInPreviousCompany"));
 			employee.setExperienceWithPPT(request.getParameter("expWithPPT"));
-
-			// Setting resignation and retirement dates
 			String dateOfResignation = request.getParameter("DOR");
 			if (dateOfResignation != null && !dateOfResignation.isEmpty()) {
 				employee.setDateOfResignation(validateDate(dateOfResignation));
@@ -147,12 +161,38 @@ public class EmployeeServiceImpl implements EmployeeService {
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.severe("Error  in RoleServiceImpl --> insertRole "+e.getMessage());
+			logger.severe("Error  in EmployeeServiceImpl --> insertEmployee "+e.getMessage());
+			ResponseBean responseBean = new ResponseBean();
+			responseBean.setSuccess(false);
+			responseBean.setMessage("Failed to create employee: " + e.getMessage());
+			responseBean.setStatusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			request.setAttribute("action", "ajaxCommonResponse");
+			Gson gson = new Gson();
+			request.setAttribute("message", gson.toJson(responseBean));
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/common/ajax.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 
 	@Override
-	public void updateEmployee(HttpServletRequest request, HttpServletResponse response) {
+	public void updateEmployee(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<String> errorMessages = new ArrayList<>();
+		if (!validateRequiredFields(request, requiredFields, errorMessages)) {
+			logger.severe("All required fields are not present in EmployeeServiceImpl --> insertEmployee "+errorMessages);
+			ResponseBean responseBean = new ResponseBean();
+			responseBean.setSuccess(false);
+			responseBean.setMessage(String.join(", ", errorMessages));
+			responseBean.setStatusCode(HttpServletResponse.SC_BAD_REQUEST);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			request.setAttribute("action", "ajaxCommonResponse");
+			response.setContentType("application/json");
+			Gson gson = new Gson();
+			request.setAttribute("message", gson.toJson(responseBean));
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/common/ajax.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
 		Employee employee = new Employee();
 		employee.setEmployeeId(validateInteger(request.getParameter("employeeId")));
 		employee.setName(request.getParameter("name"));
@@ -252,13 +292,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
-
-			logger.severe("Error  in RoleServiceImpl --> updateEmployee "+e.getMessage());
+			logger.severe("Error  in EmployeeServiceImpl --> updateEmployee "+e.getMessage());
+			ResponseBean responseBean = new ResponseBean();
+			responseBean.setSuccess(false);
+			responseBean.setMessage("Failed to create employee: " + e.getMessage());
+			responseBean.setStatusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			request.setAttribute("action", "ajaxCommonResponse");
+			Gson gson = new Gson();
+			request.setAttribute("message", gson.toJson(responseBean));
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/common/ajax.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 
 	@Override
-	public void deleteEmployee(HttpServletRequest request, HttpServletResponse response) {
+	public void deleteEmployee(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String employeeId = request.getParameter("employeeId");
 
 		try {
@@ -275,7 +324,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.severe("Error  in RoleServiceImpl --> deleteEmployee "+e.getMessage());
+			logger.severe("Error  in EmployeeServiceImpl --> deleteEmployee "+e.getMessage());
+			ResponseBean responseBean = new ResponseBean();
+			responseBean.setSuccess(false);
+			responseBean.setMessage("Failed to create employee: " + e.getMessage());
+			responseBean.setStatusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			request.setAttribute("action", "ajaxCommonResponse");
+			Gson gson = new Gson();
+			request.setAttribute("message", gson.toJson(responseBean));
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/common/ajax.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 
@@ -326,5 +385,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 		} catch (Exception e) {
 			return 1.1f;
 		}
+	}
+	public static boolean validateRequiredFields(HttpServletRequest request, String[] fieldNames, List<String> errorMessages) {
+		boolean isValid = true;
+
+		for (String fieldName : fieldNames) {
+			String value = request.getParameter(fieldName);
+			if (value == null || value.trim().isEmpty() || value.equalsIgnoreCase("nan")) {
+				isValid = false;
+				errorMessages.add(fieldName + " is required");
+			}
+		}
+		return isValid;
 	}
 }
