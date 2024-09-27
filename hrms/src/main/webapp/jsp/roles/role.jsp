@@ -109,7 +109,7 @@
 
     <c:if test="${action == 'insertRole' || action == 'updateRole'}">
       <div class="page-content container container-plus">
-        <form autocomplete="off" class="mt-475">
+        <form autocomplete="off" class="mt-475" id="roleForm">
           <div class="form-group row">
             <div class="col-lg-6">
               <div class="card h-100">
@@ -134,7 +134,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="roleName" name="roleName" value="${selectedRole.roleName}"/>
+                      <input type="text" class="form-control" id="roleName" name="roleName" value="${selectedRole.roleName}" required/>
                     </div>
                   </div>
 
@@ -145,7 +145,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min=0 max=999 id="roleLevel" name="roleLevel" value="${selectedRole.roleLevel}"/>
+                      <input type="number" class="form-control" min=0 max=999 id="roleLevel" name="roleLevel" value="${selectedRole.roleLevel}" required/>
                     </div>
                   </div>
 
@@ -363,7 +363,13 @@
           window.location.href = "/hrms/role?action=insertRole"
         });
         
-        $('#submitBtn').on('click', () => {
+        $('#submitBtn').on('click', (event) => {
+          event.preventDefault();
+          let form = $('#roleForm')[0];
+          if (form.checkValidity() === false) {
+            form.reportValidity()
+            return
+          }
           var url = "hrms/role?action=insertRole";
           <c:if test="${action == 'updateRole'}">
             url = "hrms/role?action=updateRole";
@@ -480,6 +486,15 @@
             window.location.href = 'hrms/role?action=deleteRole&roleCode=' + id;
         }
     }
+        $(document).ready(function() {
+          $('#roleName').on('input', function () {
+            this.value = this.value.replace(/[^A-Za-z\s]/g, ''); // Allow only letters
+          });
+          $('#roleLevel').on('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, ''); // Allow only digits
+          });
+        });
+
       })
     </script>
 

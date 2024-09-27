@@ -141,7 +141,7 @@
 
     <c:if test="${action == 'insertEmployee' || action == 'updateEmployee'}">
       <div class="page-content container container-plus">
-        <form autocomplete="off" class="mt-475">
+        <form autocomplete="off" class="mt-475" id="employeeForm">
           <div class="form-group row">
             <div class="col-lg-6">
               <div class="card h-100">
@@ -166,7 +166,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="name" name="name" value="${selected.name}" required/>
+                      <input type="text" class="form-control" id="name" name="name" value="${selected.name}" required pattern="[A-Za-z\s]+" title="Name should only contain alphabetic characters."/>
                     </div>
                   </div>
 
@@ -178,7 +178,12 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="categoryOfEmployment" name="categoryOfEmployment" value="${selected.categoryOfEmployment}"/>
+                      <select
+                              class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
+                              id="categoryOfEmployment" name="categoryOfEmployment" required>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Not Confirmed">Not Confirmed</option>
+                      </select>
                     </div>
                   </div>
 
@@ -210,7 +215,7 @@
                     <div class="col-sm-9">
                       <select
                               class="ace-select text-dark-m1 bgc-default-l5 bgc-h-warning-l3 brc-default-m3 brc-h-warning-m1"
-                              id="department" name="department">
+                              id="department" name="department" >
                         <option value="1">IT</option>
                         <option value="2">Management</option>
                         <option value="3">Printing</option>
@@ -241,7 +246,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="date" class="form-control" id="doj" name="doj" value=""/>
+                      <input type="date" class="form-control" id="doj" name="doj" value="" required/>
                     </div>
                   </div>
 
@@ -252,7 +257,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="month" name="month" value="jan" disabled/>
+                      <input type="text" class="form-control" id="month" name="month" value="" disabled/>
                     </div>
                   </div>
 
@@ -263,7 +268,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="yearsOfCompletion" name="yearsOfCompletion" value="2.2" disabled/>
+                      <input type="text" class="form-control" id="yearsOfCompletion" name="yearsOfCompletion" value="" disabled/>
                     </div>
                   </div>
 
@@ -274,18 +279,18 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="approxYrsCompletion" name="approxYrsCompletion"  value="2" disabled/>
+                      <input type="number" class="form-control" id="approxYrsCompletion" name="approxYrsCompletion"  value="" disabled/>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
                       <label for="probationPeriod" class="mb-0">
-                        Probation Period
+                        Probation Period (Months)
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="probationPeriod" name="probationPeriod" value="10" />
+                      <input type="number" class="form-control" id="probationPeriod" name="probationPeriod" value="" required />
                     </div>
                   </div>
 
@@ -324,7 +329,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="date" class="form-control" id="dob" name="dob" value=""/>
+                      <input type="date" class="form-control" id="dob" name="dob" value="" required/>
                     </div>
                   </div>
 
@@ -335,7 +340,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="ageTillDate" name="ageTillDate" value="2.2" disabled/>
+                      <input type="text" class="form-control" id="ageTillDate" name="ageTillDate" value="" disabled/>
                     </div>
                   </div>
 
@@ -387,7 +392,7 @@
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
                       <label for="confProb" class="mb-0">
-                        Conformation/Probation
+                        Conformation / Probation
                       </label>
                     </div>
                     <div class="col-sm-9">
@@ -434,7 +439,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bankAccount"  name="bankAccount" value="G5662GG"/>
+                      <input type="number" class="form-control" id="bankAccount"  name="bankAccount" value=""/>
                     </div>
                   </div>
 
@@ -456,7 +461,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="UanNum" name="UanNum" value="G5662GG"/>
+                      <input type="number" class="form-control" id="UanNum" name="UanNum" value=""/>
                     </div>
                   </div>
 
@@ -467,7 +472,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number"  class="form-control" id="pfNum" name="pfNum" value="563G5662GG"/>
+                      <input type="number"  class="form-control" id="pfNum" name="pfNum" value=""/>
                     </div>
                   </div>
 
@@ -510,7 +515,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" max="9999999999" class="form-control" id="officialContactNo" name="officialContactNo" value="9874563211"/>
+                      <input type="tel" placeholder="Enter phone number" pattern="\d{10}" maxlength="10" class="form-control" id="officialContactNo" name="officialContactNo" value="" required/>
                     </div>
                   </div>
 
@@ -521,7 +526,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" max="9999999999" class="form-control" id="personalContactNo" name="personalContactNo" value="9874563211"/>
+                      <input type="tel" placeholder="Enter phone number" pattern="\d{10}" maxlength="10" class="form-control" id="personalContactNo" name="personalContactNo" value="" required/>
                     </div>
                   </div>
 
@@ -532,7 +537,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" max="9999999999" class="form-control" id="alternateContactNo" name="alternateContactNo" value="9874563211"/>
+                      <input type="tel" placeholder="Enter phone number" pattern="\d{10}" maxlength="10" class="form-control" id="alternateContactNo" name="alternateContactNo" value=""/>
                     </div>
                   </div>
 
@@ -543,7 +548,8 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="email" class="form-control" id="personalEmailId" name="personalEmailId" value="G5662GG"/>
+                      <input type="email" class="form-control" id="personalEmailId" name="personalEmailId" value="" required/>
+                      <span id="personalEmailError" class="error-message" style="color: #FF0000;"></span>
                     </div>
                   </div>
 
@@ -554,7 +560,8 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="email" class="form-control" id="officialEmailId" name="officialEmailId" value="G5662GG"/>
+                      <input type="email" class="form-control" id="officialEmailId" name="officialEmailId" value="" required/>
+                      <span id="officialEmailError" class="error-message" style="color: #FF0000;"></span>
                     </div>
                   </div>
 
@@ -582,23 +589,26 @@
 
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label text-sm-left pr-0">
-                      <label for="currentAddress" class="mb-0">
-                        Current Address
-                      </label>
-                    </div>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="currentAddress" name="currentAddress" value="9874563211"/>
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
                       <label for="permanentAddress" class="mb-0">
                         Permanent Address
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="permanentAddress" name="permanentAddress" value="9874563211"/>
+                      <input type="text" class="form-control" id="permanentAddress" name="permanentAddress" value="Permanent Address" required/>
+                    </div>
+                  </div>
+                  <label>
+                    <input type="checkbox" id="sameAsPermanent"> Same as Permanent Address
+                  </label>
+
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label text-sm-left pr-0">
+                      <label for="currentAddress" class="mb-0">
+                        Current Address
+                      </label>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="currentAddress" name="currentAddress" value="Current Address" required/>
                     </div>
                   </div>
 
@@ -609,7 +619,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="highestQualification" name="highestQualification" value="9874563211"/>
+                      <input type="text" class="form-control" id="highestQualification" name="highestQualification" value="9874563211" required/>
                     </div>
                   </div>
 
@@ -620,7 +630,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="totalExp" name="totalExp" value="4"/>
+                      <input type="number" class="form-control" id="totalExp" name="totalExp" value="4" required/>
                     </div>
                   </div>
 
@@ -631,7 +641,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="relevantExp" name="relevantExp" value="14"/>
+                      <input type="number" class="form-control" id="relevantExp" name="relevantExp" value="14" required/>
                     </div>
                   </div>
 
@@ -642,7 +652,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="previousCompany" name="previousCompany" value="G5662GG"/>
+                      <input type="text" class="form-control" id="previousCompany" name="previousCompany" value="adffasf"/>
                     </div>
                   </div>
 
@@ -653,7 +663,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="designationInPreviousCompany" name="designationInPreviousCompany" value="G5662GG"/>
+                      <input type="text" class="form-control" id="designationInPreviousCompany" name="designationInPreviousCompany" value="adfafc"/>
                     </div>
                   </div>
 
@@ -774,7 +784,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bankName" name="bankName" value="GGG"/>
+                      <input type="text" class="form-control" id="bankName" name="bankName" value="GGG" required/>
                     </div>
                   </div>
 
@@ -785,7 +795,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="nameAsPerBank" name="nameAsPerBank" value="G5662GG"/>
+                      <input type="text" class="form-control" id="nameAsPerBank" name="nameAsPerBank" value="G5662GG" required/>
                     </div>
                   </div>
 
@@ -796,7 +806,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="accountNo" name="accountNumber" value="G5662GG"/>
+                      <input type="text" class="form-control" id="accountNo" name="accountNumber" value="G5662GG" required/>
                     </div>
                   </div>
 
@@ -807,7 +817,7 @@
                       </label>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="ifscCodeBank" name="ifscCodeBank" value="G5662GG"/>
+                      <input type="text" class="form-control" id="ifscCodeBank" name="ifscCodeBank" value="G5662GG" required/>
                     </div>
                   </div>
 
@@ -1007,11 +1017,17 @@
           window.location.href = "/hrms/employee?action=insertEmployee"
         });
 
-        $('#submitBtn').on('click', () => {
-    let url = "hrms/employee?action=insertEmployee";
-    <c:if test="${action == 'updateEmployee'}">
-        url = "hrms/employee?action=updateEmployee";
-    </c:if>
+        $('#submitBtn').on('click', (event) => {
+          event.preventDefault();
+          let form = $('#employeeForm')[0];
+          if (form.checkValidity() === false) {
+            form.reportValidity()
+            return
+          }
+          let url = "hrms/employee?action=insertEmployee";
+          <c:if test="${action == 'updateEmployee'}">
+              url = "hrms/employee?action=updateEmployee";
+          </c:if>
 
           let employeeData = {
             "employeeId": $('#employeeId').val(),
@@ -1209,10 +1225,112 @@
           docInput.value = ""; // Clear the doc field if inputs are invalid
         }
       }
-
-      // Add event listeners to both inputs
-      document.getElementById("doj").addEventListener("change", calculateDoc);
       document.getElementById("probationPeriod").addEventListener("input", calculateDoc);
+
+      $(document).ready(function() {
+        // Real-time validations
+        $('#name, #account, #bankName, #nameAsPerBank, #previousCompany, #designationInPreviousCompany').on('input', function () {
+          this.value = this.value.replace(/[^A-Za-z\s]/g, ''); // Allow only letters
+        });
+        $('#bankAccount, #UanNum, #personalContactNo, #officialContactNo, #alternateContactNo, #totalExp, #relevantExp, #accountNo, #probationPeriod').on('input', function () {
+          this.value = this.value.replace(/[^0-9]/g, ''); // Allow only digits
+        });
+        $('#ifscCode, #pfNum, #ifscCodeBank').on('input', function () {
+          this.value = this.value.replace(/[^A-Za-z0-9]/g, ''); // Allow only letters and digits
+        });
+        const today = new Date();
+        const maxDate = today.toISOString().split('T')[0];
+        $('#dob, #DOR').attr('max', maxDate);
+
+        //Calculate Age till date
+
+        $('#dob').on('change', function() {
+          const dob = new Date($(this).val());
+          const today = new Date();
+
+          // Calculate age
+          let age = today.getFullYear() - dob.getFullYear();
+          const monthDiff = today.getMonth() - dob.getMonth();
+
+          // Adjust age if the birth date hasn't occurred yet this year
+          if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+          }
+
+          // Set the age in the ageTillDate input field
+          $('#ageTillDate').val(age);
+          $('#dateOfMonth').val(dob.getMonth() + 1)
+        });
+
+        //Populate Permanent address as cuurent address
+        $('#sameAsPermanent').on('change', function() {
+          if (this.checked) {
+            $('#currentAddress').val($('#permanentAddress').val()).prop('disabled', true);
+          } else {
+            $('#currentAddress').val('').prop('disabled', false);
+          }
+        });
+
+
+        //Email ID Validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        function validateEmail(inputField, errorField) {
+          const isValid = emailPattern.test($(inputField).val());
+          if (isValid) {
+            $(errorField).text('');
+          } else {
+            $(errorField).text('⚠️ Please enter a valid email address.');
+          }
+        }
+
+        $('#personalEmailId').on('input', function() {
+          validateEmail('#personalEmailId', '#personalEmailError');
+        }).on('blur', function() {
+          validateEmail('#personalEmailId', '#personalEmailError');
+        });
+
+        $('#officialEmailId').on('input', function() {
+          validateEmail('#officialEmailId', '#officialEmailError');
+        }).on('blur', function() {
+          validateEmail('#officialEmailId', '#officialEmailError');
+        });
+
+        //on DOJ change
+        $('#doj').on('change', function() {
+          calculateDoc()
+          //calculate #month
+          const dojValue = $(this).val();
+          if (dojValue) {
+            const doj = new Date(dojValue);
+            const month = doj.getMonth() + 1;
+            $('#month').val(month);
+
+            //calculate years of completion
+            const today = new Date();
+            let years = today.getFullYear() - doj.getFullYear();
+            const monthDiff = today.getMonth() - doj.getMonth();
+            const dayDiff = today.getDate() - doj.getDate();
+            let approxYrsCompletion = years + (monthDiff / 12) + (dayDiff / 365);
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+              years--;
+            }
+            // Apply rounding logic for yearsOfCompletion based on approxYrsCompletion
+            if (approxYrsCompletion - Math.floor(approxYrsCompletion) >= 0.50) {
+              years = Math.ceil(approxYrsCompletion); // Round up if the decimal part is 0.50 or greater
+            } else {
+              years = Math.floor(approxYrsCompletion); // Round down otherwise
+            }
+            $('#approxYrsCompletion').val(years);
+            $('#yearsOfCompletion').val(approxYrsCompletion.toFixed(2));
+          } else {
+            $('#dateOfMonth').val('');
+            $('#approxYrsCompletion').val('');
+            $('#yearsOfCompletion').val('');
+          }
+
+        });
+      });
 
     </script>
 
